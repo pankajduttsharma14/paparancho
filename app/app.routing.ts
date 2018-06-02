@@ -13,15 +13,15 @@ import { RegisterComponent } from './views/register/register.component';
 
 
 export const routes: Routes = [
-  
+
   {
     path: '',
     redirectTo:'login',
     pathMatch: 'full'
 
-    
+
   },
-  
+
   {
     path: 'login',
     component: LoginComponent,
@@ -41,7 +41,7 @@ export const routes: Routes = [
       title: 'Page 500'
     }
   },
-  
+
   {
     path: 'register',
     component: RegisterComponent,
@@ -55,7 +55,7 @@ export const routes: Routes = [
     data: {
       title: 'dashboard'
     },
-    
+
     children: [
       {
         path: '',
@@ -77,10 +77,14 @@ export const routes: Routes = [
         path: 'vouchers',
         loadChildren: './vouchers/vouchers.module#VouchersModule'
       },
-      
-      
-     
-     
+      {
+        path: 'table-management',
+        loadChildren: './tablemanagement/table.module#TableModule'
+      },
+
+
+
+
     ]
   }
 ];

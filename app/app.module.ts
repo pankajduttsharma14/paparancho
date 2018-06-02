@@ -35,7 +35,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
-  
+
 
 } from '@coreui/angular'
 
@@ -50,6 +50,7 @@ import { AppSettingComponent } from './app-setting/app-setting.component';
 import {FoodModule} from './food/food.module';
 import {StaffManagementModule} from './staffmanagement/staffmanagement.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {TableModule} from './tablemanagement/table.module';
 
 
 
@@ -79,9 +80,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OrderModule,
     VouchersModule,
     BrowserAnimationsModule,
-    ModalModule.forRoot()
-    
-    
+    ModalModule.forRoot(),
+    TableModule
+
+
 
   ],
   declarations: [
@@ -92,11 +94,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     RegisterComponent,
     AppSettingComponent,
-    ModalsComponent
-    
-    
-    
-    
+    ModalsComponent,
+
+
+
+
+
 
   ],
   providers: [{

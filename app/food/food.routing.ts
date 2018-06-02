@@ -15,7 +15,7 @@ const routes: Routes = [
     component:FoodComponent,
     children: [
       {
-        path: 'food',
+        path: '',
         component: CategoryComponent,
         data: {
           title: 'Categories'
@@ -42,7 +42,7 @@ const routes: Routes = [
           title: 'Items'
         }
       }
-     
+
     ]
   }
 ];
