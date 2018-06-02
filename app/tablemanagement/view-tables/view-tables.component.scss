@@ -1,11 +1,12 @@
 .table_list
 {
     list-style-type: none;
+    padding: 0;
     
 }
 .table_list li{
     display: inline-block;
-    width: 20%;
+    width: 18%;
     
     text-align: center;
     height: 80px;
@@ -17,15 +18,17 @@
     font-size: 24px;
     font-weight: bold;
     color: #fff;
+    border-radius: 3px;
 
 }
 .free{
     background: #5cb85c;
     border:1px solid #4cae4c;
+    cursor: pointer;
 }
 .booked{
     background-color: #d9534f;
     border-color:1px solid #d43f3a;
-    cursor: not-allowed;
+    cursor: pointer;
     
 }
