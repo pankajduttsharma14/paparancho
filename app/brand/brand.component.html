@@ -1,0 +1,127 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Brands
+        </div>
+        <!-- modal  -->
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+              <i class="fa fa-plus"></i> Add Brand
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Brand</h3>
+                  <div class="alert alert-success" *ngIf="BrandMsg!=null">{{BrandMsg}}</div>
+                  <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand(AddBrandForm)">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Outlet Id</label>
+                          <input type="number" formControlName="ol_id" class="form-control">
+                          <div *ngIf="AddBrandForm.controls['ol_id'].touched && !AddBrandForm.controls['ol_id'].valid">
+                            <label *ngIf="AddBrandForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="AddBrandForm.controls['ol_id'].hasError('min')" style="color:red;">ID Should strat from 1</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Brand Title</label>
+                          <input type="text" name="" formControlName="brand_title" class="form-control">
+                          <div *ngIf="AddBrandForm.controls['brand_title'].touched && !AddBrandForm.controls['brand_title'].valid">
+                            <label *ngIf="AddBrandForm.controls['brand_title'].hasError('required')" style="color:red;"> Brand Title</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Brand Image Name</label>
+                          <input type="text" formControlName="brand_img" class="form-control">
+                          <div *ngIf="AddBrandForm.controls['brand_img'].touched && !AddBrandForm.controls['brand_img'].valid">
+                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="status">Status</label>
+                          <select formControlName="status" class="form-control">
+                            <option value="" [selected]="isSelected">Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="AddBrandForm.controls['status'].touched && !AddBrandForm.controls['status'].valid">
+                            <label *ngIf="AddBrandForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12" style="margin-top: 10px;">
+                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddBrandForm.valid"><i class="fa fa-plus"></i> Add Brand</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Modified Date</th>
+                <th>Created Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let data of brands.data | paginate: { itemsPerPage: 10, currentPage: p}'>
+                <td>
+                  <input type="Checkbox" name="select">
+                </td>
+                <td>{{data.brid}}</td>
+                <td>{{data.brand_title}}</td>
+                <td><img src="{{data.img_path}}" alt="brands"></td>
+                <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
+                <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
+                <td><span class="badge badge-success">{{data.status}}</span></td>
+                <td>
+                  <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
+                  <a href="#" title="Edit" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
+                  <a href="#" title="Delete" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          <!--  <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

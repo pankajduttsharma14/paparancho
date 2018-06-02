@@ -1,0 +1,154 @@
+<style type="text/css">
+  .ui-inputtext{
+    width: 100% !important;
+    border: 1px solid #ccc !important;
+    height: 35px !important;
+}
+</style>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- msg -->
+      <!-- msg -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Vouchers
+        </div>
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+              <i class="fa fa-plus"></i> Add Voucher
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+
+                <div class="modal-body">
+                    <h3 class="modal_heading">Add Voucher</h3>
+                    <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div> 
+                    
+                    <form nonvalidate #myForm="ngForm" (ngSubmit)="AddVoucher(myForm)">
+                        <div class="form-group">
+                            <label>Voucher Name</label>
+                            <input type="Text" name="VName" class="form-control" placeholder="Voucher Name" [(ngModel)]="myForm.VName" required #VName="ngModel">
+                            <label *ngIf="VName.errors && (VName.touched || VName.dirty)" style="color:red;">Enter Voucher Name</label>
+                        </div>
+                        <div class="form-group">
+                            <label>Voucher Type</label>
+                            <select type="number" 
+                            name="VType" 
+                            placeholder="Voucher Type (ie. Fixed or %)" 
+                            class="form-control" 
+                            [(ngModel)]="myForm.VType"
+                            #VType="ngModel"
+                            required 
+                            >
+                              <option [ngValue]="null">Voucher Type</option>
+                              <option>Fixed</option>
+                              <option>Percentage</option>
+                            </select>
+                            <label *ngIf="VType.errors && (VType.dirty || VType.touched)" style="color: red;">Enter Voucher Type</label>
+                        </div>
+                        <div class="form-group">
+                          <label>Voucher Value</label>
+                           <input type="number" 
+                            name="Vvalue" 
+                            placeholder="Value" 
+                            class="form-control" 
+                            [(ngModel)]="myForm.Vvalue"
+                            #Vvalue="ngModel"
+                            required 
+                            >
+                            <label *ngIf="Vvalue.errors && (Vvalue.dirty || Vvalue.touched)" style="color: red;">Enter Voucher Value</label>
+
+                        </div>
+                        <div class="form-group">
+                          <label>Voucher Status</label>
+                            <select 
+                            name="status1" 
+                            class="form-control" 
+                            [(ngModel)]="myForm.status1"
+                            name="status1" 
+                            #status1="ngModel"
+                            required 
+                            >
+                              <option [ngValue]="null">STATUS</option>
+                              <option value="ACTIVE">ACTIVE</option>
+                              <option value="INACTIVE">INACTIVE</option>
+                            </select>
+                            <label *ngIf="status1.invalid && (status1.dirty || status1.touched)" style="color: red;">Select status</label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Valid Till</label>
+                            <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till"
+                            #valid_till="ngModel"
+                            required 
+                            >
+                            <label *ngIf="valid_till.errors && (valid_till.dirty || valid_till.touched)" style="color: red;">Select Date</label>
+                        </div>
+                        <div class="form-group time_picker">
+                           <label>Vaild Time</label>
+                           <p-calendar [(ngModel)]="myForm.time" [timeOnly]="true" hourFormat="12"  #time="ngModel" name="time" required styleClass="custom_time"></p-calendar>
+                          <label *ngIf="time.errors && (time.dirty || time.touched)" style="color: red;">Enter Valid Time</label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success sub_btn" [disabled]="!myForm.valid"><i class="fa fa-plus"></i> Add Voucher</button>
+                        </div>
+                    </form>  
+                </div>
+               
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table" style="width: 1300px;">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Id</th>
+                  <th>Voucher Name</th>
+                  <th>Voucher Type</th>
+                  <th>Voucher Value</th>
+                  <th>Valid Till</th>
+                  <th>Valid Before</th>
+                  <th>Created On</th>
+                  <th>Voucher Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let data of Vouchers' style="position: relative;">
+                  <td>
+                    <input type="checkbox" name="checkbox">
+                  </td>
+                  <td>{{data.id}}</td>
+                  <td>{{data.vcr_name}}</td>
+                  <td>{{data.type}}</td>
+                  <td>{{data.value}}</td>
+                  <td>{{data.valid_till_date | date:'dd/MM/yy'}}</td>
+                  <td>{{data.valid_before}}</td>
+                  <td>{{data.createdAt | date:'dd/MM/yy'}}</td>
+                  <td>
+                    <span class="badge badge-success">{{data.status}}</span>
+                  </td>
+                  <td class="actions_main">
+                    <a title="Edit"><i class="fa fa-edit"></i></a>
+                    <a title="Delete"><i class="fa fa-trash"></i></a>
+                    <a title="View Detail"><i class="fa fa-eye"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

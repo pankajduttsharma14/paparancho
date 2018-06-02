@@ -1,0 +1,216 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Staff List
+        </div>
+        <!-- modal -->
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+              <i class="fa fa-plus"></i> Add Staff
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Staff</h3>
+                  <div class="alert alert-success" *ngIf="StaffMsg!=null">{{StaffMsg}}</div>
+                  <form [formGroup]="StaffListForm" (ngSubmit)="AddStaffList(StaffListForm)" autocomplete='off'>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Outlet Id</label>
+                          <input type="number" formControlName="ol_id" class="form-control">
+                          <div *ngIf="StaffListForm.controls['ol_id'].touched && !StaffListForm.controls['ol_id'].valid">
+                            <label *ngIf="StaffListForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="StaffListForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Staff Login Id</label>
+                          <input type="text" formControlName="staff_login_id" class="form-control">
+                          <div *ngIf="StaffListForm.controls['staff_login_id'].touched && !StaffListForm.controls['staff_login_id'].valid">
+                            <label *ngIf="StaffListForm.controls['staff_login_id'].hasError('required')" style="color:red;">Staff Login Id</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 2 -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Pass code</label>
+                          <input type="text" formControlName="pass_code" class="form-control">
+                          <div *ngIf="StaffListForm.controls['pass_code'].touched && !StaffListForm.controls['pass_code'].valid">
+                            <label *ngIf="StaffListForm.controls['pass_code'].hasError('required')" style="color:red;">Enter Pass Code</label>
+                            <label *ngIf="StaffListForm.controls['pass_code'].hasError('min')" style="color:red;">Incorrect Pass code</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Password</label>
+                          <input type="password" formControlName="password" class="form-control">
+                          <div *ngIf="StaffListForm.controls['password'].touched && !StaffListForm.controls['password'].valid">
+                            <label *ngIf="StaffListForm.controls['password'].hasError('required')" style="color:red;">Enter Password</label>
+                            <label *ngIf="StaffListForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Role Id</label>
+                          <input type="number" formControlName="role_id" class="form-control">
+                          <div *ngIf="StaffListForm.controls['role_id'].touched && !StaffListForm.controls['role_id'].valid">
+                            <label *ngIf="StaffListForm.controls['role_id'].hasError('required')" style="color:red;">Enter Role Id</label>
+                            <label *ngIf="StaffListForm.controls['role_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 3 -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>First Name</label>
+                          <input type="text" formControlName="first_name" class="form-control">
+                          <div *ngIf="StaffListForm.controls['first_name'].touched && !StaffListForm.controls['first_name'].valid">
+                            <label *ngIf="StaffListForm.controls['first_name'].hasError('required')" style="color:red;">Enter First Name</label>
+                            <label *ngIf="StaffListForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Last Name</label>
+                          <input type="text" formControlName="last_name" class="form-control">
+                          <div *ngIf="StaffListForm.controls['last_name'].touched && !StaffListForm.controls['last_name'].valid">
+                            <label *ngIf="StaffListForm.controls['last_name'].hasError('required')" style="color:red;">Enter Last Name</label>
+                            <label *ngIf="StaffListForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Contact</label>
+                          <input type="number" formControlName="mob_number" class="form-control">
+                          <div *ngIf="StaffListForm.controls['mob_number'].touched && !StaffListForm.controls['mob_number'].valid">
+                            <label *ngIf="StaffListForm.controls['mob_number'].hasError('required')" style="color:red;">Enter Mobile Number</label>
+                            <label *ngIf="StaffListForm.controls['mob_number'].hasError('pattern')" style="color:red;">Invalid contact number</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 4 -->
+                      <!-- row 4 -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Age</label>
+                          <input type="number" formControlName="age" class="form-control">
+                          <div *ngIf="StaffListForm.controls['age'].touched && !StaffListForm.controls['age'].valid">
+                            <label *ngIf="StaffListForm.controls['age'].hasError('required')" style="color:red;">Enter Age</label>
+                            <label *ngIf="StaffListForm.controls['age'].hasError('min')" style="color:red;">Minimum Age Should be 18 Years</label>
+                            <label *ngIf="StaffListForm.controls['age'].hasError('pattern')" style="color:red;">Age Contain 2 Digits Max</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Gender</label>
+                          <select formControlName="gender" class="form-control">
+                            <option value="" [selected]="isSelected">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                          <div *ngIf="StaffListForm.controls['gender'].touched && !StaffListForm.controls['gender'].valid">
+                            <label *ngIf="StaffListForm.controls['gender'].hasError('required')" style="color:red;">Select Gender</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Status</label>
+                          <select formControlName="status" class="form-control">
+                            <option value="" [selected]="isSelected">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                          </select>
+                          <div *ngIf="StaffListForm.controls['status'].touched && !StaffListForm.controls['status'].valid">
+                            <label *ngIf="StaffListForm.controls['status'].hasError('required')" style="color:red;">Select Status
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Address</label>
+                          <textarea formControlName="address" class="form-control" style="height: 60px !important;"></textarea>
+                          <div *ngIf="StaffListForm.controls['address'].touched && !StaffListForm.controls['address'].valid">
+                            <label *ngIf="StaffListForm.controls['address'].hasError('required')" style="color:red;">Enter Address</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- submit -->
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!StaffListForm.valid">
+                            <i class="fa fa-plus"></i> Staff List</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <div class="card-body table-responsive">
+          <table class="table" style="width:1200px;">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Staff Id</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <!-- <th>Modified Date</th>
+                <th>Created Date</th> -->
+                <th>Login Status</th>
+                <th>Active Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+              <tbody>
+              <tr *ngFor='let data of StaffList.data | paginate: { itemsPerPage: 10, currentPage: p}'>
+                <td>
+                  <input type="checkbox" name="checkbox">
+                </td>
+                <td>{{data.staff_id}}</td>
+                <td>{{data.first_name+" "+data.last_name}}</td>
+                <td>{{data.mob_number}}</td>
+                <td>{{data.address}}</td>
+                <td>{{data.age}}</td>
+                <td>{{data.gender}}</td>
+                <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
+                <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
+                <td><span class="badge badge-success">{{data.login_status}}</span></td>
+                <td><span class="badge badge-success">{{data.status}}</span></td>
+                <td>
+                  <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
+                  <a href="#" title="Edit" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
+                  <a href="#" title="Delete" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          <!--  <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

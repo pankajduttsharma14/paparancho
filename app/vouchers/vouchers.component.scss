@@ -1,0 +1,47 @@
+@import "~primeng/resources/themes/omega/theme.css";
+@import "~primeng/resources/primeng.min.css";
+.actions_main a
+{
+		cursor: pointer;
+		color: #2199e8;
+	margin-left:10px;
+	font-size:16px;	
+	display:inline-block;
+
+}
+
+.modal_heading
+{
+	font-size:18px;
+	background: #20a8d8;
+	color: #fff;
+	padding: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+
+}
+
+.sub_btn
+{
+	background: #20a8d8;
+}
+.form-control, .time_picker p-calendar .ui-inputtext {
+    width: 100% !important;
+    height: 35px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 0 !important;
+}
+.custom_time
+{
+	width: 100%;
+}
+.button_control
+{
+	text-align: right;
+	margin: 10px 10px 0;
+}
+.button_control button
+{
+	color: #fff;
+
+}

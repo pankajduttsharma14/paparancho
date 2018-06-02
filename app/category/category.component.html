@@ -1,0 +1,186 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Categories
+        </div>
+        <!-- modal  -->
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+              <i class="fa fa-plus"></i> Add Category
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Categories</h3>
+                  <div class="alert alert-success" *ngIf="AddCatMsg!=null">{{AddCatMsg}}</div>
+                  
+                  <form [formGroup]="AddForm" (ngSubmit)="AddCategories(AddForm)">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">  
+                          <label >Outlet Id</label>
+                          <input type="number" formControlName="ol_id" class="form-control">
+                          <div *ngIf="AddForm.controls['ol_id'].touched && !AddForm.controls['ol_id'].valid">
+                              <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                              
+                              
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">  
+                          <label >Category Type</label>
+                          <select formControlName="cat_type" class="form-control">
+                            <option value="" [selected]="isSelected">Select Category Type</option>
+                            <option *ngFor="let cat of category_type  " [value]="cat">{{cat}}</option>
+                            
+                          </select>
+                          <div *ngIf="AddForm.controls['cat_type'].touched && !AddForm.controls['cat_type'].valid">
+                              <label *ngIf="AddForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Parent Id</label>  
+                          <input type="number" formControlName="parent_id" class="form-control">
+                          <div *ngIf="AddForm.controls['parent_id'].touched && !AddForm.controls['parent_id'].valid">
+                              <label *ngIf="AddForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                              
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">  
+                            <label>Category Title</label>  
+                          <input type="text" formControlName="cat_title" class="form-control">
+                          <div *ngIf="AddForm.controls['cat_title'].touched && !AddForm.controls['cat_title'].valid">
+                              <label *ngIf="AddForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">  
+                            <label>Image Name</label>
+                          
+                          <input type="text" formControlName="cat_img_name" class="form-control">
+                          <div *ngIf="AddForm.controls['cat_img_name'].touched && !AddForm.controls['cat_img_name'].valid">
+                              <label *ngIf="AddForm.controls['cat_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">  
+                          <label for="">Category Image Url</label>
+                          <input type="text" formControlName="cat_img_url" class="form-control">
+                          <div *ngIf="AddForm.controls['cat_img_url'].touched && !AddForm.controls['cat_img_url'].valid">
+                              <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
+                              <label *ngIf="AddForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
+                                
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                          
+                        <div class="col-md-6">  
+                            <label>Is Alcholic?</label>
+                          
+                          <select formControlName="isAlcholic" class="form-control">
+                            <option value="" [selected]="isSelected">Is Alcholic?</option>
+                            <option *ngFor="let al of alchoholic" [value]="al.value">{{al.data}}</option>
+                          </select>
+                          <div *ngIf="AddForm.controls['isAlcholic'].touched && !AddForm.controls['isAlcholic'].valid">
+                              <label *ngIf="AddForm.controls['isAlcholic'].hasError('required')" style="color:red;">Select Drink Type</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">  
+                          <label for="status">Status</label>
+                            <select formControlName="status" class="form-control">
+                              <option value="" [selected]="isSelected">Status</option>
+                              <option *ngFor="let st of Status" [value]="st">{{st}}</option>
+                            </select>
+                            <div *ngIf="AddForm.controls['status'].touched && !AddForm.controls['status'].valid">
+                            <label *ngIf="AddForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                            </div>
+                          </div>
+
+                      
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">  
+                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddForm.valid"><i class="fa fa-plus"></i> Add Category</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </form>
+                 
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Id</th>
+                <th>Category Type</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Modified Date</th>
+                <th>Created Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let data of categories | paginate: { itemsPerPage: 10, currentPage: p} '>
+                <td>
+                  <input type="checkbox" name="checkbox">
+                </td>
+                <td>{{data.icid}}</td>
+                <td>{{data.cat_type}}</td>
+                <td>{{data.cat_title}}</td>
+                <td>{{data.cat_img}}</td>
+                <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
+                <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
+                <td><span class="badge badge-success">{{data.status}}</span></td>
+                <td>
+                  <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
+                  <a href="#" title="Edit" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
+                  <a href="#" title="Delete" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          <!--  <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
