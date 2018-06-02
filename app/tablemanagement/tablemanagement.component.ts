@@ -10,7 +10,12 @@ export class TablemanagementComponent implements OnInit {
 
   constructor(private router:Router) { 
     
+    var status = localStorage.getItem('loginStatus');
+    if (status != "true") {
 
+      this.router.navigate(['login']);
+
+    }
     this.router.navigate(['dashboard/table-management/view-tables']);
 
   }
