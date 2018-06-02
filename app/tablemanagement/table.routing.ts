@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {TablemanagementComponent} from './tablemanagement.component';
+import { ViewTablesComponent } from './view-tables/view-tables.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -8,19 +10,29 @@ const routes: Routes = [
       title: 'Table Management'
     },
     component:TablemanagementComponent,
-    // children: [
-    //   {
-    //     path: '',
-    //     component: CategoryComponent,
-    //     data: {
-    //       title: 'Categories'
-    //     }
-    //   },
-    //
-    //
-    // ]
+    children: [
+      {
+        path: '',
+        component: ViewTablesComponent,
+        data: {
+          title: 'View Tables'
+        }
+      },
+      {
+        path: 'view-tables',
+        component: ViewTablesComponent,
+        data: {
+          title: 'View Tables'
+        }
+      },
+    ]
   }
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
 
 
 

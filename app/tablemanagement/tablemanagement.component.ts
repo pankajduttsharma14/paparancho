@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tablemanagement',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablemanagementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { 
+    
+
+    this.router.navigate(['dashboard/table-management/view-tables']);
+
+  }
 
   ngOnInit() {
   }

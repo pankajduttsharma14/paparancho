@@ -5,10 +5,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {TableRoutingModule} from './table.routing';
 import {TablemanagementComponent} from './tablemanagement.component';
+import { ViewTablesComponent } from './view-tables/view-tables.component';
 
 @NgModule({
 imports:[CommonModule,NgxPaginationModule,FormsModule,ReactiveFormsModule,TableRoutingModule],
-declarations:[TablemanagementComponent]
+declarations:[TablemanagementComponent, ViewTablesComponent]
 })
 
 export class TableModule { }
