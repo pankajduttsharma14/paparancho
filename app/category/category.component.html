@@ -35,7 +35,7 @@
                         <div class="col-md-6">  
                           <label >Category Type</label>
                           <select formControlName="cat_type" class="form-control">
-                            <option value="" [selected]="isSelected">Select Category Type</option>
+                            <option value="" [selected]="true">Select Category Type</option>
                             <option *ngFor="let cat of category_type  " [value]="cat">{{cat}}</option>
                             
                           </select>
@@ -91,7 +91,7 @@
                             <label>Is Alcholic?</label>
                           
                           <select formControlName="isAlcholic" class="form-control">
-                            <option value="" [selected]="isSelected">Is Alcholic?</option>
+                            <option value="" [selected]="true">Is Alcholic?</option>
                             <option *ngFor="let al of alchoholic" [value]="al.value">{{al.data}}</option>
                           </select>
                           <div *ngIf="AddForm.controls['isAlcholic'].touched && !AddForm.controls['isAlcholic'].valid">
@@ -101,7 +101,7 @@
                         <div class="col-md-6">  
                           <label for="status">Status</label>
                             <select formControlName="status" class="form-control">
-                              <option value="" [selected]="isSelected">Status</option>
+                              <option value="" [selected]="true">Status</option>
                               <option *ngFor="let st of Status" [value]="st">{{st}}</option>
                             </select>
                             <div *ngIf="AddForm.controls['status'].touched && !AddForm.controls['status'].valid">

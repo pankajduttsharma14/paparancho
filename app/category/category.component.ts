@@ -15,7 +15,7 @@ export class CategoryComponent implements OnInit {
   p: number = 1;
   private AddCat = {};
   public categories: any = [];
-  private AddForm: any;
+  AddForm: any;
 
   // parameters for form
   ol_id: string;

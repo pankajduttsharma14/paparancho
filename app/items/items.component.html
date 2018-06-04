@@ -34,7 +34,7 @@
 
                         <label>Category</label>
                         <select formControlName="icid" class="form-control">
-                          <option value="" [selected]="isSelected">Select Category Type</option>
+                          <option value="" [selected]="true">Select Category Type</option>
                           <option *ngFor="let item of catList" [value]="item.catId">{{item.catName}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['icid'].touched && !AddItemsForm.controls['icid'].valid">
@@ -45,7 +45,7 @@
                       <div class="col-md-4">
                         <label>Brand</label>
                         <select formControlName="brand_id" class="form-control">
-                          <option value="" [selected]="isSelected">Select Brand</option>
+                          <option value="" [selected]="true">Select Brand</option>
                           <option *ngFor="let item of brandList" [value]="item.brId">{{item.brName}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['brand_id'].touched && !AddItemsForm.controls['brand_id'].valid">
@@ -113,7 +113,7 @@
                       <div class="col-md-3">
                         <label>Status</label>
                         <select formControlName="status" class="form-control">
-                          <option value="" [selected]="isSelected">Status</option>
+                          <option value="" [selected]="true">Status</option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inctive</option>
                         </select>

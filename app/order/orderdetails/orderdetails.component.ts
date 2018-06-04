@@ -11,8 +11,8 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 
 export class OrderdetailsComponent implements OnInit {
-  private OrderID:any;
-  private OrderDetails:any=[{}];
+  OrderID:any;
+  OrderDetails:any=[{}];
   constructor(private router:Router, private activatedRoute: ActivatedRoute, private OrderService:OrderService){ 
   	var status=localStorage.getItem('loginStatus');
   	if(status!="true")

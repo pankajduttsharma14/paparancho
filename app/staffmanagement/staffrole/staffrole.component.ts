@@ -16,7 +16,7 @@ export class StaffroleComponent implements OnInit {
 	@ViewChild('largeModal') public largeModal: ModalDirective;
 
 	public StaffRolesList: any = {};
-	private StaffRoleForm: FormGroup;
+	StaffRoleForm: FormGroup;
 	p: number = 1;
 	ol_id: string;
 	title: string;

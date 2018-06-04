@@ -84,11 +84,18 @@ export class FoodService {
 
 
   }
+  // Delete brand
   DeleteBrand(id):Observable<any>
   {
-    console.log(id);
+    
     const url:string=this.BASE_URL+"deletebrand/id/"+id;
     return this.http.get(url,this.options).map(res=>res.json());
+  }
+
+  // edit brand
+  UpdateBrand(body){
+    const url:string=this.BASE_URL+"editbrand";
+    return this.http.post(url,body,this.options).map(res=>res.json());
   }
 
 
