@@ -11,7 +11,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 })
 export class BrandComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
-  public largeModal1:ModalDirective;
+  @ViewChild('largeModal') public largeModal1:ModalDirective;
   // formsettings
   AddBrandForm: FormGroup;
   EditForm:FormGroup;
@@ -129,9 +129,9 @@ export class BrandComponent implements OnInit {
   }
   
   model={};
-EditBrand()
+Edit()
 {
-  this.model={}
+  this.model={};
     this.model={
         "brid":this.Editrow[0].brid,
         "ol_id":this.Editrow[0].ol_id,
@@ -146,6 +146,7 @@ UpdateBrand(formData)
 { 
   let data=formData.value;
   this.FoodService.UpdateBrand(data).subscribe(res=>{
+    
     if (res.status == 200) {
       this.UpdateBrandMsg = res.message;
       this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; }, err => { console.log(err) });
@@ -156,6 +157,7 @@ UpdateBrand(formData)
       }, 3000);
     }
     else{
+      
       setTimeout(() => {
         this.UpdateBrandMsg = null;
         this.largeModal1.hide();
@@ -163,6 +165,7 @@ UpdateBrand(formData)
       }, 3000);
     }
   },err=>{
+    
     setTimeout(() => {
       this.UpdateBrandMsg = null;
       this.largeModal1.hide();

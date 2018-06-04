@@ -135,24 +135,20 @@
         <!-- edit modal -->
         <!-- modal  -->
         <div class="add_box">
-          <!-- <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal1.show()">
-              <i class="fa fa-plus"></i> Add Brand
-            </button>
-          </div> -->
-          <div class="alert alert-success" *ngIf="UpdateBrandMsg!=null">{{UpdateBrandMsg}}</div>
-          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            (onShown)='EditBrand($event)'>
+         <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            (onShown)='Edit($event)'>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
+                  
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Brand</h3>
+                  <div class="alert alert-success" *ngIf="UpdateBrandMsg!=null">{{UpdateBrandMsg}}</div>
                   <form [formGroup]="EditForm" (ngSubmit)=UpdateBrand(EditForm) novalidate>
                     
                     <div class="row">
                       <div class="col-md-6">
                         <label>Brand Id</label>
-                        <input type="number" class="form-control" formControlName="brid" [ngModel]="model.brid">
+                        <input type="number" class="form-control" formControlName="brid" [ngModel]="model.brid" readonly>
                          <div *ngIf="EditForm.controls['brid'].touched && !EditForm.controls['brid'].valid">
                             <label *ngIf="EditForm.controls['brid'].hasError('required')" style="color:red;">Enter Brand Id</label>
                             <label *ngIf="EditForm.controls['brid'].hasError('min')" style="color:red;">Id can't be 0</label>

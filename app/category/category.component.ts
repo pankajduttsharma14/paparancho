@@ -95,7 +95,30 @@ urlPattern=/^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]
     }
 
   }
+  // delete category
 
-
-
+  DeleteCatMsg: string;
+  DeleteCategory(id) {
+    this.FoodService.DeleteCategory(id).subscribe(res => {
+      if (res.status == 200) {
+        this.DeleteCatMsg = res.data.message;
+        this.FoodService.GetAllCategories().subscribe(res => {this.categories = res.data;},
+         err => { console.log(err) });        
+   
+        setTimeout(() => {
+          this.DeleteCatMsg = null;
+        }, 3000);
+      }
+      else {
+        setTimeout(() => {
+          this.DeleteCatMsg = null;
+        }, 3000);
+      }
+    }, err => {
+      setTimeout(() => {
+        this.DeleteCatMsg = null;
+      }, 3000);
+    });
+  }
 }
+

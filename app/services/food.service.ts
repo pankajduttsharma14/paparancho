@@ -98,6 +98,14 @@ export class FoodService {
     return this.http.post(url,body,this.options).map(res=>res.json());
   }
 
+  // Delete Category
+  DeleteCategory(id):Observable<any>
+  {
+    
+    const url:string=this.BASE_URL+"deleteCategorie/id/"+id;
+    return this.http.get(url,this.options).map(res=>res.json());
+  }
+
 
 
 }

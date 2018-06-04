@@ -130,10 +130,11 @@
         </div>
         <!-- modal -->
         <div class="card-body">
+            <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">{{DeleteCatMsg}}</div>
           <table class="table">
             <thead>
               <tr>
-                <th></th>
+                <!-- <th></th> -->
                 <th>Id</th>
                 <th>Category Type</th>
                 <th>Title</th>
@@ -146,9 +147,9 @@
             </thead>
             <tbody>
               <tr *ngFor='let data of categories | paginate: { itemsPerPage: 10, currentPage: p} '>
-                <td>
+                <!-- <td>
                   <input type="checkbox" name="checkbox">
-                </td>
+                </td> -->
                 <td>{{data.icid}}</td>
                 <td>{{data.cat_type}}</td>
                 <td>{{data.cat_title}}</td>
@@ -157,12 +158,12 @@
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
                 <td><span class="badge badge-success">{{data.status}}</span></td>
                 <td>
-                  <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
-                  <a href="#" title="Edit" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
-                  <a href="#" title="Delete" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                  <!-- <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
+                  <span title="Edit" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;"><i class="fa fa-edit"></i></span>
+                  <span title="Delete" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteCategory(data.icid)"><i class="fa fa-trash"></i></span>
                 </td>
               </tr>
             </tbody>
@@ -179,6 +180,10 @@
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul> -->
         </div>
+
+           <!-- edit modal -->
+
+           <!-- edit modal -->
       </div>
     </div>
   </div>
