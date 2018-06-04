@@ -56,7 +56,7 @@ export class FoodService {
    AddCategory(data):Observable<any>
   {
     let body=data;
-    console.log(body);
+    
     const url:string=this.BASE_URL+"addcategorie";
     return this.http.post(url,body,this.options).map(res=>res.json());
 
@@ -67,23 +67,30 @@ export class FoodService {
    AddBrand(data):Observable<any>
   {
     let body=data;
-    console.log(body);
+    
     const url:string=this.BASE_URL+"addbrand";
     return this.http.post(url,body,this.options).map(res=>res.json());
 
 
   }
 
-     // Add itsm
+     // Add item
    AddItem(data):Observable<any>
   {
     let body=data;
-    console.log(body);
+    
     const url:string=this.BASE_URL+"additem";
     return this.http.post(url,body,this.options).map(res=>res.json());
 
 
   }
+  DeleteBrand(id):Observable<any>
+  {
+    console.log(id);
+    const url:string=this.BASE_URL+"deletebrand/id/"+id;
+    return this.http.get(url,this.options).map(res=>res.json());
+  }
+
 
 
 }

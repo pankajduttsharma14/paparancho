@@ -1,25 +1,22 @@
-
 <div class="table_layout">
-   
-    <div class="row" *ngIf="GetTables">
-        <!-- table list -->
-        <div class="col-md-8">
-            <ul class="table_list">
-                <li *ngFor="let table of GetTables" [ngClass]="{'free': table.is_available=='FREE', 'booked': table.is_available=='BOOKED'}" (click)="TableDetails(table)">{{table.srtbl_no}}</li>
-            </ul>
-        </div>
-        <!-- table details -->
-        <div class="col-md-4" style="background: #fff;">
-            <div class="table_status">
-                <h3 *ngIf="TableDetail==null">This table is booked</h3>
 
-                <div class="table_de" *ngIf="TableDetail !=null">
-                    {{TableDetail | json}}
-                </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> All Tables
             </div>
+            <!-- modal -->
 
+            <div class="card-body" *ngIf="GetTables">
+                <ul class="table_list">
+                    <li *ngFor="let table of GetTables" [ngClass]="{'free': table.is_available=='FREE', 'booked': table.is_available=='BOOKED'}"
+                        (click)="TableDetails(table)">{{table.srtbl_no}}</li>
+                </ul>
+
+            </div>
         </div>
     </div>
+
 
 
 

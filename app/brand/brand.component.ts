@@ -82,4 +82,29 @@ export class BrandComponent implements OnInit {
 
     });
   }
+
+  DeleteBrandMsg:string;
+  DeleteBrand(id)
+  {
+    this.FoodService.DeleteBrand(id).subscribe(res=>{
+      if(res.status==200)
+      {
+        this.DeleteBrandMsg=res.data.message;
+        this.FoodService.GetAllBrands().subscribe(res=>{this.brands=res;},err=>{console.log(err)});
+        setTimeout(()=>{
+          this.DeleteBrandMsg=null;  
+        },3000);
+      }
+      else{
+        setTimeout(()=>{
+          this.DeleteBrandMsg=null;  
+        },3000);
+      }
+    },err=>{
+      setTimeout(()=>{
+        this.DeleteBrandMsg=null;  
+      },3000);
+    }); 
+  }
+
 }

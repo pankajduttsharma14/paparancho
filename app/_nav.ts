@@ -135,6 +135,18 @@ export const navItems = [
     //   },
     // ]
   },
+  {
+    name: 'Table Management',
+    url: 'table-management',
+    icon: 'icon-puzzle',
+    children: [
+      {
+        name: 'View Tables',
+        url: 'table-management/view-tables',
+        icon: 'icon-puzzle'
+      },
+    ]
+  },
 
   // KITCHEN management
 

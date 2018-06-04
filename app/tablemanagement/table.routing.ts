@@ -2,7 +2,7 @@ import { NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {TablemanagementComponent} from './tablemanagement.component';
 import { ViewTablesComponent } from './view-tables/view-tables.component';
-
+import { TabledetailComponent } from './tabledetail/tabledetail.component';
 const routes: Routes = [
   {
     path: '',
@@ -25,6 +25,7 @@ const routes: Routes = [
           title: 'View Tables'
         }
       },
+     
     ]
   }
 ];

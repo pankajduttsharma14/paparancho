@@ -6,10 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {TableRoutingModule} from './table.routing';
 import {TablemanagementComponent} from './tablemanagement.component';
 import { ViewTablesComponent } from './view-tables/view-tables.component';
+import { TabledetailComponent } from './tabledetail/tabledetail.component';
 
 @NgModule({
 imports:[CommonModule,NgxPaginationModule,FormsModule,ReactiveFormsModule,TableRoutingModule],
-declarations:[TablemanagementComponent, ViewTablesComponent]
+declarations:[TablemanagementComponent, ViewTablesComponent, TabledetailComponent]
 })
 
 export class TableModule { }

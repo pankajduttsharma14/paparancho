@@ -74,6 +74,7 @@
         </div>
         <!-- modal -->
         <div class="card-body">
+          <div class="alert alert-success" *ngIf="DeleteBrandMsg!=null">{{DeleteBrandMsg}}</div>
           <table class="table">
             <thead>
               <tr>
@@ -99,12 +100,12 @@
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
                 <td><span class="badge badge-success">{{data.status}}</span></td>
                 <td>
-                  <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
-                  <a href="#" title="Edit" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
-                  <a href="#" title="Delete" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                  <!-- <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
+                  <span title="Edit" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;"><i class="fa fa-edit"></i></span>
+                  <span title="Delete" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteBrand(data.brid)"><i class="fa fa-trash"></i></span>
                 </td>
               </tr>
             </tbody>
