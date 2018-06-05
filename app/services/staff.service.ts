@@ -49,6 +49,33 @@ export class StaffService {
       const url : string= this.BASE_URL+"addstaff";
       return this.http.post(url,body,this.options).map(res=>res.json());
     }
+    // DeleteStaffRole
+
+    DeleteStaffRole(id){
+             const url : string= this.BASE_URL+"deletestaffrole/id/"+id;
+             return this.http.get(url,this.options).map(res=>res.json());   
+    }
+
+    // Edit Staff Role
+
+    EditStaffRole(data){
+             const url : string= this.BASE_URL+"editstaffrole";
+             return this.http.post(url,data,this.options).map(res=>res.json());   
+    }
+
+     // DeleteStaffRole
+
+    DeleteStaff(id){
+             const url : string= this.BASE_URL+"deletestaff/id/"+id;
+             return this.http.get(url,this.options).map(res=>res.json());   
+    }
+        
     
+    // Edit Staff Role
+
+    EditStaffList(data){
+             const url : string= this.BASE_URL+"editstaff";
+             return this.http.post(url,data,this.options).map(res=>res.json());   
+    }
 
 }

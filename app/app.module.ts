@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@angular/common';
 import {FormsModule} from '@angular/forms'
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -104,7 +104,7 @@ import {TableModule} from './tablemanagement/table.module';
   ],
   providers: [{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy,},AuthService],
+    useClass: PathLocationStrategy,},AuthService],
     exports:[ModalsComponent,ModalModule],
     bootstrap: [ AppComponent ]
 })

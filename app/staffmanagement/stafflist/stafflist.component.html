@@ -155,10 +155,11 @@
         </div>
         <!-- modal -->
         <div class="card-body table-responsive">
-          <table class="table" style="width:1200px;">
+          <div class="alert alert-success" *ngIf="DeleteStaffListMsg!=null">{{DeleteStaffListMsg}}</div>
+          <table class="table" width="1200">
             <thead>
               <tr>
-                <th></th>
+                <!-- <th></th> -->
                 <th>Staff Id</th>
                 <th>Name</th>
                 <th>Contact</th>
@@ -172,11 +173,11 @@
                 <th>Actions</th>
               </tr>
             </thead>
-              <tbody>
+            <tbody>
               <tr *ngFor='let data of StaffList.data | paginate: { itemsPerPage: 10, currentPage: p}'>
-                <td>
+                <!-- <td>
                   <input type="checkbox" name="checkbox">
-                </td>
+                </td> -->
                 <td>{{data.staff_id}}</td>
                 <td>{{data.first_name+" "+data.last_name}}</td>
                 <td>{{data.mob_number}}</td>
@@ -185,15 +186,14 @@
                 <td>{{data.gender}}</td>
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                <td><span class="badge badge-success">{{data.login_status}}</span></td>
-                <td><span class="badge badge-success">{{data.status}}</span></td>
+                <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td>
+                
+                <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
                 <td>
-                  <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
-                  <a href="#" title="Edit" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
-                  <a href="#" title="Delete" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                  <span title="Edit" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
+                  <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffList(data.staff_id)"><i class="fa fa-trash"></i></span>
                 </td>
               </tr>
             </tbody>
@@ -210,6 +210,165 @@
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul> -->
         </div>
+        <!--Edit modal -->
+        <div class="add_box">
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Staff</h3>
+                  <div class="alert alert-success" *ngIf="UpdateStaffListMsg!=null">{{UpdateStaffListMsg}}</div>
+                  <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off'>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Staff Id</label>
+                          <input type="text" formControlName="staff_id" class="form-control" [ngModel]="model.staff_id">
+                          <div *ngIf="EditForm.controls['staff_id'].touched && !EditForm.controls['staff_id'].valid">
+                            <label *ngIf="EditForm.controls['staff_id'].hasError('required')" style="color:red;">Staff Login Id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Outlet Id</label>
+                          <input type="number" formControlName="ol_id" class="form-control" [ngModel]="model.ol_id">
+                          <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 2 -->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Pass code</label>
+                          <input type="text" formControlName="pass_code" class="form-control" [ngModel]="model.pass_code">
+                          <div *ngIf="EditForm.controls['pass_code'].touched && !EditForm.controls['pass_code'].valid">
+                            <label *ngIf="EditForm.controls['pass_code'].hasError('required')" style="color:red;">Enter Pass Code</label>
+                            <label *ngIf="EditForm.controls['pass_code'].hasError('min')" style="color:red;">Incorrect Pass code</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Password</label>
+                          <input type="password" formControlName="password" class="form-control" [ngModel]="model.password">
+                          <div *ngIf="EditForm.controls['password'].touched && !EditForm.controls['password'].valid">
+                            <label *ngIf="EditForm.controls['password'].hasError('required')" style="color:red;">Enter Password</label>
+                            <label *ngIf="EditForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Role Id</label>
+                          <input type="number" formControlName="role_id" class="form-control" [ngModel]="model.role_id">
+                          <div *ngIf="EditForm.controls['role_id'].touched && !EditForm.controls['role_id'].valid">
+                            <label *ngIf="EditForm.controls['role_id'].hasError('required')" style="color:red;">Enter Role Id</label>
+                            <label *ngIf="EditForm.controls['role_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Login Status</label>
+                          <select class="form-control" formControlName="login_status" [(ngModel)]="model.login_status">
+                            <option value="">Login Status</option>
+                            <option value="ONLINE" [selected]="model.login_status=='ONLINE'">ONLINE</option>
+                            <option value="OFFLINE" [selected]="model.login_status=='OFFLINE'">OFFLINE</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['login_status'].touched && !EditForm.controls['login_status'].valid">
+                            <label *ngIf="EditForm.controls['login_status'].hasError('required')" style="color:red;">Select Login Staus</label>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 3 -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>First Name</label>
+                          <input type="text" formControlName="first_name" class="form-control" [ngModel]="model.first_name">
+                          <div *ngIf="EditForm.controls['first_name'].touched && !EditForm.controls['first_name'].valid">
+                            <label *ngIf="EditForm.controls['first_name'].hasError('required')" style="color:red;">Enter First Name</label>
+                            <label *ngIf="EditForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Last Name</label>
+                          <input type="text" formControlName="last_name" class="form-control" [ngModel]="model.last_name">
+                          <div *ngIf="EditForm.controls['last_name'].touched && !EditForm.controls['last_name'].valid">
+                            <label *ngIf="EditForm.controls['last_name'].hasError('required')" style="color:red;">Enter Last Name</label>
+                            <label *ngIf="EditForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Contact</label>
+                          <input type="number" formControlName="mob_number" class="form-control"  [ngModel]="model.mob_number">
+                          <div *ngIf="EditForm.controls['mob_number'].touched && !EditForm.controls['mob_number'].valid">
+                            <label *ngIf="EditForm.controls['mob_number'].hasError('required')" style="color:red;">Enter Mobile Number</label>
+                            <label *ngIf="EditForm.controls['mob_number'].hasError('pattern')" style="color:red;">Invalid contact number</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 4 -->
+                      <!-- row 4 -->
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Age</label>
+                          <input type="number" formControlName="age" class="form-control" [ngModel]="model.age">
+                          <div *ngIf="EditForm.controls['age'].touched && !EditForm.controls['age'].valid">
+                            <label *ngIf="EditForm.controls['age'].hasError('required')" style="color:red;">Enter Age</label>
+                            <label *ngIf="EditForm.controls['age'].hasError('min')" style="color:red;">Minimum Age Should be 18 Years</label>
+                            <label *ngIf="EditForm.controls['age'].hasError('pattern')" style="color:red;">Age Contain 2 Digits Max</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Gender</label>
+                          <select formControlName="gender" class="form-control" [(ngModel)]="model.gender">
+                            <option value="" [selected]="true">Select Gender</option>
+                            <option value="Male" [selected]="model.gender=='Male'">Male</option>
+                            <option value="Female" [selected]="model.gender=='Female'">Female</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['gender'].touched && !EditForm.controls['gender'].valid">
+                            <label *ngIf="EditForm.controls['gender'].hasError('required')" style="color:red;">Select Gender</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Status</label>
+                          <select formControlName="status" class="form-control" [(ngModel)]="model.status">
+                            <option value="" [selected]="true">Status</option>
+                            <option value="ACTIVE" [selected]="model.status=='ACTIVE'">ACTIVE</option>
+                            <option value="INACTIVE" [selected]="model.status=='INACTIVE'">INACTIVE</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['status'].touched && !EditForm.controls['status'].valid">
+                            <label *ngIf="EditForm.controls['status'].hasError('required')" style="color:red;">Select Status
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Address</label>
+                          <textarea formControlName="address" class="form-control" style="height: 60px !important;" [ngModel]="model.address"></textarea>
+                          <div *ngIf="EditForm.controls['address'].touched && !EditForm.controls['address'].valid">
+                            <label *ngIf="EditForm.controls['address'].hasError('required')" style="color:red;">Enter Address</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- submit -->
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid">
+                            <i class="fa fa-plus"></i> Staff List</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!--Edit modal -->
       </div>
     </div>
   </div>

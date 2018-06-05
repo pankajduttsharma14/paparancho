@@ -26,7 +26,7 @@ export class CategoryComponent implements OnInit {
   cat_title: string
   cat_img_name: string;
   cat_img_url: string;
-  isAlcholic: boolean;
+  isAlcoholic: boolean;
   status: string;
 
   // fill dropdown
@@ -55,11 +55,11 @@ export class CategoryComponent implements OnInit {
       'cat_title': ['', Validators.required],
       'cat_img_name': ['', Validators.required],
       'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
-      'isAlcholic': ['', Validators.required],
+      'isAlcoholic': ['', Validators.required],
       'status': ['', Validators.required],
     });
     this.EditForm = this.fb.group({
-      'icid':['',],
+      'icid': ['', ],
       'ol_id': ['', Validators.required],
       'cat_type': ['', Validators.required],
       'parent_id': ['', Validators.required],
@@ -111,11 +111,14 @@ export class CategoryComponent implements OnInit {
   }
   // delete category
 
-  DeleteCatMsg: any=null;
+  DeleteCatMsg: string = null;
   DeleteCategory(id) {
+
     this.FoodService.DeleteCategory(id).subscribe(res => {
       if (res.status == 200) {
+
         this.DeleteCatMsg = 'Item Deleted Successfully';
+
         this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; },
           err => { console.log(err) });
 
@@ -139,28 +142,28 @@ export class CategoryComponent implements OnInit {
   Editrow = [];
   show(data, modal) {
 
-    this.Editrow = Array();
+    this.Editrow = new Array();
     this.Editrow.push(data);
-    console.log(this.Editrow);
+
     modal.show();
   }
 
   model = {
-  'icid':'',
-  'ol_id': '',
-  'cat_type':'',
-  'parent_id':'',
-  'cat_title': '',
-  'cat_img_name':'',
-  'cat_img_url': '',
-  'status': '',
-  'isAlcoholic': '',
+    'icid': '',
+    'ol_id': '',
+    'cat_type': '',
+    'parent_id': '',
+    'cat_title': '',
+    'cat_img_name': '',
+    'cat_img_url': '',
+    'status': '',
+    'isAlcoholic': '',
   }
-  Edit($event) {
-    
+  Edit($event=0) {
+
     this.model = null;
     this.model = {
-      'icid':this.Editrow[0].icid,
+      'icid': this.Editrow[0].icid,
       'ol_id': this.Editrow[0].ol_id,
       'cat_type': this.Editrow[0].cat_type,
       'parent_id': this.Editrow[0].parent_id,
@@ -168,48 +171,44 @@ export class CategoryComponent implements OnInit {
       'cat_img_name': this.Editrow[0].cat_img_name,
       'cat_img_url': this.Editrow[0].cat_img_url,
       'status': this.Editrow[0].status,
-      'isAlcoholic': this.Editrow[0].isAlcoholic,
+      'isAlcoholic': this.Editrow[0].isAlcoholic
 
     }
 
   }
-  UpdateCatMsg:string=null;
-  UpdateCategory(formData)
-  {
-     let data=formData.value;
-     console.log(data);
-     this.FoodService.UpdateCategory(data).subscribe(res=>{
+  UpdateCatMsg: string = null;
+  UpdateCategory(formData) {
+    let data = formData.value;
 
-      if (res.status == 200) {
-      this.UpdateCatMsg = res.message;
-      this.FoodService.GetAllCategories().subscribe(res => { this.categories = res; }, err => { console.log(err) });
-      setTimeout(() => {
-        this.UpdateCatMsg = null;
-        this.largeModal1.hide();
-
-      }, 3000);
-    }
-    else{
+    this.FoodService.UpdateCategory(data).subscribe(res => {
       
+      if (res.status == 200) {
+        this.UpdateCatMsg = res.message;
+        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; }, err => { console.log(err)});
+        setTimeout(() => {
+          this.UpdateCatMsg = null;
+          this.largeModal1.hide();
+
+        }, 3000);
+
+
+      } else {
+
+        setTimeout(() => {
+          this.UpdateCatMsg = null;
+          this.largeModal1.hide();
+
+        }, 3000);
+      }
+    }, err => {
+
       setTimeout(() => {
         this.UpdateCatMsg = null;
         this.largeModal1.hide();
 
       }, 3000);
-    }
-  },err=>{
-    
-    setTimeout(() => {
-      this.UpdateCatMsg = null;
-      this.largeModal1.hide();
 
-    }, 3000);
-
-  });  
+    });
   }
-
-
-
-
 
 }

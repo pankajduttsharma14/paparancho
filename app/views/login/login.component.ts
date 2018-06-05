@@ -79,15 +79,13 @@ constructor(private auth: AuthService, private router:Router, private FoodServic
 	// login auth function
 LoginAuth(userData):any
 	{
-		
 		this.loginError=false;
 		let body = userData;
-		
 		this.auth.loginAuthService(body).subscribe(
 		res=>{
          		if(res.status==200 && res.id==body.mobile)
          		{			
-							this.LoginLoader=true;
+						 this.LoginLoader=true;
 						 localStorage.setItem('userData',res.id);
 						 localStorage.setItem('loginStatus',"true");
 						 this.SetCatData();
