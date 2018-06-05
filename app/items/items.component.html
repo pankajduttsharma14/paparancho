@@ -5,6 +5,7 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Items
         </div>
+
         <!-- modal  -->
         <div class="add_box">
           <div class="button_control">
@@ -12,6 +13,7 @@
               <i class="fa fa-plus"></i> Add Item
             </button>
           </div>
+
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -19,7 +21,7 @@
                   <h3 class="modal_heading">Add Item</h3>
                   <div class="alert alert-success" *ngIf="AddItemMsg!=null">{{AddItemMsg}}</div>
                   <!-- form  -->
-                  
+
                   <form [formGroup]="AddItemsForm" (ngSubmit)="AddItems(AddItemsForm)">
                     <div class="row">
                       <div class="col-md-4">
@@ -124,7 +126,8 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12" style="margin-top: 10px;">
-                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddItemsForm.valid"><i class="fa fa-plus"></i> Add Item</button>
+                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddItemsForm.valid">
+                          <i class="fa fa-plus"></i> Add Item</button>
                       </div>
                     </div>
                   </form>
@@ -139,10 +142,11 @@
         </div>
         <!-- modal -->
         <div class="card-body">
+          <div class="alert alert-success" *ngIf="DeleteItemMsg!=null">{{DeleteItemMsg}}</div>
           <table class="table">
             <thead>
               <tr>
-                <th></th>
+                <!-- <th></th> -->
                 <th>Id</th>
                 <th>Title</th>
                 <th>Stock</th>
@@ -156,40 +160,167 @@
             </thead>
             <tbody>
               <tr *ngFor='let data of items.data | paginate: { itemsPerPage: 10, currentPage: p}'>
-                <td>
+                <!-- <td>
                   <input type="checkbox" name="checkbox">
-                </td>
+                </td> -->
                 <td>{{data.itmid}}</td>
                 <td>{{data.item_title}}</td>
                 <td>{{data.item_stock}}</td>
-                <td><i class="fa fa-rupee"></i> {{data.item_price}}</td>
+                <td>
+                  <i class="fa fa-rupee"></i> {{data.item_price}}</td>
                 <td>{{data.Image}}</td>
                 <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
-                <td><span class="badge badge-success">{{data.status}}</span></td>
                 <td>
-                  <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a>
-                  <a href="#" title="Edit" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-edit"></i></a>
-                  <a href="#" title="Delete" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-trash"></i></a>
+                  <span class="badge badge-success">{{data.status}}</span>
+                </td>
+                <td>
+                  <!-- <a href="#" title="Add" style="font-size: 16px;
+                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
+                  <span title="Edit" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)">
+                    <i class="fa fa-edit"></i>
+                  </span>
+                  <span title="Delete" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteItem(data.icid)">
+                    <i class="fa fa-trash"></i>
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
-          <!--  <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul> -->
+
         </div>
+
+        <!--Edit modal  -->
+        <div class="add_box">
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+            (onShown)='Edit($event)'>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Edit Item</h3>
+                  <div class="alert alert-success" *ngIf="AddItemMsg!=null">{{AddItemMsg}}</div>
+                  <!-- form  -->
+                  <form [formGroup]="EditForm" (ngSubmit)="EditItem(EditForm)">
+                    <div class="row">
+                      <div class="col-md-4">
+                            <label>Item Id</label>
+                            <input type="number" formControlName="itmid" class="form-control" [(ngModel)]="model.itmid">
+                            <div *ngIf="EditForm.controls['itmid'].touched && !EditForm.controls['itmid'].valid">
+                              <label *ngIf="EditForm.controls['itmid'].hasError('required')" style="color:red;">Enter Item Id</label>
+                              <label *ngIf="EditForm.controls['itmid'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                            </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label>Outlet Id</label>
+                        <input type="number" formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                        <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
+                          <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                        </div>
+                      </div>
+                     
+                      <div class="col-md-4">
+                        <label>Brand</label>
+                        <select formControlName="brand_id" class="form-control" [(ngModel)]="model.brand_id">
+                          <option value="">Select Brand</option>
+                          <option *ngFor="let item of brandList" [value]="item.brId" [selected]="item.brId==model.brand_id">{{item.brName}}</option>
+                        </select>
+                        <div *ngIf="EditForm.controls['brand_id'].touched && !EditForm.controls['brand_id'].valid">
+                          <label *ngIf="EditForm.controls['brand_id'].hasError('required')" style="color:red;">Select Brand</label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- row 2 -->
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label>Item Title</label>
+                        <input type="text" formControlName="item_price" class="form-control" [(ngModel)]="model.item_price">
+                        <div *ngIf="EditForm.controls['item_title'].touched && !EditForm.controls['item_title'].valid">
+                          <label *ngIf="EditForm.controls['item_title'].hasError('required')" style="color:red;">Enter item title</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Item Price</label>
+                        <input type="number" formControlName="item_price" class="form-control" [(ngModel)]="model.item_price">
+                        <div *ngIf="EditForm.controls['item_price'].touched && !EditForm.controls['item_price'].valid">
+                          <label *ngIf="EditForm.controls['item_price'].hasError('required')" style="color:red;">Enter item Price</label>
+                          <label *ngIf="EditForm.controls['item_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Minimum Bar Price</label>
+                        <input type="number" formControlName="min_bar_price" class="form-control" [(ngModel)]="model.min_bar_price">
+                        <div *ngIf="EditForm.controls['min_bar_price'].touched && !EditForm.controls['min_bar_price'].valid">
+                          <label *ngIf="EditForm.controls['min_bar_price'].hasError('required')" style="color:red;">Enter Min Price</label>
+                          <label *ngIf="EditForm.controls['min_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Maximum Bar Price</label>
+                        <input type="number" formControlName="max_bar_price" class="form-control" [(ngModel)]="model.max_bar_price">
+                        <div *ngIf="EditForm.controls['max_bar_price'].touched && !EditForm.controls['max_bar_price'].valid">
+                          <label *ngIf="EditForm.controls['max_bar_price'].hasError('required')" style="color:red;">Enter Max Price</label>
+                          <label *ngIf="EditForm.controls['max_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label>Image Url</label>
+                        <input type="text" formControlName="item_img_url" class="form-control" [(ngModel)]="model.item_img_url">
+                        <div *ngIf="EditForm.controls['item_img_url'].touched && !EditForm.controls['item_img_url'].valid">
+                          <label *ngIf="EditForm.controls['item_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Image Name</label>
+                        <input type="text" formControlName="item_img_name" class="form-control" [(ngModel)]="model.item_img_name">
+                        <div *ngIf="EditForm.controls['item_img_name'].touched && !EditForm.controls['item_img_name'].valid">
+                          <label *ngIf="EditForm.controls['item_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Item Stock</label>
+                        <input type="number" formControlName="item_stock" class="form-control" [(ngModel)]="model.item_stock">
+                        <div *ngIf="EditForm.controls['item_stock'].touched && !EditForm.controls['item_stock'].valid">
+                          <label *ngIf="EditForm.controls['item_stock'].hasError('required')" style="color:red;">Enter Image Name</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <label>Status</label>
+                        {{model.status}}
+                        <select formControlName="status" class="form-control" [(ngModel)]="model.status">
+                          <option value="">Status</option>
+                          <option value="ACTIVE">ACTIVE</option>
+                          <option value="INACTIVE">INCTIVE</option>
+                        </select>
+                        <div *ngIf="EditForm.controls['status'].touched && !EditForm.controls['status'].valid">
+                          <label *ngIf="EditForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12" style="margin-top: 10px;">
+                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid">
+                          <i class="fa fa-plus"></i> Add Item</button>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- form -->
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+
+
+          <!-- /.modal -->
+        </div>
+        <!--Edit modal -->
       </div>
     </div>
   </div>

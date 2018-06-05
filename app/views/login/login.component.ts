@@ -61,7 +61,7 @@ constructor(private auth: AuthService, private router:Router, private FoodServic
     var brands=[];
 
     this.FoodService.GetAllBrands().subscribe(res=>{    
-    	console.log(res.data);
+    	
     	for(var i=0; i<res.data.length;i++)
       	{	
      		brands.push({brId:res.data[i].brid,brName:res.data[i].brand_title});
@@ -75,7 +75,7 @@ constructor(private auth: AuthService, private router:Router, private FoodServic
       console.log(err);
     });
   }
-
+	LoginLoader:boolean;
 	// login auth function
 LoginAuth(userData):any
 	{
@@ -87,18 +87,25 @@ LoginAuth(userData):any
 		res=>{
          		if(res.status==200 && res.id==body.mobile)
          		{			
+							this.LoginLoader=true;
 						 localStorage.setItem('userData',res.id);
 						 localStorage.setItem('loginStatus',"true");
 						 this.SetCatData();
 						 this.SetBrandData();
 
+							setTimeout(()=>{
+								this.LoginLoader=false;
+								this.router.navigate(['dashboard']);
+								
 
-						 this.router.navigate(['dashboard']);
+							},1000);
+						 
 
 
 				}	
          		else
          		{
+							this.LoginLoader=false;
 				this.loginError=true;
 				localStorage.clear();
 				  setTimeout(()=>{
@@ -108,6 +115,7 @@ LoginAuth(userData):any
          	},
             err=>
             {
+							this.LoginLoader=false;
 				this.loginError=true;
 				localStorage.clear();
 				setTimeout(()=>{

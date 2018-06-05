@@ -18,108 +18,89 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Categories</h3>
                   <div class="alert alert-success" *ngIf="AddCatMsg!=null">{{AddCatMsg}}</div>
-                  
                   <form [formGroup]="AddForm" (ngSubmit)="AddCategories(AddForm)">
                     <div class="form-group">
                       <div class="row">
-                        <div class="col-md-6">  
-                          <label >Outlet Id</label>
+                        <div class="col-md-6">
+                          <label>Outlet Id</label>
                           <input type="number" formControlName="ol_id" class="form-control">
                           <div *ngIf="AddForm.controls['ol_id'].touched && !AddForm.controls['ol_id'].valid">
-                              <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
-                              
-                              
+                            <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                           </div>
                         </div>
-
-                        <div class="col-md-6">  
-                          <label >Category Type</label>
+                        <div class="col-md-6">
+                          <label>Category Type</label>
                           <select formControlName="cat_type" class="form-control">
                             <option value="" [selected]="true">Select Category Type</option>
                             <option *ngFor="let cat of category_type  " [value]="cat">{{cat}}</option>
-                            
                           </select>
                           <div *ngIf="AddForm.controls['cat_type'].touched && !AddForm.controls['cat_type'].valid">
-                              <label *ngIf="AddForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
+                            <label *ngIf="AddForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
                           </div>
-
                         </div>
                       </div>
-
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Parent Id</label>  
+                          <label>Parent Id</label>
                           <input type="number" formControlName="parent_id" class="form-control">
                           <div *ngIf="AddForm.controls['parent_id'].touched && !AddForm.controls['parent_id'].valid">
-                              <label *ngIf="AddForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
-                              
+                            <label *ngIf="AddForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
                           </div>
                         </div>
-
-                        <div class="col-md-6">  
-                            <label>Category Title</label>  
+                        <div class="col-md-6">
+                          <label>Category Title</label>
                           <input type="text" formControlName="cat_title" class="form-control">
                           <div *ngIf="AddForm.controls['cat_title'].touched && !AddForm.controls['cat_title'].valid">
-                              <label *ngIf="AddForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                            <label *ngIf="AddForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
                           </div>
                         </div>
                       </div>
-
                       <div class="row">
-                        <div class="col-md-6">  
-                            <label>Image Name</label>
-                          
+                        <div class="col-md-6">
+                          <label>Image Name</label>
                           <input type="text" formControlName="cat_img_name" class="form-control">
                           <div *ngIf="AddForm.controls['cat_img_name'].touched && !AddForm.controls['cat_img_name'].valid">
-                              <label *ngIf="AddForm.controls['cat_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
+                            <label *ngIf="AddForm.controls['cat_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
                           </div>
                         </div>
-
-                        <div class="col-md-6">  
+                        <div class="col-md-6">
                           <label for="">Category Image Url</label>
                           <input type="text" formControlName="cat_img_url" class="form-control">
                           <div *ngIf="AddForm.controls['cat_img_url'].touched && !AddForm.controls['cat_img_url'].valid">
-                              <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
-                              <label *ngIf="AddForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
-                                
+                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
+                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
                           </div>
                         </div>
                       </div>
                       <div class="row">
-                          
-                        <div class="col-md-6">  
-                            <label>Is Alcholic?</label>
-                          
+                        <div class="col-md-6">
+                          <label>Is Alcholic?</label>
                           <select formControlName="isAlcholic" class="form-control">
                             <option value="" [selected]="true">Is Alcholic?</option>
                             <option *ngFor="let al of alchoholic" [value]="al.value">{{al.data}}</option>
                           </select>
                           <div *ngIf="AddForm.controls['isAlcholic'].touched && !AddForm.controls['isAlcholic'].valid">
-                              <label *ngIf="AddForm.controls['isAlcholic'].hasError('required')" style="color:red;">Select Drink Type</label>
+                            <label *ngIf="AddForm.controls['isAlcholic'].hasError('required')" style="color:red;">Select Drink Type</label>
                           </div>
                         </div>
-                        <div class="col-md-6">  
+                        <div class="col-md-6">
                           <label for="status">Status</label>
-                            <select formControlName="status" class="form-control">
-                              <option value="" [selected]="true">Status</option>
-                              <option *ngFor="let st of Status" [value]="st">{{st}}</option>
-                            </select>
-                            <div *ngIf="AddForm.controls['status'].touched && !AddForm.controls['status'].valid">
+                          <select formControlName="status" class="form-control">
+                            <option value="" [selected]="true">Status</option>
+                            <option *ngFor="let st of Status" [value]="st">{{st}}</option>
+                          </select>
+                          <div *ngIf="AddForm.controls['status'].touched && !AddForm.controls['status'].valid">
                             <label *ngIf="AddForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
-                            </div>
                           </div>
-
-                      
+                        </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-12" style="margin-top: 10px;">  
-                        <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddForm.valid"><i class="fa fa-plus"></i> Add Category</button>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddForm.valid"><i class="fa fa-plus"></i> Add Category</button>
                         </div>
-
                       </div>
                     </div>
                   </form>
-                 
                 </div>
               </div>
               <!-- /.modal-content -->
@@ -130,7 +111,7 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-            <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">{{DeleteCatMsg}}</div>
+          <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">{{DeleteCatMsg}}</div>
           <table class="table">
             <thead>
               <tr>
@@ -161,7 +142,7 @@
                   <!-- <a href="#" title="Add" style="font-size: 16px;
                   margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
                   <span title="Edit" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;"><i class="fa fa-edit"></i></span>
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
                   <span title="Delete" style="font-size: 16px;
                   margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteCategory(data.icid)"><i class="fa fa-trash"></i></span>
                 </td>
@@ -180,12 +161,121 @@
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul> -->
         </div>
-
-           <!-- edit modal -->
-
-           <!-- edit modal -->
+        <!-- edit modal -->
+        <!-- modal  -->
+        <div class="add_box">
+          <div class="button_control">
+          </div>
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Edit Categories</h3>
+                  <div class="alert alert-success" *ngIf="UpdateCatMsg!=null">{{UpdateCatMsg}}</div>
+                  <form [formGroup]="EditForm" (ngSubmit)="UpdateCategory(EditForm)">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6" style="display: none !important;">
+                          <label>cat Id</label>
+                          <input type="number" formControlName="icid" class="form-control" [ngModel]="model.icid">
+                          <div *ngIf="EditForm.controls['icid'].touched && !EditForm.controls['icid'].valid">
+                            <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Outlet Id</label>
+                          <input type="number" formControlName="ol_id" class="form-control" [ngModel]="model.ol_id">
+                          <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Category Type</label>
+                          <select formControlName="cat_type" class="form-control" [(ngModel)]="model.cat_type">
+                            <option value="" [selected]="true">Select Category Type</option>
+                            <option *ngFor="let cat of category_type  " [value]="cat">{{cat}}</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['cat_type'].touched && !EditForm.controls['cat_type'].valid">
+                            <label *ngIf="EditForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Parent Id</label>
+                          <input type="number" formControlName="parent_id" class="form-control" [ngModel]="model.parent_id">
+                          <div *ngIf="EditForm.controls['parent_id'].touched && !EditForm.controls['parent_id'].valid">
+                            <label *ngIf="EditForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label>Category Title</label>
+                          <input type="text" formControlName="cat_title" class="form-control" [ngModel]="model.cat_title">
+                          <div *ngIf="EditForm.controls['cat_title'].touched && !EditForm.controls['cat_title'].valid">
+                            <label *ngIf="EditForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Image Name</label>
+                          <input type="text" formControlName="cat_img_name" class="form-control" [ngModel]="model.cat_img_name">
+                          <div *ngIf="EditForm.controls['cat_img_name'].touched && !EditForm.controls['cat_img_name'].valid">
+                            <label *ngIf="EditForm.controls['cat_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="">Category Image Url</label>
+                          <input type="text" formControlName="cat_img_url" class="form-control" [ngModel]="model.cat_img_url">
+                          <div *ngIf="EditForm.controls['cat_img_url'].touched && !EditForm.controls['cat_img_url'].valid">
+                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
+                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Is Alcholic?</label>
+                          <br>
+                          <select formControlName="isAlcoholic" class="form-control" [(ngModel)]="model.isAlcoholic">
+                            <option value="">Is Alcholic?</option>
+                            <option [value]="true" [selected]="model.isAlcoholic=='true'">Yes</option>
+                            <option [value]="false" [selected]="model.isAlcoholic=='false'">No</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['isAlcoholic'].touched && !EditForm.controls['isAlcoholic'].valid">
+                            <label *ngIf="EditForm.controls['isAlcoholic'].hasError('required')" style="color:red;">Select Drink Type</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="status">Status</label>
+                          <select formControlName="status" class="form-control" [(ngModel)]="model.status">
+                            <option value="">Status</option>
+                            <option value="ACTIVE" [selected]="model.status=='ACTIVE'">ACTIVE</option>
+                            <option value="INACTIVE" [selected]="model.status=='INACTIVE'">INACTIVE</option>
+                          </select>
+                          <div *ngIf="EditForm.controls['status'].touched && !EditForm.controls['status'].valid">
+                            <label *ngIf="EditForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Category</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <!-- edit modal -->
       </div>
     </div>
   </div>
-  
 </div>

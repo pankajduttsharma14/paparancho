@@ -3,6 +3,7 @@ import { FoodService } from '../services/food.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
@@ -128,10 +129,16 @@ export class BrandComponent implements OnInit {
     modal.show();
   }
   
-  model={};
-Edit()
+  model={
+        "brid":'',
+        "ol_id":'',
+        "brand_title":'',
+        "brand_img":'',
+        "status":'',
+  };
+Edit($event)
 {
-  this.model={};
+  this.model=null;
     this.model={
         "brid":this.Editrow[0].brid,
         "ol_id":this.Editrow[0].ol_id,
@@ -139,6 +146,7 @@ Edit()
         "brand_img":this.Editrow[0].img_path,
         "status":this.Editrow[0].status,
     } 
+    return this.model;
 }
 UpdateBrandMsg:string=null;
 // update brand

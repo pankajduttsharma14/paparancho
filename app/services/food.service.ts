@@ -106,6 +106,23 @@ export class FoodService {
     return this.http.get(url,this.options).map(res=>res.json());
   }
 
+    // edit brand
+  UpdateCategory(body){
+    const url:string=this.BASE_URL+"editcategorie";
+    return this.http.post(url,body,this.options).map(res=>res.json());
+  }
 
+  // Delete Category
+  DeleteItem(id):Observable<any>
+  {
+    
+    const url:string=this.BASE_URL+"deleteitem/id/"+id;
+    return this.http.get(url,this.options).map(res=>res.json());
+  }
+     // edit brand
+     UpdateItem(body){
+      const url:string=this.BASE_URL+"edititem";
+      return this.http.post(url,body,this.options).map(res=>res.json());
+    }
 
 }
