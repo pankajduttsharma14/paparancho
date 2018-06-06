@@ -14,13 +14,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 })
+
 export class VouchersComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   public Vouchers;
   p: number = 1;
   EditForm: FormGroup;
-
   constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
@@ -127,6 +127,7 @@ export class VouchersComponent implements OnInit {
 
     this.Editrow = new Array();
     this.Editrow.push(data);
+
     modal.show();
   }
 
@@ -141,7 +142,12 @@ export class VouchersComponent implements OnInit {
 
   }
   Edit($event=0) {
-
+    var date=new Date(this.Editrow[0].valid_till_date);
+    var day:any = date.getDate();
+    var month:any = date.getMonth() + 1;
+    var year = date.getFullYear();
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
     this.model = null;
     this.model = {
       "id":this.Editrow[0].id,
@@ -149,14 +155,42 @@ export class VouchersComponent implements OnInit {
       "type":this.Editrow[0].type,
       "value":this.Editrow[0].value,
       "status":this.Editrow[0].status,
-      "valid_till_date":this.Editrow[0].valid_till_date,
+      // "valid_till_date":new Date(date.getDay()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()),
+      "valid_till_date":year+"-"+month+"-"+day,
       "valid_before":this.Editrow[0].valid_before,
 
     }
 
-  }
-  EditVoucher(formData) {
 
+}
+
+UpdateVoucherMsg:string=null;
+// Update voucher msg
+  UpdateVoucher(formData) {
+  console.log(formData.value);
+    let data=formData.value;
+    this.VouchersService.UpdateVoucher(data).subscribe(res=>{
+        if(res.status==200)
+        {
+          this.UpdateVoucherMsg="Voucher updated successfully!";
+          this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data }, err => { console.log(err) });
+          setTimeout(()=>{
+            this.UpdateVoucherMsg=null;
+          },3000);
+        }
+        else{
+            this.UpdateVoucherMsg="Unable to update voucher!";
+            setTimeout(()=>{
+              this.UpdateVoucherMsg=null;
+            },3000);
+        }
+    },
+    err=>{
+      this.UpdateVoucherMsg="Unable to update voucher!";
+      setTimeout(()=>{
+        this.UpdateVoucherMsg=null;
+      },3000);
+    });
 
 
   }

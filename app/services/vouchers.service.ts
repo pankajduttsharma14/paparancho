@@ -49,7 +49,7 @@ export class VouchersService{
 
 	}
 	// Edit Voucher
-	EditVoucher(data):Observable<any>
+	UpdateVoucher(data):Observable<any>
 	{
 			const url:string=this.BASE_URL+"editvoucher";
 			return this.http.post(url,data,this.options);

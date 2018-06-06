@@ -37,9 +37,9 @@
                     <div class="form-group">
                       <label>Voucher Type</label>
                       <select type="number" name="VType" placeholder="Voucher Type (ie. Fixed or %)" class="form-control" [(ngModel)]="myForm.VType" #VType="ngModel" required>
-                              <option [ngValue]="null">Voucher Type</option>
-                              <option>Fixed</option>
-                              <option>Percentage</option>
+                              <option value="">Voucher Type</option>
+                              <option value="Fixed">Fixed</option>
+                              <option value="Percentage">Percentage</option>
                             </select>
                       <label *ngIf="VType.errors && (VType.dirty || VType.touched)" style="color: red;">Enter Voucher Type</label>
                     </div>
@@ -87,7 +87,7 @@
             {{VoucherMsg}}
           </div>
           <div class="table-responsive">
-            <table class="table" style="width: 1000px;">
+            <table class="table" style="min-width: 1000px; width:100%;">
               <thead>
                 <tr>
                   <!-- <th></th> -->
@@ -115,7 +115,7 @@
                   <td>{{data.valid_before}}</td>
                   <td>{{data.createdAt | date:'dd/MM/yy'}}</td>
                   <td>
-                    <span class="badge badge-success">{{data.status}}</span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span>
                   </td>
                   <td class="actions_main">
                     <span title="Edit" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
@@ -157,7 +157,7 @@
                       </div>
                       <!-- row 2 -->
                       <div class="row">
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                           <label>Voucher Type</label>
                           <select formControlName="type" class="form-control" [(ngModel)]="model.type" required>
                               <option value="">Voucher Type</option>
@@ -169,7 +169,7 @@
                           </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                           <label>Voucher Value</label>
                           <input type="number" placeholder="Value"  formControlName="value" class="form-control" [ngModel]="model.value" required>
                           <div *ngIf="EditForm.controls['value'].touched && !EditForm.controls['value'].valid">
@@ -177,7 +177,7 @@
                           </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                           <label>Voucher status</label>
                           <select class="form-control" required [(ngModel)]="model.status" formControlName="status">
                               <option value="">STATUS</option>
@@ -189,19 +189,21 @@
                           </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                           <label>Valid Till</label>
                           <input type="date" class="form-control" required formControlName="valid_till_date" [ngModel]="model.valid_till_date">
                           <div *ngIf="EditForm.controls['valid_till_date'].touched && !EditForm.controls['valid_till_date'].valid">
                             <label *ngIf="EditForm.controls['valid_till_date'].hasError('required')" style="color:red;">Enter Valid Date</label>
                           </div>
                         </div>
-                        <div class="form-group time_picker">
+                        <div class="form-group time_picker col-md-12">
                           <label>Vaild Time</label>
                           <p-calendar [(ngModel)]="model.valid_before" [timeOnly]="true" hourFormat="12" required styleClass="custom_time" formControlName="valid_before"></p-calendar>
                           <label *ngIf="EditForm.controls['valid_before'].hasError('required')" style="color:red;">Select Valid Time</label>
                         </div>
-
+                        <div class="from-group col-md-12">
+                            <button type="submit" class="btn btn-success sub_btn" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Voucher</button>
+                        </div>
 
                       </div>
 
