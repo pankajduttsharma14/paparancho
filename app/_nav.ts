@@ -24,8 +24,8 @@ export const navItems = [
         url: 'staff-management/stafflist',
         icon: 'icon-puzzle'
       }
-     
-      
+
+
     ]
   },
   // menu management
@@ -54,8 +54,8 @@ export const navItems = [
       //   url: 'food/my-bar-price',
       //   icon: 'icon-puzzle'
       // },
-      
-      
+
+
     ]
   },
   // order management
@@ -75,8 +75,8 @@ export const navItems = [
         url: 'order/print-bill',
         icon: 'icon-puzzle'
       }
-      
-      
+
+
     ]
   },
   // GIFT management
@@ -101,25 +101,25 @@ export const navItems = [
   //   //     url: '/gift/view-card',
   //   //     icon: 'icon-puzzle'
   //   //   },
-      
-      
+
+
   //   // ]
   // },
 
-  // Tax management
+  // Voucher management
 
-  //  {
-  //   name: 'Vouchers',
-  //   url: 'vouchers',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Vouchers List',
-  //   //     url: 'voucher/vouchers-list',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   // ]
-  // },
+   {
+    name: 'Vouchers',
+    url: 'vouchers',
+    icon: 'icon-puzzle',
+    // children: [
+    //   {
+    //     name: 'Vouchers List',
+    //     url: 'voucher/vouchers-list',
+    //     icon: 'icon-puzzle'
+    //   },
+    // ]
+  },
   // Tax management
 
   //  {
@@ -206,8 +206,8 @@ export const navItems = [
   //   //     url: '/system/set-rules',
   //   //     icon: 'icon-puzzle'
   //   //   },
-      
+
   //   // ]
   // },
-  
+
 ];

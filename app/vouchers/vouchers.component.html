@@ -26,8 +26,8 @@
 
                 <div class="modal-body">
                     <h3 class="modal_heading">Add Voucher</h3>
-                    <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div> 
-                    
+                    <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div>
+
                     <form nonvalidate #myForm="ngForm" (ngSubmit)="AddVoucher(myForm)">
                         <div class="form-group">
                             <label>Voucher Name</label>
@@ -36,13 +36,13 @@
                         </div>
                         <div class="form-group">
                             <label>Voucher Type</label>
-                            <select type="number" 
-                            name="VType" 
-                            placeholder="Voucher Type (ie. Fixed or %)" 
-                            class="form-control" 
+                            <select type="number"
+                            name="VType"
+                            placeholder="Voucher Type (ie. Fixed or %)"
+                            class="form-control"
                             [(ngModel)]="myForm.VType"
                             #VType="ngModel"
-                            required 
+                            required
                             >
                               <option [ngValue]="null">Voucher Type</option>
                               <option>Fixed</option>
@@ -52,28 +52,28 @@
                         </div>
                         <div class="form-group">
                           <label>Voucher Value</label>
-                           <input type="number" 
-                            name="Vvalue" 
-                            placeholder="Value" 
-                            class="form-control" 
+                           <input type="number"
+                            name="Vvalue"
+                            placeholder="Value"
+                            class="form-control"
                             [(ngModel)]="myForm.Vvalue"
                             #Vvalue="ngModel"
-                            required 
+                            required
                             >
                             <label *ngIf="Vvalue.errors && (Vvalue.dirty || Vvalue.touched)" style="color: red;">Enter Voucher Value</label>
 
                         </div>
                         <div class="form-group">
                           <label>Voucher Status</label>
-                            <select 
-                            name="status1" 
-                            class="form-control" 
+                            <select
+                            name="status1"
+                            class="form-control"
                             [(ngModel)]="myForm.status1"
-                            name="status1" 
+                            name="status1"
                             #status1="ngModel"
-                            required 
+                            required
                             >
-                              <option [ngValue]="null">STATUS</option>
+                              <option value="" [selected]="true">STATUS</option>
                               <option value="ACTIVE">ACTIVE</option>
                               <option value="INACTIVE">INACTIVE</option>
                             </select>
@@ -84,7 +84,7 @@
                             <label>Valid Till</label>
                             <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till"
                             #valid_till="ngModel"
-                            required 
+                            required
                             >
                             <label *ngIf="valid_till.errors && (valid_till.dirty || valid_till.touched)" style="color: red;">Select Date</label>
                         </div>
@@ -96,9 +96,9 @@
                         <div class="form-group">
                             <button class="btn btn-success sub_btn" [disabled]="!myForm.valid"><i class="fa fa-plus"></i> Add Voucher</button>
                         </div>
-                    </form>  
+                    </form>
                 </div>
-               
+
               </div>
               <!-- /.modal-content -->
             </div>
@@ -111,7 +111,7 @@
             <table class="table" style="width: 1300px;">
               <thead>
                 <tr>
-                  <th></th>
+                  <!-- <th></th> -->
                   <th>Id</th>
                   <th>Voucher Name</th>
                   <th>Voucher Type</th>
@@ -125,9 +125,9 @@
               </thead>
               <tbody>
                 <tr *ngFor='let data of Vouchers' style="position: relative;">
-                  <td>
+                  <!-- <td>
                     <input type="checkbox" name="checkbox">
-                  </td>
+                  </td> -->
                   <td>{{data.id}}</td>
                   <td>{{data.vcr_name}}</td>
                   <td>{{data.type}}</td>

@@ -1,9 +1,9 @@
 
 <div class="animated fadeIn">
   <div class="row">
-  
- 
-    
+
+
+
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
@@ -17,7 +17,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th></th>
+                
                 <th>Id</th>
                 <th>Table Id</th>
                 <th>Staff Id</th>
@@ -30,9 +30,9 @@
               </tr>
             </thead>
             <tbody>
-            	
+
               <tr *ngFor='let data of OrderList  | dateToday:switch | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
-	                <td><input type="checkbox" name="checkbox"></td>
+	                
 	                <td>{{data.id}}</td>
 	                <td>{{data.stid}}</td>
 	                <td>{{data.staff_id}}</td>
@@ -50,11 +50,11 @@
 	                  <!-- <a title="Delete"><i class="fa fa-trash"></i></a> -->
 	                  <a title="View Detail" [routerLink]="[data.id]"><i class="fa fa-eye"></i></a>
 	                </td>
-                  
+
               </tr>
 
 
-              
+
             </tbody>
           </table>
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
@@ -71,9 +71,7 @@
         </div>
       </div>
     </div>
-  
+
   </div>
-  
+
 </div>
-
-

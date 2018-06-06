@@ -2,21 +2,21 @@
 {
     list-style-type: none;
     padding: 0;
-    
+
 }
 .table_list li{
     display: inline-block;
     width: 18%;
-    
+
     text-align: center;
     height: 80px;
     margin-right: 10px;
     margin-bottom: 10px;
-     
-    display:flex;
+
+    display:inline-flex;
     justify-content: center;
     align-items: center;
-    
+
     font-size: 24px;
     font-weight: bold;
     color: #fff;
@@ -51,7 +51,7 @@ background: linear-gradient(to right, rgba(255,125,102,1) 0%, rgba(231,56,39,1) 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7d66', endColorstr='#e73827', GradientType=1 );
     // border-color:1px solid #d43f3a;
     cursor: pointer;
-    
+
 }
 
 .table_status
@@ -69,5 +69,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7d66', end
     font-size: 24px;
     font-weight: normal;
     text-transform: uppercase;
-    
+
 }
