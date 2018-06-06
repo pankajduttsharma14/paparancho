@@ -1,9 +1,9 @@
 <style type="text/css">
-  .ui-inputtext{
+  .ui-inputtext {
     width: 100% !important;
     border: 1px solid #ccc !important;
     height: 35px !important;
-}
+  }
 </style>
 <div class="animated fadeIn">
   <div class="row">
@@ -25,78 +25,54 @@
               <div class="modal-content">
 
                 <div class="modal-body">
-                    <h3 class="modal_heading">Add Voucher</h3>
-                    <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div>
+                  <h3 class="modal_heading">Add Voucher</h3>
+                  <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div>
 
-                    <form nonvalidate #myForm="ngForm" (ngSubmit)="AddVoucher(myForm)">
-                        <div class="form-group">
-                            <label>Voucher Name</label>
-                            <input type="Text" name="VName" class="form-control" placeholder="Voucher Name" [(ngModel)]="myForm.VName" required #VName="ngModel">
-                            <label *ngIf="VName.errors && (VName.touched || VName.dirty)" style="color:red;">Enter Voucher Name</label>
-                        </div>
-                        <div class="form-group">
-                            <label>Voucher Type</label>
-                            <select type="number"
-                            name="VType"
-                            placeholder="Voucher Type (ie. Fixed or %)"
-                            class="form-control"
-                            [(ngModel)]="myForm.VType"
-                            #VType="ngModel"
-                            required
-                            >
+                  <form nonvalidate #myForm="ngForm" (ngSubmit)="AddVoucher(myForm)">
+                    <div class="form-group">
+                      <label>Voucher Name</label>
+                      <input type="Text" name="VName" class="form-control" placeholder="Voucher Name" [(ngModel)]="myForm.VName" required #VName="ngModel">
+                      <label *ngIf="VName.errors && (VName.touched || VName.dirty)" style="color:red;">Enter Voucher Name</label>
+                    </div>
+                    <div class="form-group">
+                      <label>Voucher Type</label>
+                      <select type="number" name="VType" placeholder="Voucher Type (ie. Fixed or %)" class="form-control" [(ngModel)]="myForm.VType" #VType="ngModel" required>
                               <option [ngValue]="null">Voucher Type</option>
                               <option>Fixed</option>
                               <option>Percentage</option>
                             </select>
-                            <label *ngIf="VType.errors && (VType.dirty || VType.touched)" style="color: red;">Enter Voucher Type</label>
-                        </div>
-                        <div class="form-group">
-                          <label>Voucher Value</label>
-                           <input type="number"
-                            name="Vvalue"
-                            placeholder="Value"
-                            class="form-control"
-                            [(ngModel)]="myForm.Vvalue"
-                            #Vvalue="ngModel"
-                            required
-                            >
-                            <label *ngIf="Vvalue.errors && (Vvalue.dirty || Vvalue.touched)" style="color: red;">Enter Voucher Value</label>
+                      <label *ngIf="VType.errors && (VType.dirty || VType.touched)" style="color: red;">Enter Voucher Type</label>
+                    </div>
+                    <div class="form-group">
+                      <label>Voucher Value</label>
+                      <input type="number" name="Vvalue" placeholder="Value" class="form-control" [(ngModel)]="myForm.Vvalue" #Vvalue="ngModel" required>
+                      <label *ngIf="Vvalue.errors && (Vvalue.dirty || Vvalue.touched)" style="color: red;">Enter Voucher Value</label>
 
-                        </div>
-                        <div class="form-group">
-                          <label>Voucher Status</label>
-                            <select
-                            name="status1"
-                            class="form-control"
-                            [(ngModel)]="myForm.status1"
-                            name="status1"
-                            #status1="ngModel"
-                            required
-                            >
+                    </div>
+                    <div class="form-group">
+                      <label>Voucher Status</label>
+                      <select name="status1" class="form-control" [(ngModel)]="myForm.status1" name="status1" #status1="ngModel" required>
                               <option value="" [selected]="true">STATUS</option>
                               <option value="ACTIVE">ACTIVE</option>
                               <option value="INACTIVE">INACTIVE</option>
                             </select>
-                            <label *ngIf="status1.invalid && (status1.dirty || status1.touched)" style="color: red;">Select status</label>
+                      <label *ngIf="status1.invalid && (status1.dirty || status1.touched)" style="color: red;">Select status</label>
 
-                        </div>
-                        <div class="form-group">
-                            <label>Valid Till</label>
-                            <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till"
-                            #valid_till="ngModel"
-                            required
-                            >
-                            <label *ngIf="valid_till.errors && (valid_till.dirty || valid_till.touched)" style="color: red;">Select Date</label>
-                        </div>
-                        <div class="form-group time_picker">
-                           <label>Vaild Time</label>
-                           <p-calendar [(ngModel)]="myForm.time" [timeOnly]="true" hourFormat="12"  #time="ngModel" name="time" required styleClass="custom_time"></p-calendar>
-                          <label *ngIf="time.errors && (time.dirty || time.touched)" style="color: red;">Enter Valid Time</label>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success sub_btn" [disabled]="!myForm.valid"><i class="fa fa-plus"></i> Add Voucher</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group">
+                      <label>Valid Till</label>
+                      <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till" #valid_till="ngModel" required>
+                      <label *ngIf="valid_till.errors && (valid_till.dirty || valid_till.touched)" style="color: red;">Select Date</label>
+                    </div>
+                    <div class="form-group time_picker">
+                      <label>Vaild Time</label>
+                      <p-calendar [(ngModel)]="myForm.time" [timeOnly]="true" hourFormat="12" #time="ngModel" name="time" required styleClass="custom_time"></p-calendar>
+                      <label *ngIf="time.errors && (time.dirty || time.touched)" style="color: red;">Enter Valid Time</label>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-success sub_btn" [disabled]="!myForm.valid"><i class="fa fa-plus"></i> Add Voucher</button>
+                    </div>
+                  </form>
                 </div>
 
               </div>
@@ -107,8 +83,11 @@
           <!-- /.modal -->
         </div>
         <div class="card-body">
+          <div class="alert alert-success" *ngIf="VoucherMsg!=null">
+            {{VoucherMsg}}
+          </div>
           <div class="table-responsive">
-            <table class="table" style="width: 1300px;">
+            <table class="table" style="width: 1000px;">
               <thead>
                 <tr>
                   <!-- <th></th> -->
@@ -124,7 +103,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor='let data of Vouchers' style="position: relative;">
+                <tr *ngFor='let data of Vouchers | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
                   <!-- <td>
                     <input type="checkbox" name="checkbox">
                   </td> -->
@@ -139,15 +118,107 @@
                     <span class="badge badge-success">{{data.status}}</span>
                   </td>
                   <td class="actions_main">
-                    <a title="Edit"><i class="fa fa-edit"></i></a>
-                    <a title="Delete"><i class="fa fa-trash"></i></a>
-                    <a title="View Detail"><i class="fa fa-eye"></i></a>
+                    <span title="Edit" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
+                    <span title="Delete" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteVoucher(data.id)"><i class="fa fa-trash"></i></span>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
           </div>
         </div>
+        <!--Edit modal -->
+        <div class="add_box">
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Staff</h3>
+                  <div class="alert alert-success" *ngIf="UpdateVoucherMsg!=null">{{UpdateVoucherMsg}}</div>
+                  <form [formGroup]="EditForm" (ngSubmit)="UpdateVoucher(EditForm)">
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Voucher Id</label>
+                          <input type="number" formControlName="id" class="form-control" [ngModel]="model.id" readonly>
+                          <!-- <div *ngIf="EditForm.controls['id'].touched && !EditForm.controls['id'].valid">
+                            <label *ngIf="EditForm.controls['id'].hasError('required')" style="color:red;">Staff Login Id</label>
+                          </div> -->
+                        </div>
+                        <div class="col-md-6">
+                          <label>Voucher Name</label>
+                          <input type="text" formControlName="vcr_name" class="form-control" [ngModel]="model.vcr_name">
+                          <div *ngIf="EditForm.controls['vcr_name'].touched && !EditForm.controls['vcr_name'].valid">
+                            <label *ngIf="EditForm.controls['vcr_name'].hasError('required')" style="color:red;">Enter Voucher name</label>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- row 2 -->
+                      <div class="row">
+                        <div class="form-group">
+                          <label>Voucher Type</label>
+                          <select formControlName="type" class="form-control" [(ngModel)]="model.type" required>
+                              <option value="">Voucher Type</option>
+                              <option value="Fixed" [selected]="model.type=='Fixed'">Fixed</option>
+                              <option value="Percentage" [selected]="model.type=='Percentage'">Percentage</option>
+                            </select>
+                          <div *ngIf="EditForm.controls['type'].touched && !EditForm.controls['type'].valid">
+                            <label *ngIf="EditForm.controls['type'].hasError('required')" style="color:red;">Select Voucher Type</label>
+                          </div>
+
+                        </div>
+                        <div class="form-group">
+                          <label>Voucher Value</label>
+                          <input type="number" placeholder="Value"  formControlName="value" class="form-control" [ngModel]="model.value" required>
+                          <div *ngIf="EditForm.controls['value'].touched && !EditForm.controls['value'].valid">
+                            <label *ngIf="EditForm.controls['value'].hasError('required')" style="color:red;">Enter Voucher Value</label>
+                          </div>
+
+                        </div>
+                        <div class="form-group">
+                          <label>Voucher status</label>
+                          <select class="form-control" required [(ngModel)]="model.status" formControlName="status">
+                              <option value="">STATUS</option>
+                              <option value="ACTIVE" [selected]="model.status=='ACTIVE'">ACTIVE</option>
+                              <option value="INACTIVE" [selected]="model.status=='INACTIVE'">INACTIVE</option>
+                            </select>
+                          <div *ngIf="EditForm.controls['status'].touched && !EditForm.controls['status'].valid">
+                            <label *ngIf="EditForm.controls['status'].hasError('required')" style="color:red;">Select Staus</label>
+                          </div>
+
+                        </div>
+                        <div class="form-group">
+                          <label>Valid Till</label>
+                          <input type="date" class="form-control" required formControlName="valid_till_date" [ngModel]="model.valid_till_date">
+                          <div *ngIf="EditForm.controls['valid_till_date'].touched && !EditForm.controls['valid_till_date'].valid">
+                            <label *ngIf="EditForm.controls['valid_till_date'].hasError('required')" style="color:red;">Enter Valid Date</label>
+                          </div>
+                        </div>
+                        <div class="form-group time_picker">
+                          <label>Vaild Time</label>
+                          <p-calendar [(ngModel)]="model.valid_before" [timeOnly]="true" hourFormat="12" required styleClass="custom_time" formControlName="valid_before"></p-calendar>
+                          <label *ngIf="EditForm.controls['valid_before'].hasError('required')" style="color:red;">Select Valid Time</label>
+                        </div>
+
+
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!--Edit modal -->
+
+
+
       </div>
     </div>
   </div>

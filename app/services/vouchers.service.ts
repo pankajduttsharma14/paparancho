@@ -35,7 +35,7 @@ export class VouchersService{
   AddVoucher(data):Observable<any>
   {
     let body=data;
-    console.log(body);
+
     const url:string=this.BASE_URL+"addvoucher";
     return this.http.post(url,data,this.options).map(res=>res.json());
 
@@ -47,6 +47,12 @@ export class VouchersService{
 			const url:string=this.BASE_URL+"deletevoucher/id/"+id;
 			return this.http.get(url,this.options);
 
+	}
+	// Edit Voucher
+	EditVoucher(data):Observable<any>
+	{
+			const url:string=this.BASE_URL+"editvoucher";
+			return this.http.post(url,data,this.options);
 	}
 
 

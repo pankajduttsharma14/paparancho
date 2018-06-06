@@ -3,15 +3,15 @@ import {CommonModule} from '@angular/common';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {VoucherRoutingModule} from './voucher.routing';
 import {VouchersComponent} from './vouchers.component';
-import {FormsModule} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
 	imports:[CommonModule,NgxPaginationModule,VoucherRoutingModule,FormsModule,CalendarModule,
-	ModalModule.forRoot()],
+	ModalModule.forRoot(),ModalModule,ReactiveFormsModule],
 	declarations:[VouchersComponent],
 })
 

@@ -140,8 +140,7 @@
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
                 <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
                 <td>
-                  <!-- <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
+                  
                   <span title="Edit" style="font-size: 16px;
                   margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
                   <span title="Delete" style="font-size: 16px;
