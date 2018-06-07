@@ -12,7 +12,7 @@ export class OrderComponent implements OnInit {
 
   constructor(private router:Router) { 
   	
-  		this.router.navigate(['dashboard/order/order-list']);
+  		// this.router.navigate(['dashboard/order/order-list']);
   }
 
   ngOnInit() {

@@ -24,6 +24,7 @@ export class OrderdetailsComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.OrderID = params['id'];
+      
       // get all records by id
       this.OrderService.GetRecordsById(this.OrderID).subscribe(
         res => {
@@ -43,12 +44,12 @@ export class OrderdetailsComponent implements OnInit {
         this.OrderStatus = res.data;
 
           setTimeout(() => {
-            this.router.navigate(['/order-list']);
-
+            this.router.navigate(['/dashboard/order/order-list']);
+             this.OrderStatus =null;
           }, 1000);
 
         },
-        err => {console.log(err)});
+        err => {console.log(err);this.OrderStatus =null;});
 
     });
   }

@@ -27,5 +27,16 @@ export class TableService
         return this.http.get(url,this.options).map(res=>res.json());
         
     }
+    // get order data by table id
+    GetOrderByTableId(id):Observable<any>
+    {
+            const url : string= this.BASE_URL+"tablewiseorders/tableid/"+id;
+            return this.http.get(url,this.options).map(res=>res.json());
+    }
+    AddTable(data):Observable<any>
+    {
+            const url : string= this.BASE_URL+"addservicetable";
+            return this.http.post(url,data,this.options).map(res=>res.json());   
+    }
 
 }

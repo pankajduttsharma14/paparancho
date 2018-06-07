@@ -8,8 +8,9 @@ import {TablemanagementComponent} from './tablemanagement.component';
 import { ViewTablesComponent } from './view-tables/view-tables.component';
 import { TabledetailComponent } from './tabledetail/tabledetail.component';
 
+
 @NgModule({
-imports:[CommonModule,NgxPaginationModule,FormsModule,ReactiveFormsModule,TableRoutingModule],
+imports:[CommonModule,NgxPaginationModule,FormsModule,ReactiveFormsModule,TableRoutingModule,ModalModule],
 declarations:[TablemanagementComponent, ViewTablesComponent, TabledetailComponent]
 })
 

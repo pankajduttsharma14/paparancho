@@ -1,85 +1,253 @@
-.table_list
-{
-    list-style-type: none;
-    padding: 0;
+.table_list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.table_list li {
+  display: inline-block;
+  width: 80px;
+
+  text-align: center;
+  height: 80px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 3px;
+}
+
+
+.table_list li a:hover {
+  text-decoration: none;
+}
+
+.free {
+  background: rgba(168, 214, 30, 1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(168, 214, 30, 1) 0%, rgba(168, 214, 30, 1) 39%, rgba(89, 184, 0, 1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(168, 214, 30, 1)), color-stop(39%, rgba(168, 214, 30, 1)), color-stop(100%, rgba(89, 184, 0, 1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(168, 214, 30, 1) 0%, rgba(168, 214, 30, 1) 39%, rgba(89, 184, 0, 1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(168, 214, 30, 1) 0%, rgba(168, 214, 30, 1) 39%, rgba(89, 184, 0, 1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(168, 214, 30, 1) 0%, rgba(168, 214, 30, 1) 39%, rgba(89, 184, 0, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(168, 214, 30, 1) 0%, rgba(168, 214, 30, 1) 39%, rgba(89, 184, 0, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8d61e', endColorstr='#59b800', GradientType=1); // border:1px solid #4cae4c;
+  cursor: pointer;
+}
+
+.booked,
+.locked {
+  background: rgba(255, 132, 110, 1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(255, 132, 110, 1) 0%, rgba(255, 132, 110, 1) 28%, rgba(231, 56, 39, 1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255, 132, 110, 1)), color-stop(28%, rgba(255, 132, 110, 1)), color-stop(100%, rgba(231, 56, 39, 1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(255, 132, 110, 1) 0%, rgba(255, 132, 110, 1) 28%, rgba(231, 56, 39, 1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(255, 132, 110, 1) 0%, rgba(255, 132, 110, 1) 28%, rgba(231, 56, 39, 1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(255, 132, 110, 1) 0%, rgba(255, 132, 110, 1) 28%, rgba(231, 56, 39, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(255, 132, 110, 1) 0%, rgba(255, 132, 110, 1) 28%, rgba(231, 56, 39, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff846e', endColorstr='#e73827', GradientType=1); // border-color:1px solid #d43f3a;
+  cursor: pointer;
+}
+
+.locked::before {
+  content: '\E08E';
+  font-family: simple-line-icons;
+  font-size: 50px;
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  z-index: 1;
+  opacity: 0.1;
+  color: #000;
+}
+
+.table_status {
+  background: #fff;
+}
+
+.table_list_new {
+  background: #efefef;
+}
+
+.table_details h3, .orders_list h3{
+  color: #20a8d8;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #efefef;
+  padding: 10px 15px;
+  margin: 0px;
+}
+
+.table_details p {
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: bold;
+
+  padding: 10px 15px;
+  margin: 0px;
+}
+
+.semi_booked {
+  background: rgba(245, 207, 110, 1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(245, 207, 110, 1) 0%, rgba(252, 209, 101, 1) 51%, rgba(247, 179, 8, 1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(245, 207, 110, 1)), color-stop(51%, rgba(252, 209, 101, 1)), color-stop(100%, rgba(247, 179, 8, 1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(245, 207, 110, 1) 0%, rgba(252, 209, 101, 1) 51%, rgba(247, 179, 8, 1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(245, 207, 110, 1) 0%, rgba(252, 209, 101, 1) 51%, rgba(247, 179, 8, 1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(245, 207, 110, 1) 0%, rgba(252, 209, 101, 1) 51%, rgba(247, 179, 8, 1) 100%);
+  background: radial-gradient(ellipse at center, rgba(245, 207, 110, 1) 0%, rgba(252, 209, 101, 1) 51%, rgba(247, 179, 8, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5cf6e', endColorstr='#f7b308', GradientType=1);
+  cursor: pointer;
+}
+
+.table_details h4 {
+  font-size: 16px;
+}
+
+.semi_booked_text {
+  color: #ef9b0f !important;
+}
+
+.booked_text,
+.locked_text {
+  color: #dd1603 !important;
+}
+
+.free_text {
+  color: #3ed715 !important;
+}
+
+.chair_loop li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 10px;
+  padding-left: 0px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  
 
 }
-.table_list li{
+
+.chair_loop {
+  padding: 0px 15px;
+}
+
+.orders_list li
+{
+  display: inline-block;
+  width: 100%;
+  /*margin-bottom: 5px;*/
+  font-size: 14px;
+}
+.orders_list li a h4{
+  font-size: 14px;
+}
+.orders_list ul
+{
+  padding: 0px;
+      height: 229px;
+    padding: 0px;
+    -webkit-appearance: none;
+    overflow: auto;
+    margin: 0;
+}
+
+.orders_list ul li
+{
+  padding: 10px 15px !important;
+
+}
+
+.orders_list ul::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.orders_list ul::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.orders_list ul::-webkit-scrollbar-thumb {
+  background-color: rgba(105,198,199,0.5);
+  outline: 1px solid slategrey;
+}
+.orders_list ul li:hover
+{
+  background:#9ddcf9 !important;
+}
+.orders_list ul li a
+{
+  color: #111111 !important;
+}
+.orders_list ul li:nth-child(even)
+{
+  background: #69c6c7;
+}
+.orders_list ul li:nth-child(odd)
+{
+  background: #7dd3d4;
+}
+
+.id_status
+{
+  width: 90%;
     display: inline-block;
-    width: 80px;
-
-    text-align: center;
-    height: 80px;
     margin-right: 10px;
-    margin-bottom: 10px;
-
-    display:inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 24px;
     font-weight: bold;
-    color: #fff;
-    border-radius: 3px;
-
+}
+.print_icon i
+{
+  font-size: 18px;
+  cursor: pointer;
 }
 
 
-.table_list li a:hover{
-    text-decoration: none;
-}
-.free{
-  background: rgba(168,214,30,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(168,214,30,1) 0%, rgba(168,214,30,1) 39%, rgba(89,184,0,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(168,214,30,1)), color-stop(39%, rgba(168,214,30,1)), color-stop(100%, rgba(89,184,0,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(168,214,30,1) 0%, rgba(168,214,30,1) 39%, rgba(89,184,0,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(168,214,30,1) 0%, rgba(168,214,30,1) 39%, rgba(89,184,0,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(168,214,30,1) 0%, rgba(168,214,30,1) 39%, rgba(89,184,0,1) 100%);
-background: radial-gradient(ellipse at center, rgba(168,214,30,1) 0%, rgba(168,214,30,1) 39%, rgba(89,184,0,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8d61e', endColorstr='#59b800', GradientType=1 );
-    // border:1px solid #4cae4c;
+/*modal css*/
+
+.actions_main a
+{
     cursor: pointer;
-}
-.booked{
-  background: rgba(255,132,110,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(255,132,110,1) 0%, rgba(255,132,110,1) 28%, rgba(231,56,39,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,132,110,1)), color-stop(28%, rgba(255,132,110,1)), color-stop(100%, rgba(231,56,39,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(255,132,110,1) 0%, rgba(255,132,110,1) 28%, rgba(231,56,39,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(255,132,110,1) 0%, rgba(255,132,110,1) 28%, rgba(231,56,39,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(255,132,110,1) 0%, rgba(255,132,110,1) 28%, rgba(231,56,39,1) 100%);
-background: radial-gradient(ellipse at center, rgba(255,132,110,1) 0%, rgba(255,132,110,1) 28%, rgba(231,56,39,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff846e', endColorstr='#e73827', GradientType=1 );
-    // border-color:1px solid #d43f3a;
-    cursor: pointer;
+    color: #2199e8;
+  margin-left:10px;
+  font-size:16px; 
+  display:inline-block;
 
 }
 
-.table_status
+.modal_heading
 {
-    background: #fff;
+  font-size:18px;
+  background: #20a8d8;
+  color: #fff;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+
 }
 
-.table_list_new{
-        background: #efefef;
-}
-
-.table_heading_new
+.sub_btn
 {
-    color: #20a8d8;
-    font-size: 24px;
-    font-weight: normal;
-    text-transform: uppercase;
-
+  background: #20a8d8;
 }
-.semi_booked
+.form-control, .time_picker p-calendar .ui-inputtext {
+    width: 100% !important;
+    height: 35px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 0 !important;
+}
+.custom_time
 {
-  background: rgba(245,207,110,1);
-background: -moz-radial-gradient(center, ellipse cover, rgba(245,207,110,1) 0%, rgba(252,209,101,1) 51%, rgba(247,179,8,1) 100%);
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(245,207,110,1)), color-stop(51%, rgba(252,209,101,1)), color-stop(100%, rgba(247,179,8,1)));
-background: -webkit-radial-gradient(center, ellipse cover, rgba(245,207,110,1) 0%, rgba(252,209,101,1) 51%, rgba(247,179,8,1) 100%);
-background: -o-radial-gradient(center, ellipse cover, rgba(245,207,110,1) 0%, rgba(252,209,101,1) 51%, rgba(247,179,8,1) 100%);
-background: -ms-radial-gradient(center, ellipse cover, rgba(245,207,110,1) 0%, rgba(252,209,101,1) 51%, rgba(247,179,8,1) 100%);
-background: radial-gradient(ellipse at center, rgba(245,207,110,1) 0%, rgba(252,209,101,1) 51%, rgba(247,179,8,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5cf6e', endColorstr='#f7b308', GradientType=1 );
-cursor: pointer;
+  width: 100%;
+}
+.button_control
+{
+  text-align: right;
+  margin: 10px 10px 0;
+}
+.button_control button
+{
+  color: #fff;
+
 }
