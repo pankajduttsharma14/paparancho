@@ -4,18 +4,20 @@
       <!-- msg -->
       <div class="alert alert-success" *ngIf="OrderStatus">{{OrderStatus.message}}</div>
       <!-- msg -->
+
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Order Details
         </div>
         <div class="order_box">
           <ul>
-            <li *ngIf="OrderDetails[0].order_id"><span>Order Id</span>{{OrderDetails[0].order_id}}</li>
+            <!-- <li *ngIf="OrderDetails[0].order_id"><span>Order Id</span>{{OrderDetails[0].order_id}}</li>
             <li *ngIf="OrderDetails[0].createdAt"><span>Order Date</span> {{OrderDetails[0].createdAt | date:'dd/mm/yy'}}</li>
-            <li *ngIf="OrderDetails[0].id"><span>Table Number</span>{{OrderDetails[0].id}}</li>
+            <li *ngIf="OrderDetails[0].id"><span>Table Number</span>{{OrderDetails[0].id}}</li> -->
           </ul>
         </div>
         <div class="card-body">
+
           <table class="table" style="width:100%;">
             <thead>
               <tr>
@@ -28,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor='let data of OrderDetails' style="position: relative;">
+              <tr *ngFor='let data of OrderDetails.data' style="position: relative;">
 
                 <td>{{data.item_name}}</td>
                 <td>{{data.item_qty}}</td>
@@ -55,12 +57,12 @@
               </tr>
             </tbody>
           </table>
-          <div class="button_groups">
 
-            <button type="button" class="btn btn-success" *ngIf="OrderDetails[0].status=='Pending'"><i class="fa fa-edit"></i> Complete Order</button>
-            <button type="button" class="btn btn-warning" *ngIf="OrderDetails[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button>
+          <div class="button_groups" *ngIf="OrderDetails.Orderdata">
 
-            <button type="button" class="btn btn-danger" (click)="CancelOrder(OrderDetails[0].order_id)" *ngIf="OrderDetails[0].status=='Pending'"><i class="fa fa-times"></i> Cancel Order</button>
+            <button type="button" class="btn btn-success" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Complete Order</button>
+            <button type="button" class="btn btn-warning" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button>
+            <button type="button" class="btn btn-danger" (click)="CancelOrder(OrderDetails.data[0].order_id)" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-times"></i> Cancel Order</button>
           </div>
 
         </div>

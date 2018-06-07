@@ -27,9 +27,8 @@ export class OrderdetailsComponent implements OnInit {
       // get all records by id
       this.OrderService.GetRecordsById(this.OrderID).subscribe(
         res => {
-          this.OrderDetails = res.data;
-          this.OrderData = res.Orderdata;
-
+          this.OrderDetails = res;
+          
         }, err => { console.log(err) });
     });
   }
