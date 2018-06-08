@@ -3,11 +3,13 @@ import { FoodService } from '../services/food.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
-  providers: [FoodService]
+  providers: [FoodService, Ng4LoadingSpinnerService]
 })
 export class CategoryComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
@@ -37,10 +39,11 @@ export class CategoryComponent implements OnInit {
 
   constructor(private FoodService: FoodService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinnerService: Ng4LoadingSpinnerService
 
   ) {
-
+    
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
 
@@ -70,10 +73,10 @@ export class CategoryComponent implements OnInit {
       'status': ['', Validators.required],
 
     });
-
+    this.spinnerService.show(); 
     // get all .categories
-    this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; },
-      err => { console.log(err) }, );
+    this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.spinnerService.hide();},
+      err => { console.log(err);this.spinnerService.hide();});
   }
 
 
@@ -82,17 +85,20 @@ export class CategoryComponent implements OnInit {
 
   AddCatMsg: string = null;
   AddCategories(formData) {
+
+    this.spinnerService.show();
     let data = formData.value;
     if (data) {
       formData.reset();
       this.FoodService.AddCategory(data).subscribe(
         res => {
+          
           if (res.status == 200) {
-            console.log(res);
+          
             this.AddCatMsg = res.message;
             // get all .categories
-            this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; },
-              err => { console.log(err) }, );
+            this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.spinnerService.hide();},
+              err => {this.spinnerService.hide();},);
             setTimeout(() => {
               this.AddCatMsg = null;
               this.largeModal.hide();
@@ -100,10 +106,21 @@ export class CategoryComponent implements OnInit {
 
           } else {
             this.AddCatMsg = "Category can't added";
+            this.spinnerService.hide();
+            setTimeout(() => {
+              this.AddCatMsg = null;
+              this.largeModal.hide();
+            }, 3000);
+
           }
         },
         err => {
           this.AddCatMsg = "Category can't added";
+          this.spinnerService.hide();
+          setTimeout(() => {
+              this.AddCatMsg = null;
+              this.largeModal.hide();
+            }, 3000);
         }
       );
     }
@@ -113,10 +130,10 @@ export class CategoryComponent implements OnInit {
 
   DeleteCatMsg: string = null;
   DeleteCategory(id) {
-
+    this.spinnerService.show();
     this.FoodService.DeleteCategory(id).subscribe(res => {
       if (res.status == 200) {
-
+        this.spinnerService.hide();
         this.DeleteCatMsg = 'Item Deleted Successfully';
 
         this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; },
@@ -178,11 +195,13 @@ export class CategoryComponent implements OnInit {
   }
   UpdateCatMsg: string = null;
   UpdateCategory(formData) {
+    this.spinnerService.show();
     let data = formData.value;
 
     this.FoodService.UpdateCategory(data).subscribe(res => {
       
       if (res.status == 200) {
+        this.spinnerService.hide();
         this.UpdateCatMsg = res.message;
         this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; }, err => { console.log(err)});
         setTimeout(() => {

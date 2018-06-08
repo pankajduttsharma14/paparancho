@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss'],
-  providers: [VouchersService],
+  providers: [VouchersService,Ng4LoadingSpinnerService],
   encapsulation: ViewEncapsulation.None,
 
 
@@ -21,13 +22,14 @@ export class VouchersComponent implements OnInit {
   public Vouchers;
   p: number = 1;
   EditForm: FormGroup;
-  constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder) {
+  constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService){
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
       this.router.navigate(['login']);
     }
     // get all vouchers
-    this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data }, err => { console.log(err) });
+    this.spinnerService.show();
+    this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
     this.EditForm = fb.group({
       "id": ['', Validators.compose([Validators.required])],
       "vcr_name": ['', Validators.compose([Validators.required])],
@@ -46,7 +48,7 @@ export class VouchersComponent implements OnInit {
   VoucherData = {};
   VoucherMsg: string = null;
   AddVoucher(formData): any {
-
+    this.spinnerService.show();
     var data = formData.value;
     var time = data.time;
     function formatAMPM(time) {
@@ -72,17 +74,27 @@ export class VouchersComponent implements OnInit {
 
     this.VouchersService.AddVoucher(this.VoucherData).subscribe(res => {
       if (res.status) {
+
         this.VoucherMsg = res.message;
         formData.reset();
         // update vouchers list
-        this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data }, err => { console.log(err) });
+        this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
+        setTimeout(() => {
+          this.VoucherMsg = null;
+        }, 3000);
+      }
+      else{
+        this.spinnerService.hide();
+        this.VoucherMsg = "Voucher cant added!";
         setTimeout(() => {
           this.VoucherMsg = null;
         }, 3000);
       }
     },
       err => {
-        this.VoucherMsg = err;
+
+        this.VoucherMsg = "Voucher cant added!";
+        this.spinnerService.hide();
         setTimeout(() => {
           this.VoucherMsg = null;
           formData.reset();
@@ -95,11 +107,12 @@ export class VouchersComponent implements OnInit {
 
   // Delete Voucher
   DeleteVoucher(id) {
+    this.spinnerService.show();
     this.VouchersService.DeleteVoucher(id).subscribe(res => {
       if (res.status == 200) {
         this.VoucherMsg = "Voucher Deleted Successfully!";
         // update vouchers list
-        this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data }, err => { console.log(err) });
+        this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
         setTimeout(() => {
           this.VoucherMsg = null;
 
@@ -107,6 +120,7 @@ export class VouchersComponent implements OnInit {
       }
       else {
         this.VoucherMsg = "Voucher Cant Deleted";
+        this.spinnerService.hide();
         setTimeout(() => {
           this.VoucherMsg = null;
 
@@ -115,6 +129,7 @@ export class VouchersComponent implements OnInit {
 
     }, err => {
       this.VoucherMsg = "Voucher Cant Deleted";
+      this.spinnerService.hide();
       setTimeout(() => {
         this.VoucherMsg = null;
       }, 3000);
@@ -167,26 +182,30 @@ export class VouchersComponent implements OnInit {
 UpdateVoucherMsg:string=null;
 // Update voucher msg
   UpdateVoucher(formData) {
+    this.spinnerService.show();
   console.log(formData.value);
     let data=formData.value;
     this.VouchersService.UpdateVoucher(data).subscribe(res=>{
         if(res.status==200)
         {
           this.UpdateVoucherMsg="Voucher updated successfully!";
-          this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data }, err => { console.log(err) });
+          this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => {this.spinnerService.hide();});
           setTimeout(()=>{
             this.UpdateVoucherMsg=null;
           },3000);
         }
         else{
             this.UpdateVoucherMsg="Unable to update voucher!";
+            this.spinnerService.hide();
             setTimeout(()=>{
               this.UpdateVoucherMsg=null;
             },3000);
         }
     },
     err=>{
+
       this.UpdateVoucherMsg="Unable to update voucher!";
+      this.spinnerService.hide();
       setTimeout(()=>{
         this.UpdateVoucherMsg=null;
       },3000);

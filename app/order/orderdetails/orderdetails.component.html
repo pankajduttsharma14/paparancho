@@ -59,7 +59,7 @@
           </table>
 
           <div class="button_groups" *ngIf="OrderDetails.Orderdata">
-
+            {{OrderDetails.Orderdata | json}}
             <button type="button" class="btn btn-success" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Complete Order</button>
             <button type="button" class="btn btn-warning" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button>
             <button type="button" class="btn btn-danger" (click)="CancelOrder(OrderDetails.data[0].order_id)" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-times"></i> Cancel Order</button>

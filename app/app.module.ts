@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@angular/common';
 import {FormsModule} from '@angular/forms'
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -23,6 +23,7 @@ import {VouchersModule} from './vouchers/vouchers.module';
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './views/notifications/modals.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 const APP_CONTAINERS = [
@@ -51,6 +52,7 @@ import {FoodModule} from './food/food.module';
 import {StaffManagementModule} from './staffmanagement/staffmanagement.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from './tablemanagement/table.module';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 
@@ -81,7 +83,9 @@ import {TableModule} from './tablemanagement/table.module';
     VouchersModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
-    TableModule
+    TableModule,
+    Ng4LoadingSpinnerModule.forRoot()
+
 
 
 
@@ -104,7 +108,7 @@ import {TableModule} from './tablemanagement/table.module';
   ],
   providers: [{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy,},AuthService],
+    useClass: PathLocationStrategy,},AuthService,Ng4LoadingSpinnerService],
     exports:[ModalsComponent,ModalModule],
     bootstrap: [ AppComponent ]
 })

@@ -3,13 +3,13 @@ import { StaffService } from '../../services/staff.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-staffrole',
   templateUrl: './staffrole.component.html',
   styleUrls: ['./staffrole.component.scss'],
-  providers: [StaffService]
+  providers: [StaffService,Ng4LoadingSpinnerService]
 })
 export class StaffroleComponent implements OnInit {
 
@@ -26,15 +26,16 @@ export class StaffroleComponent implements OnInit {
   status: string;
 
   constructor(private StaffService: StaffService,
-    private router: Router, private fb: FormBuilder) {
+    private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
       this.router.navigate(['login']);
     }
     // get staff roles
+    this.spinnerService.show();
     this.StaffService.GetStaffRoles().subscribe(
-      res => { this.StaffRolesList = res },
-      err => { console.log(err) });
+      res => { this.StaffRolesList = res;this.spinnerService.hide(); },
+      err => { this.spinnerService.hide();});
 
     // Add Form intitilized
     this.StaffRoleForm = this.fb.group({
@@ -63,15 +64,17 @@ export class StaffroleComponent implements OnInit {
   // Add Staff Role
   StaffMsg: string = null;
   AddStaffRole(formData) {
+    this.spinnerService.show();
     let data = formData.value;
     formData.reset();
     this.StaffService.AddStaffRole(data).subscribe(res => {
       if (res.status == 200) {
         this.StaffMsg = res.message;
+        this.spinnerService.hide();
         // get staff roles
         this.StaffService.GetStaffRoles().subscribe(
-          res => { this.StaffRolesList = res },
-          err => { console.log(err) });
+          res => { this.StaffRolesList = res;this.spinnerService.hide(); },
+          err => { this.spinnerService.hide(); });
 
         setTimeout(() => {
           this.StaffMsg = null;
@@ -81,6 +84,7 @@ export class StaffroleComponent implements OnInit {
 
       } else {
         this.StaffMsg = "Staff Role Can't Be Added";
+        this.spinnerService.hide();
         setTimeout(() => {
           this.StaffMsg = null;
           this.largeModal.hide();
@@ -91,6 +95,7 @@ export class StaffroleComponent implements OnInit {
     }, err => {
 
       this.StaffMsg = "Staff Role Can't Be Added";
+      this.spinnerService.hide();
       setTimeout(() => {
         this.StaffMsg = null;
         this.largeModal.hide();
@@ -102,23 +107,26 @@ export class StaffroleComponent implements OnInit {
   DeleteStaff: string = null;
   // Delete Staff role
   DeleteStaffRole(id) {
+    this.spinnerService.show();
     this.StaffService.DeleteStaffRole(id).subscribe(res => {
       if (res.status = 200) {
         this.DeleteStaff = "Staff Role Deleted Successfully";
         // get staff roles
         this.StaffService.GetStaffRoles().subscribe(
-          res => { this.StaffRolesList = res },
-          err => { console.log(err) });
+          res => { this.StaffRolesList = res;this.spinnerService.hide(); },
+          err => { this.spinnerService.hide(); });
         setTimeout(() => {
           this.DeleteStaff = null;
         }, 3000)
       } else {
+        this.spinnerService.hide();
         setTimeout(() => {
           this.DeleteStaff = null;
         }, 3000)
       }
 
     }, err => {
+      this.spinnerService.hide();
       setTimeout(() => {
         this.DeleteStaff = null;
       }, 3000)
@@ -162,14 +170,15 @@ export class StaffroleComponent implements OnInit {
   UpdateStaffRoleMsg: string = null;
 
   UpdateStaffRole(formData) {
+    this.spinnerService.show();
     let data = formData.value;
     this.StaffService.EditStaffRole(data).subscribe(res => {
       if (res.status == 200) {
         this.UpdateStaffRoleMsg = res.message;
         // get staff roles
         this.StaffService.GetStaffRoles().subscribe(
-          res => { this.StaffRolesList = res },
-          err => { console.log(err) });
+          res => { this.StaffRolesList = res;this.spinnerService.hide(); },
+          err => { this.spinnerService.hide();});
 
         setTimeout(() => {
           this.UpdateStaffRoleMsg = null;
@@ -179,6 +188,7 @@ export class StaffroleComponent implements OnInit {
 
 
       } else {
+        this.spinnerService.hide();
 
         setTimeout(() => {
           this.UpdateStaffRoleMsg = null;
@@ -187,7 +197,7 @@ export class StaffroleComponent implements OnInit {
         }, 3000);
       }
     }, err => {
-
+      this.spinnerService.hide();
       setTimeout(() => {
         this.UpdateStaffRoleMsg = null;
         this.largeModal1.hide();

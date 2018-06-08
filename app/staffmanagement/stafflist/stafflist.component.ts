@@ -3,7 +3,7 @@ import { StaffService } from '../../services/staff.service';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 
@@ -11,7 +11,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   selector: 'app-stafflist',
   templateUrl: './stafflist.component.html',
   styleUrls: ['./stafflist.component.scss'],
-  providers: [StaffService],
+  providers: [StaffService, Ng4LoadingSpinnerService],
 
 })
 
@@ -38,15 +38,17 @@ export class StafflistComponent implements OnInit {
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   p: number = 1;
   public StaffList: any = {};
-  constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder) {
+  constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
       this.router.navigate(['login']);
     }
     // get staff list
+    this.spinnerService.show();
     this.StaffService.GetStaffList().subscribe(
-      res => { this.StaffList = res },
-      err => { console.log(err) });
+      res => { this.StaffList = res;
+        this.spinnerService.hide(); },
+      err => { this.spinnerService.hide(); });
   }
 
   ngOnInit() {
@@ -88,6 +90,7 @@ export class StafflistComponent implements OnInit {
   // Add Staff
   StaffMsg: string;
   AddStaffList(formData) {
+    this.spinnerService.show();
     let data = formData.value;
     if (data) {
       formData.reset();
@@ -97,19 +100,23 @@ export class StafflistComponent implements OnInit {
 
             this.StaffMsg = res.message;
             // get all .categories
-            this.StaffService.GetStaffList().subscribe(res => { this.StaffList = res; },
-              err => { console.log(err) }, );
+            this.StaffService.GetStaffList().subscribe(res => { this.StaffList = res;
+                this.spinnerService.hide(); },
+              err => { this.spinnerService.hide(); }, );
             setTimeout(() => {
+              this.spinnerService.hide();
               this.StaffMsg = null;
               this.largeModal.hide();
             }, 3000);
 
           } else {
             this.StaffMsg = "Staff can't added";
+            this.spinnerService.hide();
           }
         },
         err => {
           this.StaffMsg = "Staff can't added";
+          this.spinnerService.hide();
         }
       );
     }
@@ -122,26 +129,32 @@ export class StafflistComponent implements OnInit {
   DeleteStaffListMsg: string = null;
   // Delete Staff role
   DeleteStaffList(id) {
+    this.spinnerService.show();
     this.StaffService.DeleteStaffRole(id).subscribe(res => {
       if (res.status = 200) {
         this.DeleteStaffListMsg = "Staff Deleted Successfully";
 
+
         this.StaffService.GetStaffList().subscribe(
-          res => { this.StaffList = res },
-          err => { console.log(err) });
+          res => { this.StaffList = res;
+            this.spinnerService.hide(); },
+          err => { this.spinnerService.hide(); });
 
 
         setTimeout(() => {
           this.DeleteStaffListMsg = null;
         }, 3000)
       } else {
+        this.spinnerService.hide();
         setTimeout(() => {
           this.DeleteStaffListMsg = null;
         }, 3000)
       }
 
     }, err => {
+      this.spinnerService.hide();
       setTimeout(() => {
+
         this.DeleteStaffListMsg = null;
       }, 3000)
 
@@ -162,7 +175,7 @@ export class StafflistComponent implements OnInit {
   model = {
     "staff_id": '',
     "ol_id": '',
-    
+
     "pass_code": '',
     "password": '',
     "role_id": '',
@@ -182,7 +195,7 @@ export class StafflistComponent implements OnInit {
     this.model = {
       "staff_id": this.Editrow[0].staff_id,
       "ol_id": this.Editrow[0].ol_id,
-      
+
       "pass_code": this.Editrow[0].pass_code,
       "password": this.Editrow[0].password,
       "role_id": this.Editrow[0].role_id,
@@ -196,20 +209,23 @@ export class StafflistComponent implements OnInit {
       "status": this.Editrow[0].status,
 
     }
-    
+
   }
 
 
   UpdateStaffListMsg: string = null;
 
   UpdateStaffList(formData) {
+    this.spinnerService.show();
     let data = formData.value;
     this.StaffService.EditStaffList(data).subscribe(res => {
       if (res.status == 200) {
         this.UpdateStaffListMsg = res.message;
         this.StaffService.GetStaffList().subscribe(
-          res => { this.StaffList = res },
-          err => { console.log(err) });
+          res => { this.StaffList = res;
+            this.spinnerService.hide(); },
+          err => { console.log(err);
+            this.spinnerService.hide(); });
 
 
         setTimeout(() => {
@@ -220,7 +236,7 @@ export class StafflistComponent implements OnInit {
 
 
       } else {
-
+        this.spinnerService.hide();
         setTimeout(() => {
           this.UpdateStaffListMsg = null;
           this.largeModal1.hide();
@@ -228,7 +244,7 @@ export class StafflistComponent implements OnInit {
         }, 3000);
       }
     }, err => {
-
+      this.spinnerService.hide();
       setTimeout(() => {
         this.UpdateStaffListMsg = null;
         this.largeModal1.hide();

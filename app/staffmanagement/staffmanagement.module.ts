@@ -7,8 +7,9 @@ import { StaffmanagementComponent } from './staffmanagement.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 @NgModule({
- imports: [CommonModule,StaffManagementRouting,FormsModule ,ReactiveFormsModule,ModalModule,NgxPaginationModule],
+ imports: [CommonModule,StaffManagementRouting,FormsModule ,ReactiveFormsModule,ModalModule,NgxPaginationModule,Ng4LoadingSpinnerModule],
  declarations: [StaffroleComponent, StafflistComponent, StaffmanagementComponent]
 
 

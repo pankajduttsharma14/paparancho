@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observer } from 'rxjs';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
@@ -31,12 +31,14 @@ export class ItemsComponent implements OnInit {
   item_stock: number;
   status: string;
 
-  constructor(private FoodService: FoodService, private router: Router, private FormBuilder: FormBuilder) {
+  constructor(private FoodService: FoodService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
       this.router.navigate(['login']);
     }
-    this.FoodService.GetAllItems().subscribe(res => { this.items = res; }, err => {});
+    this.spinnerService.show();
+    this.FoodService.GetAllItems().subscribe(res => { this.items = res;
+      this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
 
     // form initilization
     this.AddItemsForm = this.FormBuilder.group({
@@ -90,20 +92,22 @@ export class ItemsComponent implements OnInit {
 
   // add item
   AddItems(formData) {
+    this.spinnerService.show();
     let data = formData.value;
     formData.reset();
 
     this.FoodService.AddItem(data).subscribe(res => {
         if (res.status == 200) {
           this.AddItemMsg = res.message;
-          this.FoodService.GetAllItems().subscribe(res => { this.items = res; }, err => {});
+          this.FoodService.GetAllItems().subscribe(res => { this.items = res;
+            this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
           setTimeout(() => {
             this.AddItemMsg = null;
             this.largeModal.hide();
 
           }, 3000);
         } else {
-
+          this.spinnerService.hide();
           this.AddItemMsg = "Item Can't Added";
           setTimeout(() => {
             this.AddItemMsg = null;
@@ -113,6 +117,7 @@ export class ItemsComponent implements OnInit {
         }
       },
       err => {
+        this.spinnerService.hide();
         this.AddItemMsg = "Item Can't Added";
         setTimeout(() => {
           this.AddItemMsg = null;
@@ -124,15 +129,18 @@ export class ItemsComponent implements OnInit {
   DeleteItemMsg: string = null;
   // Delete item
   DeleteItem(id) {
+   this.spinnerService.show();
     this.FoodService.DeleteItem(id).subscribe(res => {
         if (res.status == 200) {
           this.DeleteItemMsg = "Item Deleted Successfully";
-          this.FoodService.GetAllItems().subscribe(res => { this.items = res; }, err => {});
+          this.FoodService.GetAllItems().subscribe(res => { this.items = res; this.spinnerService.hide();}, err => {this.spinnerService.hide();});
           setTimeout(() => {
             this.DeleteItemMsg = null;
           }, 3000);
         } else {
+
           this.DeleteItemMsg = "Item Can't Deleted";
+          this.spinnerService.hide();
           setTimeout(() => {
             this.DeleteItemMsg = null;
           }, 3000);
@@ -140,6 +148,7 @@ export class ItemsComponent implements OnInit {
       },
       err => {
         this.DeleteItemMsg = "Item Can't Deleted";
+        this.spinnerService.hide();
         setTimeout(() => {
           this.DeleteItemMsg = null;
         }, 3000);
@@ -192,11 +201,12 @@ export class ItemsComponent implements OnInit {
 
   }
   ItemEditMsg: string = null;
-    EditItem(formData) {
+  EditItem(formData) {
+   this.spinnerService.show();
     let data = formData.value;
     this.FoodService.UpdateItem(data).subscribe(res => {
       if (res.status == 200) {
-         this.FoodService.GetAllItems().subscribe(res => { this.items = res; }, err => {});
+        this.FoodService.GetAllItems().subscribe(res => { this.items = res; this.spinnerService.hide();}, err => {this.spinnerService.hide();});
         this.ItemEditMsg = res.message;
         setTimeout(() => {
           this.ItemEditMsg = null;
@@ -206,6 +216,7 @@ export class ItemsComponent implements OnInit {
       } else {
 
         this.ItemEditMsg = 'Items Can not updated';
+        this.spinnerService.hide();
         setTimeout(() => {
           this.ItemEditMsg = null;
           this.largeModal1.hide();
@@ -215,6 +226,7 @@ export class ItemsComponent implements OnInit {
     }, err => {
 
       this.ItemEditMsg = 'Items Can not updated';
+      this.spinnerService.hide();
       setTimeout(() => {
         this.ItemEditMsg = null;
         this.largeModal1.hide();
