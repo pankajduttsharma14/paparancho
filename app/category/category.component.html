@@ -17,14 +17,18 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-body">
-                  <h3 class="modal_heading">Add Categories</h3>
+                  <h3 class="modal_heading">Add Category</h3>
                   <div class="alert alert-success" *ngIf="AddCatMsg!=null">{{AddCatMsg}}</div>
                   <form [formGroup]="AddForm" (ngSubmit)="AddCategories(AddForm)">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
                           <label>Outlet Id</label>
-                          <input type="number" formControlName="ol_id" class="form-control">
+                          <select formControlName="ol_id" class="form-control">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          </select>
                           <div *ngIf="AddForm.controls['ol_id'].touched && !AddForm.controls['ol_id'].valid">
                             <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                           </div>
@@ -52,7 +56,7 @@
                           <label>Category Title</label>
                           <input type="text" formControlName="cat_title" class="form-control">
                           <div *ngIf="AddForm.controls['cat_title'].touched && !AddForm.controls['cat_title'].valid">
-                            <label *ngIf="AddForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                            <label *ngIf="AddForm.controls['cat_title'].hasError('required')" style="color:red;">Enter category title</label>
                           </div>
                         </div>
                       </div>
@@ -65,7 +69,7 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <label for="">Category Image Url</label>
+                          <label for="">Category Image</label>
                           <input type="text" formControlName="cat_img_url" class="form-control">
                           <div *ngIf="AddForm.controls['cat_img_url'].touched && !AddForm.controls['cat_img_url'].valid">
                             <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
@@ -75,13 +79,13 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Is Alcholic?</label>
+                          <label>Is Alcoholic?</label>
                           <select formControlName="isAlcoholic" class="form-control">
-                            <option value="" [selected]="true">Is Alcholic?</option>
+                            <option value="" [selected]="true">Is Alcoholic?</option>
                             <option *ngFor="let al of alchoholic" [value]="al.value">{{al.data}}</option>
                           </select>
                           <div *ngIf="AddForm.controls['isAlcoholic'].touched && !AddForm.controls['isAlcoholic'].valid">
-                            <label *ngIf="AddForm.controls['isAlcoholic'].hasError('required')" style="color:red;">Select Drink Type</label>
+                            <label *ngIf="AddForm.controls['isAlcoholic'].hasError('required')" style="color:red;">Select Is Alcoholic Status</label>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -114,20 +118,23 @@
         <!-- modal -->
         <div class="card-body">
           <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">{{DeleteCatMsg}}</div>
+          <!-- {{categories | json}} -->
           <table class="table">
             <thead>
               <tr>
                 <!-- <th></th> -->
-                <th>Id</th>
+                <th>Category Id</th>
                 <th>Category Type</th>
-                <th>Title</th>
-                <th>Image</th>
-                <th>Modified Date</th>
-                <th>Created Date</th>
+                <th>Category Title</th>
+                <th>Is Alcoholic?</th>
+                <th>Category Image</th>
+                <!-- <th>Modified Date</th> -->
+                <!-- <th>Created Date</th> -->
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               <tr *ngFor='let data of categories | paginate: { itemsPerPage: 10, currentPage: p} '>
                 <!-- <td>
@@ -136,9 +143,10 @@
                 <td>{{data.icid}}</td>
                 <td>{{data.cat_type}}</td>
                 <td>{{data.cat_title}}</td>
-                <td>{{data.cat_img}}</td>
-                <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
-                <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
+                <td><span *ngIf="data.isAlcoholic=='true'">Yes</span><span *ngIf="data.isAlcoholic=='false'">No</span></td>
+                <td><img [src]="data.cat_img_url" alt="image" height="50"></td>
+                <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
+                <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                 <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
                 <td>
                   
@@ -177,15 +185,19 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6" style="display: none !important;">
-                          <label>cat Id</label>
+                          <label>Category Id</label>
                           <input type="number" formControlName="icid" class="form-control" [ngModel]="model.icid">
                           <div *ngIf="EditForm.controls['icid'].touched && !EditForm.controls['icid'].valid">
-                            <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Enter Category Id</label>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label>Outlet Id</label>
-                          <input type="number" formControlName="ol_id" class="form-control" [ngModel]="model.ol_id">
+                          <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          </select>
                           <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
                             <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                           </div>
@@ -213,7 +225,7 @@
                           <label>Category Title</label>
                           <input type="text" formControlName="cat_title" class="form-control" [ngModel]="model.cat_title">
                           <div *ngIf="EditForm.controls['cat_title'].touched && !EditForm.controls['cat_title'].valid">
-                            <label *ngIf="EditForm.controls['cat_title'].hasError('required')" style="color:red;">Enter Parent Id</label>
+                            <label *ngIf="EditForm.controls['cat_title'].hasError('required')" style="color:red;">Enter category title</label>
                           </div>
                         </div>
                       </div>
@@ -226,7 +238,7 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <label for="">Category Image Url</label>
+                          <label for="">Category Image</label>
                           <input type="text" formControlName="cat_img_url" class="form-control" [ngModel]="model.cat_img_url">
                           <div *ngIf="EditForm.controls['cat_img_url'].touched && !EditForm.controls['cat_img_url'].valid">
                             <label *ngIf="EditForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
@@ -236,10 +248,10 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Is Alcholic?</label>
+                          <label>Is Alcoholic?</label>
                           <br>
                           <select formControlName="isAlcoholic" class="form-control" [(ngModel)]="model.isAlcoholic">
-                            <option value="">Is Alcholic?</option>
+                            <option value="">Is Alcoholic?</option>
                             <option [value]="true" [selected]="model.isAlcoholic=='true'">Yes</option>
                             <option [value]="false" [selected]="model.isAlcoholic=='false'">No</option>
                           </select>

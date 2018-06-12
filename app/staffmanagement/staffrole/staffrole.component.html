@@ -24,17 +24,21 @@
                       <div class="row">
                         <div class="col-md-6">
                           <label>Outlet Id</label>
-                          <input type="number" formControlName="ol_id" class="form-control">
+                          <select formControlName="ol_id" class="form-control">
+                              <option [selected]="true">Select Outlet</option>
+                              <option value="1">Papa Rancho</option>
+                              <option value="2">Trance</option>
+                          </select>
                           <div *ngIf="StaffRoleForm.controls['ol_id'].touched && !StaffRoleForm.controls['ol_id'].valid">
                             <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                             <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <label>Staff Title</label>
+                          <label>Role Title</label>
                           <input type="text" formControlName="title" class="form-control">
                           <div *ngIf="StaffRoleForm.controls['title'].touched && !StaffRoleForm.controls['title'].valid">
-                            <label *ngIf="StaffRoleForm.controls['title'].hasError('required')" style="color:red;">Staff Title</label>
+                            <label *ngIf="StaffRoleForm.controls['title'].hasError('required')" style="color:red;">Enter Role title</label>
                           </div>
                         </div>
                       </div>
@@ -79,15 +83,17 @@
         <div class="card-body">
           <div class="alert alert-success" *ngIf="DeleteStaff!=null">{{DeleteStaff}}</div>
           <div class="table-responsive">
+            
             <table class="table" width="100%;">
               <thead>
                 <tr>
                   <!-- <th></th> -->
-                  <th>Id</th>
-                  <th>Title</th>
+                  <th>Role Id</th>
+                  <th>Role Title</th>
+                  <th>Outlet Name</th>
                   <th>Mod Permission</th>
-                  <th>Modified Date</th>
-                  <th>Created Date</th>
+                  <!-- <th>Modified Date</th> -->
+                  <!-- <th>Created Date</th> -->
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -99,9 +105,13 @@
                   </td> -->
                   <td>{{data.srl_id}}</td>
                   <td>{{data.title}}</td>
+                  <td>
+                    <span *ngIf="data.ol_id==1">Papa Rancho</span>
+                    <span *ngIf="data.ol_id==2">Trance</span>
+                  </td>
                   <td>{{data.mod_permission}}</td>
-                  <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
-                  <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
+                  <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
+                  <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                   <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
                   <td>
                     <!-- <a href="#" title="Add" style="font-size: 16px;
@@ -136,7 +146,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Categories</h3>
-                  <div class="alert alert-success" *ngIf="UpdateStaffRoleMsg!=null">{{UpdateStaffRoleMsg}}</div>
+                  <div class="alert alert-success" *ngIf="UpdateStaffRoleMsg!=null">Staff record has been updated successfully</div>
                   <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffRole(EditForm)">
                     <div class="form-group">
                       <div class="row">
@@ -146,9 +156,14 @@
                         </div>
                         <div class="col-md-6">
                           <label>Outlet Id</label>
-                          <input type="number" formControlName="ol_id" class="form-control" [ngModel]="model.ol_id">
+                          
+                          <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          </select>
                           <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Id</label>
                           </div>
                         </div>
                       </div>

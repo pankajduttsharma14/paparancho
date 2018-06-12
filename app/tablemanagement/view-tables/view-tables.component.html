@@ -13,19 +13,25 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Outlet Id</label>
-                                    <input type="number" formControlName="ol_id" class="form-control">
+                                    <label>Outlet Name</label>
+                                    <select formControlName="ol_id" class="form-control">
+                                      <option value="" [selected]="true">Select Outlet</option>
+                                      <option value="1">Papa Rancho</option>
+                                      <option value="2">Trance</option>
+                                    </select>
                                     <div *ngIf="AddTable.controls['ol_id'].touched && !AddTable.controls['ol_id'].valid">
-                                        <label *ngIf="AddTable.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
-                                        <label *ngIf="AddTable.controls['ol_id'].hasError('min')" style="color:red;">Id Starts from 0</label>
+                                        <label *ngIf="AddTable.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
+                                        <!-- <label *ngIf="AddTable.controls['ol_id'].hasError('min')" style="color:red;">Id Starts from 0</label> -->
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <label>Service Table Number</label>
-                                    <input type="number" formControlName="srtbl_no" class="form-control">
+                                    <input type="number" formControlName="srtbl_no" class="form-control" TableValidator>
                                     <div *ngIf="AddTable.controls['srtbl_no'].touched && !AddTable.controls['srtbl_no'].valid">
                                         <label *ngIf="AddTable.controls['srtbl_no'].hasError('required')" style="color:red;">Enter service table number</label>
                                         <label *ngIf="AddTable.controls['srtbl_no'].hasError('min')" style="color:red;">Number starts from 0</label>
+                                        <label *ngIf="AddTable.controls['srtbl_no'].hasError('TableValidator') && !AddTable.controls['srtbl_no'].hasError('required')" style="color:red;">Table Already Exists!</label>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -36,6 +42,7 @@
                                     <div *ngIf="AddTable.controls['seat_cap'].touched && !AddTable.controls['seat_cap'].valid">
                                         <label *ngIf="AddTable.controls['seat_cap'].hasError('required')" style="color:red;">Enter Number of Chairs</label>
                                         <label *ngIf="AddTable.controls['seat_cap'].hasError('min')" style="color:red;">Add atlest one chair</label>
+                                        <label *ngIf="AddTable.controls['seat_cap'].hasError('max')" style="color:red;">Max 10 chairs Allowed!</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -143,3 +150,4 @@
     </div>
   </div>
 </div>
+  

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StaffService } from '../../services/staff.service';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { ViewEncapsulation } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
@@ -12,12 +13,14 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   templateUrl: './stafflist.component.html',
   styleUrls: ['./stafflist.component.scss'],
   providers: [StaffService, Ng4LoadingSpinnerService],
+  encapsulation: ViewEncapsulation.None,
 
 })
 
 
 export class StafflistComponent implements OnInit {
   StaffListForm: FormGroup;
+  
   EditForm: FormGroup;
   // form settings
   "ol_id": number;
@@ -38,6 +41,7 @@ export class StafflistComponent implements OnInit {
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   p: number = 1;
   public StaffList: any = {};
+  public StaffRoles:any=[];
   constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
@@ -49,6 +53,14 @@ export class StafflistComponent implements OnInit {
       res => { this.StaffList = res;
         this.spinnerService.hide(); },
       err => { this.spinnerService.hide(); });
+
+    // get staff Roles
+
+    this.spinnerService.show();
+    this.StaffService.GetStaffRoles().subscribe(
+      res => { this.StaffRoles = res;this.spinnerService.hide(); },
+      err => { this.spinnerService.hide();});  
+    
   }
 
   ngOnInit() {
@@ -86,6 +98,7 @@ export class StafflistComponent implements OnInit {
     });
 
   }
+
 
   // Add Staff
   StaffMsg: string;
@@ -130,7 +143,7 @@ export class StafflistComponent implements OnInit {
   // Delete Staff role
   DeleteStaffList(id) {
     this.spinnerService.show();
-    this.StaffService.DeleteStaffRole(id).subscribe(res => {
+    this.StaffService.DeleteStaff(id).subscribe(res => {
       if (res.status = 200) {
         this.DeleteStaffListMsg = "Staff Deleted Successfully";
 

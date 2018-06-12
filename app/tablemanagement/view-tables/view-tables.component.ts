@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableService } from '../../services/table.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -16,6 +16,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class ViewTablesComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   AddTable: FormGroup;
+  
+
   constructor(private TableService: TableService, private router: Router, private fb: FormBuilder) {
 
     var status = localStorage.getItem('loginStatus');
@@ -25,20 +27,20 @@ export class ViewTablesComponent implements OnInit {
 
     this.AddTable = this.fb.group({
       "ol_id": ['', [Validators.required, Validators.min(0)]],
-      "srtbl_no": ['', [Validators.required, Validators.min(0)]],
-      "seat_cap": ['', [Validators.required, Validators.min(1)]],
+      "srtbl_no": ['', [Validators.required, Validators.min(0), this.TableValidator]],
+      "seat_cap": ['', [Validators.required, Validators.min(1), Validators.max(10)]],
       "is_available": ['', [Validators.required]],
       "status": ['', [Validators.required]],
     });
+    
 
   }
 
-  GetTables = [];
+  public GetTables = [];
   GetTablesMsg;
   ngOnInit() {
-    this.TableService.GetAllTable().subscribe(res => {
-        if (res.status == 200) {
-          this.GetTables = res.data;
+    this.TableService.GetAllTable().subscribe(res => {if (res.status == 200) {this.GetTables = res.data;
+
         } else {
           this.GetTablesMsg = "No Tables For Display";
         }
@@ -84,6 +86,32 @@ export class ViewTablesComponent implements OnInit {
       this.TableDetail = null;
     }
   }
+
+
+  // table id custom validator  
+  TableValidator:any=(control:FormControl)=>{
+           let srtbl_no=control.value;
+            if(srtbl_no && srtbl_no!=null)
+           {    
+                for(var i=0;i<this.GetTables.length;i++)
+                {  
+                   if(srtbl_no==this.GetTables[i].srtbl_no)
+                   {
+                     
+                     return {'TableValidator':true};
+                     
+                   }
+                   
+                }                           
+           }
+           else{
+
+             return {'TableValidator':true};
+           }
+           
+   }
+
+
 
   // Add service table
   AddTableMsg: string = null;

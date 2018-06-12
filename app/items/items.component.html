@@ -20,17 +20,21 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Item</h3>
-                  <div class="alert alert-success" *ngIf="AddItemMsg!=null">{{AddItemMsg}}</div>
+                  <div class="alert alert-success" *ngIf="AddItemMsg!=null">Item has been added successfully</div>
                   <!-- form  -->
 
                   <form [formGroup]="AddItemsForm" (ngSubmit)="AddItems(AddItemsForm)">
                     <div class="row">
                       
                       <div class="col-md-4">
-                        <label>Outlet Id</label>
-                        <input type="number" formControlName="ol_id" class="form-control">
+                        <label>Outlet Name</label>
+                        <select formControlName="ol_id" class="form-control">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                        </select>
                         <div *ngIf="AddItemsForm.controls['ol_id'].touched && !AddItemsForm.controls['ol_id'].valid">
-                          <label *ngIf="AddItemsForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          <label *ngIf="AddItemsForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                           <label *ngIf="AddItemsForm.controls['ol_id'].hasError('min')" style="color:red;">Value Should start From 1</label>
                         </div>
                       </div>
@@ -38,12 +42,12 @@
 
                         <label>Category</label>
                         <select formControlName="icid" class="form-control">
-                          <option value="" [selected]="true">Select Category Type</option>
+                          <option value="" [selected]="true">Select Category</option>
                           <option *ngFor="let item of catList" [value]="item.catId">{{item.catName}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['icid'].touched && !AddItemsForm.controls['icid'].valid">
                           <label *ngIf="AddItemsForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
-                          <label *ngIf="AddItemsForm.controls['item_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -150,12 +154,12 @@
               <tr>
                 <!-- <th></th> -->
                 <th>Id</th>
-                <th>Title</th>
-                <th>Stock</th>
+                <th>Item Title</th>
+                <th>Item Stock</th>
                 <th>Price</th>
-                <th>Image</th>
-                <th>Modified Date</th>
-                <th>Created Date</th>
+                <th>Item Image</th>
+                <!-- <th>Modified Date</th> -->
+                <!-- <th>Created Date</th> -->
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -170,9 +174,9 @@
                 <td>{{data.item_stock}}</td>
                 <td>
                   <i class="fa fa-rupee"></i> {{data.item_price}}</td>
-                <td>{{data.Image}}</td>
-                <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
-                <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
+                <td><img [src]="data.item_img_url" alt="image" height="50px"></td>
+                <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
+                <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                 <td>
                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span>
                 </td>
@@ -184,7 +188,7 @@
                     <i class="fa fa-edit"></i>
                   </span>
                   <span title="Delete" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteItem(data.icid)">
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteItem(data.itmid)">
                     <i class="fa fa-trash"></i>
                   </span>
                 </td>
@@ -203,7 +207,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Item</h3>
-                  <div class="alert alert-success" *ngIf="ItemEditMsg!=null">{{ItemEditMsg}}</div>
+                  <!-- <div class="alert alert-success" *ngIf="ItemEditMsg!=null">Item record has been updated successfully</div> -->
                   <!-- form  -->
                   <form [formGroup]="EditForm" (ngSubmit)="EditItem(EditForm)">
                     <div class="row">
@@ -216,10 +220,14 @@
                             </div>
                       </div>
                       <div class="col-md-6">
-                        <label>Outlet Id</label>
-                        <input type="number" formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                        <label>Outlet Name</label>
+                        <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                        </select>
                         <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                          <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                          <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                           <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Value Should start From 1</label>
                         </div>
                       </div>

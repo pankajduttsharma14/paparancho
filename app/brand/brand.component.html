@@ -18,13 +18,17 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Brand</h3>
-                  <div class="alert alert-success" *ngIf="BrandMsg!=null">{{BrandMsg}}</div>
+                  <div class="alert alert-success" *ngIf="BrandMsg!=null">Brand has been added successfully</div>
                   <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand(AddBrandForm)">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
                           <label>Outlet Id</label>
-                          <input type="number" formControlName="ol_id" class="form-control">
+                          <select formControlName="ol_id" class="form-control">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          </select>
                           <div *ngIf="AddBrandForm.controls['ol_id'].touched && !AddBrandForm.controls['ol_id'].valid">
                             <label *ngIf="AddBrandForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                             <label *ngIf="AddBrandForm.controls['ol_id'].hasError('min')" style="color:red;">ID Should strat from 1</label>
@@ -40,7 +44,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Brand Image Name</label>
+                          <label>Brand Image</label>
                           <input type="text" formControlName="brand_img" class="form-control">
                           <div *ngIf="AddBrandForm.controls['brand_img'].touched && !AddBrandForm.controls['brand_img'].valid">
                             <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Outlet Id</label>
@@ -76,15 +80,15 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-          <div class="alert alert-success" *ngIf="DeleteBrandMsg!=null">{{DeleteBrandMsg}}</div>
+          <div class="alert alert-success" *ngIf="DeleteBrandMsg!=null">Brand deleted successfully</div>
           <table class="table">
             <thead>
               <tr>
                 <!-- <th></th> -->
-                <th>Id</th>
-                <th>Title</th>
+                <th>Brand Id</th>
+                <th>Brand Title</th>
                 <th>Image</th>
-                <th>Modified Date</th>
+                <th>Brand Modified Date</th>
                 <th>Created Date</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -98,7 +102,7 @@
                 <td>{{data.brid}}</td>
                 <td>{{data.brand_title}}</td>
                 <td>
-                  <img src="{{data.img_path}}" alt="brands">
+                  <img [src]="data.img_path" alt="brands" height="50">
                 </td>
                 <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
@@ -143,7 +147,7 @@
                   
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Brand</h3>
-                  <div class="alert alert-success" *ngIf="UpdateBrandMsg!=null">{{UpdateBrandMsg}}</div>
+                  <div class="alert alert-success" *ngIf="UpdateBrandMsg!=null">Brands has been updated successfully</div>
                   <form [formGroup]="EditForm" (ngSubmit)=UpdateBrand(EditForm) novalidate>
                     
                     <div class="row">
@@ -157,7 +161,11 @@
                       </div>
                       <div class="col-md-6">
                         <label>Outlet Id</label>
-                        <input type="number" class="form-control" formControlName="ol_id" [ngModel]="model.ol_id">
+                        <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
+                              <option value="">Select Outlet</option>
+                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                        </select>
                         <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
                             <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
                             <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id can't be 0</label>

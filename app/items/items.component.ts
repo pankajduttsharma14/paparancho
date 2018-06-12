@@ -133,7 +133,13 @@ export class ItemsComponent implements OnInit {
     this.FoodService.DeleteItem(id).subscribe(res => {
         if (res.status == 200) {
           this.DeleteItemMsg = "Item Deleted Successfully";
-          this.FoodService.GetAllItems().subscribe(res => { this.items = res; this.spinnerService.hide();}, err => {this.spinnerService.hide();});
+          this.FoodService.GetAllItems().subscribe(res => { 
+            if(res.status==200)
+            {
+              this.items = res; 
+            }
+            this.spinnerService.hide();}, 
+            err => {this.spinnerService.hide();});
           setTimeout(() => {
             this.DeleteItemMsg = null;
           }, 3000);

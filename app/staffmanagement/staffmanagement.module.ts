@@ -8,8 +8,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+
 @NgModule({
- imports: [CommonModule,StaffManagementRouting,FormsModule ,ReactiveFormsModule,ModalModule,NgxPaginationModule,Ng4LoadingSpinnerModule],
+ imports: [CommonModule,StaffManagementRouting,FormsModule ,ReactiveFormsModule,ModalModule,NgxPaginationModule,Ng4LoadingSpinnerModule, Ng2SearchPipeModule],
  declarations: [StaffroleComponent, StafflistComponent, StaffmanagementComponent]
 
 
