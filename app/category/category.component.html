@@ -1,3 +1,24 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this category?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(catId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- delete model -->
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -19,23 +40,25 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Category</h3>
                   <div class="alert alert-success" *ngIf="AddCatMsg!=null">{{AddCatMsg}}</div>
-                  <form [formGroup]="AddForm" (ngSubmit)="AddCategories(AddForm)">
+                  
+                  <form [formGroup]="AddForm" (ngSubmit)="AddCategories(AddForm)" *ngIf="AddCatMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
                               <option value="">Select Outlet</option>
                               <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
                               <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="AddForm.controls['ol_id'].touched && !AddForm.controls['ol_id'].valid">
-                            <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="AddForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Name</label>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label>Category Type</label>
-                          <select formControlName="cat_type" class="form-control">
+                          
+                          <select formControlName="cat_type" class="form-control" (change)="SetAlcholic($event.target.value)">
                             <option value="" [selected]="true">Select Category Type</option>
                             <option *ngFor="let cat of category_type  " [value]="cat">{{cat}}</option>
                           </select>
@@ -79,10 +102,13 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
+                          
                           <label>Is Alcoholic?</label>
                           <select formControlName="isAlcoholic" class="form-control">
-                            <option value="" [selected]="true">Is Alcoholic?</option>
-                            <option *ngFor="let al of alchoholic" [value]="al.value">{{al.data}}</option>
+                            <option value="">Is Alcoholic?</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+
                           </select>
                           <div *ngIf="AddForm.controls['isAlcoholic'].touched && !AddForm.controls['isAlcoholic'].valid">
                             <label *ngIf="AddForm.controls['isAlcoholic'].hasError('required')" style="color:red;">Select Is Alcoholic Status</label>
@@ -117,7 +143,15 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-          <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">{{DeleteCatMsg}}</div>
+          <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">Category has been deleted</div>
+           <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchCat">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
           <!-- {{categories | json}} -->
           <table class="table">
             <thead>
@@ -130,13 +164,13 @@
                 <th>Category Image</th>
                 <!-- <th>Modified Date</th> -->
                 <!-- <th>Created Date</th> -->
-                <th>Status</th>
+                
                 <th>Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr *ngFor='let data of categories | paginate: { itemsPerPage: 10, currentPage: p} '>
+              <tr *ngFor='let data of categories | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p} '>
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
                 </td> -->
@@ -147,13 +181,18 @@
                 <td><img [src]="data.cat_img_url" alt="image" height="50"></td>
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                 <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
+                
                 <td>
                   
                   <span title="Edit" style="font-size: 16px;
                   margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
+                  <!-- <span title="Delete" style="font-size: 16px;
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteCategory(data.icid)"><i class="fa fa-trash"></i></span> -->
                   <span title="Delete" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteCategory(data.icid)"><i class="fa fa-trash"></i></span>
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.icid)"><i class="fa fa-trash"></i></span>
+                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                 </td>
               </tr>
             </tbody>
@@ -181,7 +220,7 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Categories</h3>
                   <div class="alert alert-success" *ngIf="UpdateCatMsg!=null">{{UpdateCatMsg}}</div>
-                  <form [formGroup]="EditForm" (ngSubmit)="UpdateCategory(EditForm)">
+                  <form [formGroup]="EditForm" (ngSubmit)="UpdateCategory(EditForm)" *ngIf="UpdateCatMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6" style="display: none !important;">

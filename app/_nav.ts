@@ -15,7 +15,7 @@ export const navItems = [
     icon: 'icon-puzzle',
     children: [
       {
-        name: 'Staff Role',
+        name: 'Staff Role List',
         url: 'staff-management/staffrole',
         icon: 'icon-puzzle'
       },

@@ -12,7 +12,7 @@ const routes: Routes = [
     component:VouchersComponent,
     
 
-  }
+  },{path: '**', redirectTo: '/404'},
   ];
 
 @NgModule({

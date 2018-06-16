@@ -1,3 +1,25 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this category?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(DId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- delete model -->
+
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -19,19 +41,19 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Brand</h3>
                   <div class="alert alert-success" *ngIf="BrandMsg!=null">Brand has been added successfully</div>
-                  <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand(AddBrandForm)">
+                  <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand(AddBrandForm)" *ngIf="BrandMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
                               <option value="">Select Outlet</option>
                               <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
                               <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="AddBrandForm.controls['ol_id'].touched && !AddBrandForm.controls['ol_id'].valid">
-                            <label *ngIf="AddBrandForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
-                            <label *ngIf="AddBrandForm.controls['ol_id'].hasError('min')" style="color:red;">ID Should strat from 1</label>
+                            <label *ngIf="AddBrandForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
+                            <!-- <label *ngIf="AddBrandForm.controls['ol_id'].hasError('min')" style="color:red;">ID Should start from 1</label> -->
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -47,7 +69,7 @@
                           <label>Brand Image</label>
                           <input type="text" formControlName="brand_img" class="form-control">
                           <div *ngIf="AddBrandForm.controls['brand_img'].touched && !AddBrandForm.controls['brand_img'].valid">
-                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Brand Image Url</label>
                           </div>
                         </div>
                         <div class="col-md-6">
@@ -81,6 +103,14 @@
         <!-- modal -->
         <div class="card-body">
           <div class="alert alert-success" *ngIf="DeleteBrandMsg!=null">Brand deleted successfully</div>
+          <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchBrand">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
           <table class="table">
             <thead>
               <tr>
@@ -90,12 +120,12 @@
                 <th>Image</th>
                 <th>Brand Modified Date</th>
                 <th>Created Date</th>
-                <th>Status</th>
+                
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor='let data of brands.data | paginate: { itemsPerPage: 10, currentPage: p}'>
+              <tr *ngFor='let data of brands.data | filter: searchBrand | paginate: { itemsPerPage: 10, currentPage: p}'>
                 <!-- <td>
                   <input type="Checkbox" name="select">
                 </td> -->
@@ -106,10 +136,7 @@
                 </td>
                 <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
-                <td>
-                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span>
-                  
-                </td>
+                
                 <td>
                   <!-- <a href="#" title="Add" style="font-size: 16px;
                   margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
@@ -118,9 +145,12 @@
                     <i class="fa fa-edit"></i>
                   </span>
                   <span title="Delete" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteBrand(data.brid)">
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.brid)">
                     <i class="fa fa-trash"></i>
                   </span>
+                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                 </td>
               </tr>
             </tbody>
@@ -160,14 +190,14 @@
                           </div>
                       </div>
                       <div class="col-md-6">
-                        <label>Outlet Id</label>
+                        <label>Outlet Name</label>
                         <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
                               <option value="">Select Outlet</option>
                               <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
                               <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                         </select>
                         <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                             <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id can't be 0</label>
                           </div>
                       </div>
@@ -187,7 +217,7 @@
                         <label>Brand Image</label>
                         <input type="text" class="form-control" formControlName="brand_img" [ngModel]="model.brand_img">
                         <div *ngIf="EditForm.controls['brand_img'].touched && !EditForm.controls['brand_img'].valid">
-                            <label *ngIf="EditForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Brand Name</label>
+                            <label *ngIf="EditForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Brand Image Url</label>
                             
                           </div>
                       </div>

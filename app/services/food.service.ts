@@ -125,4 +125,10 @@ export class FoodService {
       return this.http.post(url,body,this.options).map(res=>res.json());
     }
 
+    GetCategoryType(id):Observable<any>
+    {
+        const url:string=this.BASE_URL+"getcattype/catid/"+id;
+        return this.http.get(url,this.options).map(res=>res.json());
+    }
+
 }

@@ -8,12 +8,15 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 
+
 @Component({
   selector: 'app-stafflist',
   templateUrl: './stafflist.component.html',
   styleUrls: ['./stafflist.component.scss'],
   providers: [StaffService, Ng4LoadingSpinnerService],
   encapsulation: ViewEncapsulation.None,
+
+  
 
 })
 
@@ -24,8 +27,9 @@ export class StafflistComponent implements OnInit {
   EditForm: FormGroup;
   // form settings
   "ol_id": number;
+  "staff_id":number;
   "staff_login_id": string;
-  "pass_code": string;
+  // "pass_code": string;
   "password": string;
   "role_id": number;
   "first_name": string;
@@ -39,9 +43,12 @@ export class StafflistComponent implements OnInit {
 
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
+  
   p: number = 1;
   public StaffList: any = {};
   public StaffRoles:any=[];
+  public searchStaff:any='';
   constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
@@ -68,11 +75,13 @@ export class StafflistComponent implements OnInit {
 
       "ol_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
       "staff_login_id": ['', Validators.compose([Validators.required])],
-      "pass_code": ['', Validators.compose([Validators.required, Validators.min(1)])],
+      // "pass_code": ['', Validators.compose([Validators.required, Validators.min(1)])],
       "password": ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       "role_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
-      "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      // "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      "first_name": ['', Validators.compose([Validators.required])],
+      // "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      "last_name": ['', Validators.compose([Validators.required])],
       "mob_number": ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]{10}$/)])],
       "address": ['', Validators.compose([Validators.required])],
       "age": ['', Validators.compose([Validators.required, Validators.min(18), Validators.pattern(/^\d{1,2}$/)])],
@@ -82,13 +91,17 @@ export class StafflistComponent implements OnInit {
     });
     this.EditForm = this.FormBuilder.group({
       "staff_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
+      "staff_login_id": ['', Validators.compose([Validators.required])],
       "ol_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
-      "pass_code": ['', Validators.compose([Validators.required, Validators.min(1)])],
+
+      // "pass_code": ['', Validators.compose([Validators.required, Validators.min(1)])],
       "password": ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       "role_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
       "login_status": ['', Validators.compose([Validators.required])],
-      "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      // "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      "first_name": ['', Validators.compose([Validators.required])],
+      // "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
+      "last_name": ['', Validators.compose([Validators.required])],
       "mob_number": ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]{10}$/)])],
       "address": ['', Validators.compose([Validators.required])],
       "age": ['', Validators.compose([Validators.required, Validators.min(18), Validators.pattern(/^\d{1,2}$/)])],
@@ -96,12 +109,13 @@ export class StafflistComponent implements OnInit {
       "status": ['', Validators.compose([Validators.required])],
 
     });
-
+    
   }
 
 
   // Add Staff
   StaffMsg: string;
+  
   AddStaffList(formData) {
     this.spinnerService.show();
     let data = formData.value;
@@ -125,11 +139,21 @@ export class StafflistComponent implements OnInit {
           } else {
             this.StaffMsg = "Staff can't added";
             this.spinnerService.hide();
+            setTimeout(() => {
+              
+              this.StaffMsg = null;
+              this.largeModal.hide();
+            }, 3000);
           }
         },
         err => {
           this.StaffMsg = "Staff can't added";
           this.spinnerService.hide();
+          setTimeout(() => {
+              
+              this.StaffMsg = null;
+              this.largeModal.hide();
+            }, 3000);
         }
       );
     }
@@ -137,7 +161,23 @@ export class StafflistComponent implements OnInit {
 
   }
 
+
+  staffId:any='';
   // Delete Staff
+  ConfirmDialog(id, trigger:boolean=false)
+  {
+    this.staffId=id;
+    if(trigger==true)
+    {
+      
+      this.DeleteStaffList(this.staffId);  
+      this.dangerModel.hide();
+
+    }
+    else{this.dangerModel.show();}
+    
+  }
+    
 
   DeleteStaffListMsg: string = null;
   // Delete Staff role
@@ -178,9 +218,10 @@ export class StafflistComponent implements OnInit {
   // edit staff
   Editrow = [];
   show(data, modal) {
-
+    console.log(data);
     this.Editrow = new Array();
     this.Editrow.push(data);
+    
 
     modal.show();
   }
@@ -188,8 +229,8 @@ export class StafflistComponent implements OnInit {
   model = {
     "staff_id": '',
     "ol_id": '',
-
-    "pass_code": '',
+    'staff_login_id':'',
+    // "pass_code": '',
     "password": '',
     "role_id": '',
     "login_status": '',
@@ -208,8 +249,8 @@ export class StafflistComponent implements OnInit {
     this.model = {
       "staff_id": this.Editrow[0].staff_id,
       "ol_id": this.Editrow[0].ol_id,
-
-      "pass_code": this.Editrow[0].pass_code,
+      'staff_login_id':this.Editrow[0].staff_login_id,
+      // "pass_code": this.Editrow[0].pass_code,
       "password": this.Editrow[0].password,
       "role_id": this.Editrow[0].role_id,
       "login_status": this.Editrow[0].login_status,
@@ -222,6 +263,7 @@ export class StafflistComponent implements OnInit {
       "status": this.Editrow[0].status,
 
     }
+    console.log(this.model);
 
   }
 

@@ -9,7 +9,7 @@ const routes: Routes = [
     data: {
       title: 'Table Management'
     },
-    component:TablemanagementComponent,
+    component:ViewTablesComponent,
     children: [
       {
         path: '',
@@ -27,7 +27,8 @@ const routes: Routes = [
       },
      
     ]
-  }
+  },
+  {path: '**', redirectTo: '/404'},
 ];
 
 @NgModule({

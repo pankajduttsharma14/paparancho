@@ -19,20 +19,27 @@ export class OrderdetailsComponent implements OnInit {
     if (status != "true") {
       this.router.navigate(['login']);
     }
+
+
+
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       this.OrderID = params['id'];
-      
+
       // get all records by id
       this.OrderService.GetRecordsById(this.OrderID).subscribe(
         res => {
           this.OrderDetails = res;
-          
+          this.CheckServedOrder(this.OrderDetails.data);
+
         }, err => { console.log(err) });
     });
   }
+
+
+
 
   public OrderStatus: any;
   // CancelOrder order
@@ -41,17 +48,40 @@ export class OrderdetailsComponent implements OnInit {
       this.OrderID = params['id'];
       this.OrderService.CancelOrder(id).subscribe(
         res => {
-        this.OrderStatus = res.data;
+          this.OrderStatus = res.data;
 
           setTimeout(() => {
             this.router.navigate(['/dashboard/order/order-list']);
-             this.OrderStatus =null;
+            this.OrderStatus = null;
           }, 1000);
 
         },
-        err => {console.log(err);this.OrderStatus =null;});
+        err => { console.log(err);
+          this.OrderStatus = null; });
 
     });
+  }
+  // checkServedOrder
+
+  ServedStatus: any = false;
+  CheckServedOrder(records) {
+
+    if (!records) return null;
+    else {
+
+
+      for (var i = 0; i < records.length; i++) {
+        if (records[i].status == 'Served') {
+          this.ServedStatus = true;
+          
+          break;
+        } else {
+            this.ServedStatus = null;
+          continue;
+        }
+
+      }
+    }
   }
 
 

@@ -26,6 +26,7 @@ import { ModalsComponent } from './views/notifications/modals.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
+
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];

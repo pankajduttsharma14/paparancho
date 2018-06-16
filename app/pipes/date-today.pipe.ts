@@ -5,10 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateTodayPipe implements PipeTransform {
 	
-	filterItems:any=Array()
+	filterItems:any=Array();
 
 
 	transform(records: any[], enable: boolean): any {
+            this.filterItems=Array();
 			if(!enable) return records;
 			var d=new Date();
     		var dd1=d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();

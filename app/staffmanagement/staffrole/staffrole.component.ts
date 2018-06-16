@@ -15,6 +15,7 @@ export class StaffroleComponent implements OnInit {
 
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
 
   public StaffRolesList: any = {};
   StaffRoleForm: FormGroup;
@@ -37,6 +38,19 @@ export class StaffroleComponent implements OnInit {
       res => { this.StaffRolesList = res;this.spinnerService.hide(); },
       err => { this.spinnerService.hide();});
 
+    
+
+  }
+
+
+  ngOnInit() {
+    this.CreateAddForm();
+    this.CreateEditForm();
+  }
+
+  
+  CreateAddForm()
+  {
     // Add Form intitilized
     this.StaffRoleForm = this.fb.group({
       "ol_id": ['', Validators.compose([Validators.required, Validators.min(0)])],
@@ -46,7 +60,9 @@ export class StaffroleComponent implements OnInit {
 
 
     });
+  }
 
+  CreateEditForm(){
     // Edit Form initilized
     this.EditForm = this.fb.group({
       'srl_id': ['', Validators.compose([Validators.required, Validators.min(0)])],
@@ -56,17 +72,15 @@ export class StaffroleComponent implements OnInit {
       "status": ['', Validators.required]
 
     });
-
   }
-
-  ngOnInit() {}
 
   // Add Staff Role
   StaffMsg: string = null;
   AddStaffRole(formData) {
     this.spinnerService.show();
     let data = formData.value;
-    formData.reset();
+    this.CreateAddForm();
+
     this.StaffService.AddStaffRole(data).subscribe(res => {
       if (res.status == 200) {
         this.StaffMsg = res.message;
@@ -106,6 +120,24 @@ export class StaffroleComponent implements OnInit {
 
   DeleteStaff: string = null;
   // Delete Staff role
+roleId:any;
+  // Delete Staff
+  ConfirmDialog(id, trigger:boolean=false)
+  {
+    this.roleId=id;
+    if(trigger==true)
+    {
+      
+      this.DeleteStaffRole(this.roleId);  
+      this.dangerModel.hide();
+
+    }
+    else{this.dangerModel.show();}
+    
+  }
+
+
+
   DeleteStaffRole(id) {
     this.spinnerService.show();
     this.StaffService.DeleteStaffRole(id).subscribe(res => {
@@ -207,5 +239,12 @@ export class StaffroleComponent implements OnInit {
     });
   }
 
+showModel(model)
+{
+  this.CreateAddForm();
+  model.show();  
+}
+
 
 }
+

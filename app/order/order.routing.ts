@@ -6,7 +6,7 @@ import {OrderdetailsComponent} from './orderdetails/orderdetails.component';
 const routes :Routes= [
 	{
 		path:'',
-    component:OrderComponent,
+    
 		data: {
       		title: 'Order'
     	},
@@ -19,6 +19,7 @@ const routes :Routes= [
           data: {
           title: 'Order-List'
           },
+          pathMatch:'full'
       },
       {
 
@@ -26,7 +27,8 @@ const routes :Routes= [
         component: OrderlistComponent,
           data: {
           title: 'Order-List'
-          }
+          },
+          pathMatch:'full'
 
       },
       {
@@ -35,12 +37,14 @@ const routes :Routes= [
         component: OrderdetailsComponent,
           data: {
           title: 'Order-Details'
-          }
+          },
+          pathMatch:'full'
 
       }
 
     	]
-	}
+	},
+  {path: '**', redirectTo: '/404'},
 
 ];
 

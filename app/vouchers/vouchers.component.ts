@@ -80,7 +80,9 @@ export class VouchersComponent implements OnInit {
         // update vouchers list
         this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });
         setTimeout(() => {
+
           this.VoucherMsg = null;
+          this.largeModal.hide();
         }, 3000);
       }
       else{
@@ -88,6 +90,7 @@ export class VouchersComponent implements OnInit {
         this.VoucherMsg = "Voucher cant added!";
         setTimeout(() => {
           this.VoucherMsg = null;
+          this.largeModal.hide();
         }, 3000);
       }
     },
@@ -98,6 +101,7 @@ export class VouchersComponent implements OnInit {
         setTimeout(() => {
           this.VoucherMsg = null;
           formData.reset();
+          this.largeModal.hide();
 
         }, 3000);
 
@@ -192,6 +196,7 @@ UpdateVoucherMsg:string=null;
           this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => {this.spinnerService.hide();});
           setTimeout(()=>{
             this.UpdateVoucherMsg=null;
+            this.largeModal1.hide();
           },3000);
         }
         else{
@@ -199,6 +204,7 @@ UpdateVoucherMsg:string=null;
             this.spinnerService.hide();
             setTimeout(()=>{
               this.UpdateVoucherMsg=null;
+              this.largeModal1.hide();
             },3000);
         }
     },
@@ -208,6 +214,7 @@ UpdateVoucherMsg:string=null;
       this.spinnerService.hide();
       setTimeout(()=>{
         this.UpdateVoucherMsg=null;
+        this.largeModal1.hide();
       },3000);
     });
 

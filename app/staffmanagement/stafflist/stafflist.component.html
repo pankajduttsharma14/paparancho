@@ -1,3 +1,26 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this staff?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(staffId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- delete model -->
+
+
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -19,24 +42,24 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Staff</h3>
                   <div class="alert alert-success" *ngIf="StaffMsg!=null"> Staff record has been updated successfully</div>
-                  <form [formGroup]="StaffListForm" (ngSubmit)="AddStaffList(StaffListForm)" autocomplete='off'>
+                  <form [formGroup]="StaffListForm" (ngSubmit)="AddStaffList(StaffListForm)" autocomplete='off' *ngIf="StaffMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
                             <option [selected]="true" value="">Select Outlet</option>
                             <option value="1">Papa Rancho</option>
                             <option value="2">Trance</option>
                           </select>
                           <div *ngIf="StaffListForm.controls['ol_id'].touched && !StaffListForm.controls['ol_id'].valid">
-                            <label *ngIf="StaffListForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="StaffListForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Name</label>
                             <label *ngIf="StaffListForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label>Staff Login Id/Phone Number</label>
-                          <input type="text" formControlName="staff_login_id" class="form-control">
+                          <input type="number" formControlName="staff_login_id" class="form-control">
                           <div *ngIf="StaffListForm.controls['staff_login_id'].touched && !StaffListForm.controls['staff_login_id'].valid">
                             <label *ngIf="StaffListForm.controls['staff_login_id'].hasError('required')" style="color:red;">Staff Login Id/Phone Number</label>
                           </div>
@@ -44,15 +67,15 @@
                       </div>
                       <!-- row 2 -->
                       <div class="row">
-                        <div class="col-md-4">
+                      <!--   <div class="col-md-4">
                           <label>Pass code</label>
                           <input type="text" formControlName="pass_code" class="form-control">
                           <div *ngIf="StaffListForm.controls['pass_code'].touched && !StaffListForm.controls['pass_code'].valid">
                             <label *ngIf="StaffListForm.controls['pass_code'].hasError('required')" style="color:red;">Enter Pass Code</label>
                             <label *ngIf="StaffListForm.controls['pass_code'].hasError('min')" style="color:red;">Incorrect Pass code</label>
                           </div>
-                        </div>
-                        <div class="col-md-4">
+                        </div> -->
+                        <div class="col-md-6">
                           <label>Password</label>
                           <input type="password" formControlName="password" class="form-control">
                           <div *ngIf="StaffListForm.controls['password'].touched && !StaffListForm.controls['password'].valid">
@@ -60,14 +83,14 @@
                             <label *ngIf="StaffListForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <label>Role Id</label>
+                        <div class="col-md-6">
+                          <label>Role</label>
                           <select formControlName="role_id" class="form-control">
                             <option [selected]="true" value="">Select Staff Role</option>
                             <option *ngFor="let data of StaffRoles.data" [value]="data.srl_id">{{data.title}}</option>
                           </select>
                           <div *ngIf="StaffListForm.controls['role_id'].touched && !StaffListForm.controls['role_id'].valid">
-                            <label *ngIf="StaffListForm.controls['role_id'].hasError('required')" style="color:red;">Select Role</label>
+                            <label *ngIf="StaffListForm.controls['role_id'].hasError('required')" style="color:red;">Select Staff Role</label>
                             <!-- <label *ngIf="StaffListForm.controls['role_id'].hasError('min')" style="color:red;">Id Starts From 1</label> -->
                           </div>
                         </div>
@@ -164,8 +187,8 @@
         <!-- modal -->
         <div class="card-body table-responsive">
           <div class="alert alert-success" *ngIf="DeleteStaffListMsg!=null">{{DeleteStaffListMsg}}</div>
-          <div class="row just">
-            <div class="col-4">
+          <div class="row justify-content-end">
+            <div class="col-3">
               <div class="input-group searchBox" style="margin-bottom: 10px;">
                 <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchStaff">
                 <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
@@ -177,17 +200,19 @@
               <tr>
                 <!-- <th></th> -->
                 <th>Staff Id</th>
+                <th>Outlet Id</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Contact</th>
-                <th>Pass Code</th>
-                <th>Address</th>
-                <th>Age</th>
-                <th>Gender</th>
+                <!-- <th>Pass Code</th> -->
+                <!-- <th width="20%" style="word-break: break-all;">Address</th> -->
+                <!-- <th>Age</th>
+                <th>Gender</th> -->
                 <!-- <th>Modified Date</th>
                 <th>Created Date</th> -->
-                <th>Login Status</th>
-                <th>Active Status</th>
+                <th>Login Id</th>
+                <!-- <th>Login Status</th> -->
+                <!-- <th>Active Status</th> -->
                 <th>Actions</th>
               </tr>
             </thead>
@@ -197,22 +222,30 @@
                   <input type="checkbox" name="checkbox">
                 </td> -->
                 <td>{{data.staff_id}}</td>
+                <td>{{data.ol_id}}</td>
                 <td>{{data.first_name+" "+data.last_name}}</td>
                 <td>{{data.role_name}}</td>
                 <td>{{data.mob_number}}</td>
-                <td>{{data.pass_code}}</td>
-                <td>{{data.address}}</td>
+                <td>{{data.staff_login_id}}</td>
+                <!-- <td>{{data.pass_code}}</td> -->
+                <!-- <td width="20%" style="word-break: break-all;">{{data.address}}</td>
                 <td>{{data.age}}</td>
-                <td>{{data.gender}}</td>
+                <td>{{data.gender}}</td> -->
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td>
-                <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
+
+                <!-- <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td> -->
+                
                 <td>
                   <span title="Edit" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
-                  <span title="Delete" style="font-size: 16px;
-                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffList(data.staff_id)"><i class="fa fa-trash"></i></span>
+                  <!-- <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffList(data.staff_id)"><i class="fa fa-trash"></i></span> -->
+                    <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.staff_id)"><i class="fa fa-trash"></i></span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                 </td>
               </tr>
             </tbody>
@@ -237,39 +270,45 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Staff</h3>
                   <div class="alert alert-success" *ngIf="UpdateStaffListMsg!=null">{{UpdateStaffListMsg}}</div>
-                  <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off'>
+                  
+                   <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off'  *ngIf="UpdateStaffListMsg==null">
                     <div class="form-group">
-                      <div class="row">
+                      <div class="row"> 
+                        <div class="col-md-6" style="display: none;">
+                          
+                          <input type="hidden" formControlName="staff_id" class="form-control" [ngModel]="model.staff_id">
+                          
+                        </div>
                         <div class="col-md-6">
-                          <label>Staff Id</label>
-                          <input type="text" formControlName="staff_id" class="form-control" [ngModel]="model.staff_id" disabled>
-                          <div *ngIf="EditForm.controls['staff_id'].touched && !EditForm.controls['staff_id'].valid">
-                            <label *ngIf="EditForm.controls['staff_id'].hasError('required')" style="color:red;">Staff Login Id</label>
+                          <label>Staff Login Id/Phone Number</label>
+                          <input type="text" formControlName="staff_login_id" class="form-control" [ngModel]="model.staff_login_id">
+                          <div *ngIf="EditForm.controls['staff_login_id'].touched && !EditForm.controls['staff_login_id'].valid">
+                            <label *ngIf="EditForm.controls['staff_login_id'].hasError('required')" style="color:red;">Enter Staff Login Id/Phone Number</label>
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
                             <option value="">Select Outlet</option>
                             <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
                             <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Name</label>
                             <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
                           </div>
                         </div>
                       </div>
                       <!-- row 2 -->
                       <div class="row">
-                        <div class="col-md-6">
+                       <!--  <div class="col-md-6">
                           <label>Pass code</label>
                           <input type="text" formControlName="pass_code" class="form-control" [ngModel]="model.pass_code">
                           <div *ngIf="EditForm.controls['pass_code'].touched && !EditForm.controls['pass_code'].valid">
                             <label *ngIf="EditForm.controls['pass_code'].hasError('required')" style="color:red;">Enter Pass Code</label>
                             <label *ngIf="EditForm.controls['pass_code'].hasError('min')" style="color:red;">Incorrect Pass code</label>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                           <label>Password</label>
                           <input type="password" formControlName="password" class="form-control" [ngModel]="model.password">
@@ -278,20 +317,21 @@
                             <label *ngIf="EditForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
                           </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label>Role Id</label>
-                          <select formControlName="role_id" class="form-control" ([ngModel])="model.role_id">
+                    
+                        <div class="col-md-6">
+                          
+                          <label>Role</label>
+                          <select formControlName="role_id" class="form-control" [(ngModel)]="model.role_id">
                             <option value="">Select Staff Role</option>
-                            <option *ngFor="let data of StaffRoles.data" [value]="data.srl_id" [selected]="data.srl_id==model.role_id">{{data.title}}</option>
+                            <option *ngFor="let data of StaffRoles.data" [value]="data.srl_id" 
+                            [selected]="data.srl_id==model.role_id">{{data.title}}</option>
                           </select>
                           <div *ngIf="EditForm.controls['role_id'].touched && !EditForm.controls['role_id'].valid">
-                            <label *ngIf="EditForm.controls['role_id'].hasError('required')" style="color:red;">Enter Role Id</label>
+                            <label *ngIf="EditForm.controls['role_id'].hasError('required')" style="color:red;">Select Role</label>
                             <label *ngIf="EditForm.controls['role_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="display: none;">
                           <label>Login Status</label>
                           <select class="form-control" formControlName="login_status" [(ngModel)]="model.login_status">
                             <option value="">Login Status</option>

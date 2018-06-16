@@ -1,3 +1,25 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this Role?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(roleId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- delete model -->
+
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -9,7 +31,7 @@
         <!-- modal -->
         <div class="add_box">
           <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="showModel(largeModal)">
               <i class="fa fa-plus"></i> Add Staff Role
             </button>
           </div>
@@ -18,19 +40,19 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Staff Role</h3>
-                  <div class="alert alert-success" *ngIf="StaffMsg!=null">{{StaffMsg}}</div>
-                  <form [formGroup]="StaffRoleForm" (ngSubmit)="AddStaffRole(StaffRoleForm)">
+                  <div class="alert alert-success" *ngIf="StaffMsg!=null">Staff role has been added successfully</div>
+                  <form [formGroup]="StaffRoleForm" (ngSubmit)="AddStaffRole(StaffRoleForm)" *ngIf="StaffMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
-                              <option [selected]="true">Select Outlet</option>
+                              <option [selected]="true" value="">Select Outlet</option>
                               <option value="1">Papa Rancho</option>
                               <option value="2">Trance</option>
                           </select>
                           <div *ngIf="StaffRoleForm.controls['ol_id'].touched && !StaffRoleForm.controls['ol_id'].valid">
-                            <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Id</label>
+                            <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Name</label>
                             <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('min')" style="color:red;">Id Starts From 1</label>
                           </div>
                         </div>
@@ -66,7 +88,7 @@
                       <div class="row">
                         <div class="col-md-12" style="margin-top: 10px;">
                           <button type="submit" class="sub_btn btn btn-success" [disabled]="!StaffRoleForm.valid">
-                            <i class="fa fa-plus"></i> Staff Role</button>
+                            <i class="fa fa-plus"></i> Add Staff Role</button>
                         </div>
                       </div>
                     </div>
@@ -81,7 +103,7 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-          <div class="alert alert-success" *ngIf="DeleteStaff!=null">{{DeleteStaff}}</div>
+          <div class="alert alert-success" *ngIf="DeleteStaff!=null">Staff role has been deleted successfully</div>
           <div class="table-responsive">
             
             <table class="table" width="100%;">
@@ -94,7 +116,7 @@
                   <th>Mod Permission</th>
                   <!-- <th>Modified Date</th> -->
                   <!-- <th>Created Date</th> -->
-                  <th>Status</th>
+                  
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -112,7 +134,7 @@
                   <td>{{data.mod_permission}}</td>
                   <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                   <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                  <td><span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span></td>
+                  
                   <td>
                     <!-- <a href="#" title="Add" style="font-size: 16px;
                     margin-right: 10px;">
@@ -120,8 +142,13 @@
                     </a> -->
                     <span title="Edit" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
+                    <!-- <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffRole(data.srl_id)"><i class="fa fa-trash"></i></span> -->
                     <span title="Delete" style="font-size: 16px;
-                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffRole(data.srl_id)"><i class="fa fa-trash"></i></span>
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.srl_id)"><i class="fa fa-trash"></i></span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -145,7 +172,7 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-body">
-                  <h3 class="modal_heading">Edit Categories</h3>
+                  <h3 class="modal_heading">Edit Staff Role</h3>
                   <div class="alert alert-success" *ngIf="UpdateStaffRoleMsg!=null">Staff record has been updated successfully</div>
                   <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffRole(EditForm)">
                     <div class="form-group">
@@ -155,7 +182,7 @@
                           <input type="number" formControlName="srl_id" class="form-control" [ngModel]="model.srl_id" readonly>
                         </div>
                         <div class="col-md-6">
-                          <label>Outlet Id</label>
+                          <label>Outlet Name</label>
                           
                           <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
                               <option value="">Select Outlet</option>
@@ -163,7 +190,7 @@
                               <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Id</label>
+                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                           </div>
                         </div>
                       </div>
@@ -197,7 +224,8 @@
                     
                       <div class="row">
                         <div class="col-md-12" style="margin-top: 10px;">
-                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Category</button>
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Staff Role</button>
+
                         </div>
                       </div>
                     </div>

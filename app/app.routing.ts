@@ -14,6 +14,7 @@ import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
 
+  
   {
     path: '',
     redirectTo:'login',
@@ -82,7 +83,7 @@ export const routes: Routes = [
         path: 'table-management',
         loadChildren: './tablemanagement/table.module#TableModule'
       },
-
+      
 
 
 

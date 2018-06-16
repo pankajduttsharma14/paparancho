@@ -1,3 +1,27 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this category?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(itemId,true)">Yes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- delete model -->
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -6,7 +30,6 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Items
         </div>
-
         <!-- modal  -->
         <div class="add_box">
           <div class="button_control">
@@ -14,7 +37,6 @@
               <i class="fa fa-plus"></i> Add Item
             </button>
           </div>
-
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -23,34 +45,32 @@
                   <div class="alert alert-success" *ngIf="AddItemMsg!=null">Item has been added successfully</div>
                   <!-- form  -->
 
-                  <form [formGroup]="AddItemsForm" (ngSubmit)="AddItems(AddItemsForm)">
+                  <form [formGroup]="AddItemsForm" (ngSubmit)="AddItems(AddItemsForm)" *ngIf="AddItemMsg==null">
                     <div class="row">
-                      
-                      <div class="col-md-4">
+                      <input type="hidden" [ngModel]="GetCatType" formControlName="item_cat_type" style="display: none">
+                      <div class="col-md-6">
                         <label>Outlet Name</label>
                         <select formControlName="ol_id" class="form-control">
-                              <option value="">Select Outlet</option>
-                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
-                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          <option value="">Select Outlet</option>
+                          <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                          <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['ol_id'].touched && !AddItemsForm.controls['ol_id'].valid">
                           <label *ngIf="AddItemsForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                           <label *ngIf="AddItemsForm.controls['ol_id'].hasError('min')" style="color:red;">Value Should start From 1</label>
                         </div>
                       </div>
-                      <div class="col-md-4">
-
+                      <div class="col-md-6">
                         <label>Category</label>
-                        <select formControlName="icid" class="form-control">
+                        <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)">
                           <option value="" [selected]="true">Select Category</option>
                           <option *ngFor="let item of catList" [value]="item.catId">{{item.catName}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['icid'].touched && !AddItemsForm.controls['icid'].valid">
                           <label *ngIf="AddItemsForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
-                          
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <!--   <div class="col-md-4">
                         <label>Brand</label>
                         <select formControlName="brand_id" class="form-control">
                           <option value="" [selected]="true">Select Brand</option>
@@ -59,66 +79,74 @@
                         <div *ngIf="AddItemsForm.controls['brand_id'].touched && !AddItemsForm.controls['brand_id'].valid">
                           <label *ngIf="AddItemsForm.controls['brand_id'].hasError('required')" style="color:red;">Select Brand</label>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     <!-- row 2 -->
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <label>Item Title</label>
                         <input type="text" formControlName="item_title" class="form-control">
                         <div *ngIf="AddItemsForm.controls['item_title'].touched && !AddItemsForm.controls['item_title'].valid">
                           <label *ngIf="AddItemsForm.controls['item_title'].hasError('required')" style="color:red;">Enter item title</label>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <label>Item Price</label>
                         <input type="number" formControlName="item_price" class="form-control">
                         <div *ngIf="AddItemsForm.controls['item_price'].touched && !AddItemsForm.controls['item_price'].valid">
                           <label *ngIf="AddItemsForm.controls['item_price'].hasError('required')" style="color:red;">Enter item Price</label>
                           <label *ngIf="AddItemsForm.controls['item_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label>Minimum Bar Price</label>
-                        <input type="number" formControlName="min_bar_price" class="form-control">
-                        <div *ngIf="AddItemsForm.controls['min_bar_price'].touched && !AddItemsForm.controls['min_bar_price'].valid">
-                          <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('required')" style="color:red;">Enter Min Price</label>
-                          <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <label>Maximum Bar Price</label>
-                        <input type="number" formControlName="max_bar_price" class="form-control">
-                        <div *ngIf="AddItemsForm.controls['max_bar_price'].touched && !AddItemsForm.controls['max_bar_price'].valid">
-                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('required')" style="color:red;">Enter Max Price</label>
-                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
-
+                          <label *ngIf="AddItemsForm.controls['item_price'].hasError('pattern') && !AddItemsForm.controls['item_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-6">
+                        <label>Minimum Bar Price</label>
+                        <input type="number" formControlName="min_bar_price" class="form-control" [formGroup]="AddItemsForm">
+                        <div *ngIf="AddItemsForm.controls['min_bar_price'].touched && !AddItemsForm.controls['min_bar_price'].valid">
+                          <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('required')" style="color:red;">Enter Min Price</label>
+                          <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('pattern') && !AddItemsForm.controls['min_bar_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
+                          <!-- <label *ngIf="AddItemsForm.controls['min_bar_price'].hasError('PriceValidator') && !AddItemsForm.controls['min_bar_price'].hasError('required')" style="color:red;">Incorrect min bar price</label> -->
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Maximum Bar Price</label>
+                        <input type="number" formControlName="max_bar_price" class="form-control" [formGroup]="AddItemsForm">
+                        <div *ngIf="AddItemsForm.controls['max_bar_price'].touched && !AddItemsForm.controls['max_bar_price'].valid">
+                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('required')" style="color:red;">Enter Max Price</label>
+                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('PriceValidator') && !AddItemsForm.controls['max_bar_price'].hasError('required')" style="color:red;">Incorrect max bar price</label>
+                          <label *ngIf="AddItemsForm.controls['max_bar_price'].hasError('pattern') && !AddItemsForm.controls['max_bar_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
                         <label>Image Url</label>
                         <input type="text" formControlName="item_img_url" class="form-control">
                         <div *ngIf="AddItemsForm.controls['item_img_url'].touched && !AddItemsForm.controls['item_img_url'].valid">
                           <label *ngIf="AddItemsForm.controls['item_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <label>Image Name</label>
                         <input type="text" formControlName="item_img_name" class="form-control">
                         <div *ngIf="AddItemsForm.controls['item_img_name'].touched && !AddItemsForm.controls['item_img_name'].valid">
                           <label *ngIf="AddItemsForm.controls['item_img_name'].hasError('required')" style="color:red;">Enter Image Name</label>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
                         <label>Item Stock</label>
                         <input type="number" formControlName="item_stock" class="form-control">
                         <div *ngIf="AddItemsForm.controls['item_stock'].touched && !AddItemsForm.controls['item_stock'].valid">
                           <label *ngIf="AddItemsForm.controls['item_stock'].hasError('required')" style="color:red;">Enter Image Name</label>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <label>Status</label>
                         <select formControlName="status" class="form-control">
                           <option value="" [selected]="true">Status</option>
@@ -148,7 +176,15 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-          <div class="alert alert-success" *ngIf="DeleteItemMsg!=null">{{DeleteItemMsg}}</div>
+          <div class="alert alert-success" *ngIf="DeleteItemMsg!=null">Item has been deleted successfully</div>
+          <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchItem">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
           <table class="table">
             <thead>
               <tr>
@@ -157,15 +193,16 @@
                 <th>Item Title</th>
                 <th>Item Stock</th>
                 <th>Price</th>
+                <th>Min Bar Price</th>
+                <th>Max Bar Price</th>
                 <th>Item Image</th>
                 <!-- <th>Modified Date</th> -->
                 <!-- <th>Created Date</th> -->
-                <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor='let data of items.data | paginate: { itemsPerPage: 10, currentPage: p}'>
+              <tr *ngFor='let data of items.data | filter: searchItem | paginate: { itemsPerPage: 10, currentPage: p}'>
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
                 </td> -->
@@ -173,13 +210,17 @@
                 <td>{{data.item_title}}</td>
                 <td>{{data.item_stock}}</td>
                 <td>
-                  <i class="fa fa-rupee"></i> {{data.item_price}}</td>
+                  <i class="fa fa-rupee"></i> {{data.item_price}}
+                </td>
+                <td>
+                  <i class="fa fa-rupee"></i> {{data.min_bar_price}}
+                </td>
+                <td>
+                  <i class="fa fa-rupee"></i> {{data.max_bar_price}}
+                </td>
                 <td><img [src]="data.item_img_url" alt="image" height="50px"></td>
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                 <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                <td>
-                 <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span>
-                </td>
                 <td>
                   <!-- <a href="#" title="Add" style="font-size: 16px;
                   margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
@@ -188,55 +229,65 @@
                     <i class="fa fa-edit"></i>
                   </span>
                   <span title="Delete" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteItem(data.itmid)">
+                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.itmid)">
                     <i class="fa fa-trash"></i>
                   </span>
+                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                 </td>
               </tr>
             </tbody>
           </table>
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
-
         </div>
-
         <!--Edit modal  -->
         <div class="add_box">
-          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            (onShown)='Edit($event)'>
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Item</h3>
-                  <!-- <div class="alert alert-success" *ngIf="ItemEditMsg!=null">Item record has been updated successfully</div> -->
+                  <div class="alert alert-success" *ngIf="ItemEditMsg!=null">Item record has been updated successfully</div>
                   <!-- form  -->
-                  <form [formGroup]="EditForm" (ngSubmit)="EditItem(EditForm)">
+                  
+                  <form [formGroup]="EditForm" (ngSubmit)="EditItem(EditForm)" *ngIf="ItemEditMsg==null">
                     <div class="row">
-                      <div class="col-md-6">
-                            <label>Item Id</label>
-                            <input type="number" formControlName="itmid" class="form-control" [(ngModel)]="model.itmid">
-                            <div *ngIf="EditForm.controls['itmid'].touched && !EditForm.controls['itmid'].valid">
-                              <label *ngIf="EditForm.controls['itmid'].hasError('required')" style="color:red;">Enter Item Id</label>
-                              <label *ngIf="EditForm.controls['itmid'].hasError('min')" style="color:red;">Value Should start From 1</label>
-                            </div>
+                      <input type="hidden" [ngModel]="GetCatType" formControlName="item_cat_type" style="display: none;">
+                      <div class="col-md-6" style="display: none;">
+                        <label>Item Id</label>
+                        <input type="number" formControlName="itmid" class="form-control" [(ngModel)]="model.itmid" disabled>
+                        <div *ngIf="EditForm.controls['itmid'].touched && !EditForm.controls['itmid'].valid">
+                          <label *ngIf="EditForm.controls['itmid'].hasError('required')" style="color:red;">Enter Item Id</label>
+                          <label *ngIf="EditForm.controls['itmid'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <label>Outlet Name</label>
                         <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
-                              <option value="">Select Outlet</option>
-                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
-                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          <option value="">Select Outlet</option>
+                          <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                          <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                         </select>
                         <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
                           <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                           <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Value Should start From 1</label>
                         </div>
                       </div>
-                     
-                     
+                      <div class="col-md-6">
+                        <label>Category</label>
+                        <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)" [(ngModel)]="model.icid">
+                          <option value="">Select Category</option>
+                          <option *ngFor="let item of catList" [value]="item.catId" [selected]="item.catId==model.icid">{{item.catName}}</option>
+                        </select>
+                        <div *ngIf="EditForm.controls['icid'].touched && !EditForm.controls['icid'].valid">
+                          <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
+                        </div>
+                      </div>
                     </div>
                     <!-- row 2 -->
                     <div class="row">
-                       <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <label>Brand</label>
                         <select formControlName="brand_id" class="form-control" [(ngModel)]="model.brand_id">
                           <option value="">Select Brand</option>
@@ -244,6 +295,15 @@
                         </select>
                         <div *ngIf="EditForm.controls['brand_id'].touched && !EditForm.controls['brand_id'].valid">
                           <label *ngIf="EditForm.controls['brand_id'].hasError('required')" style="color:red;">Select Brand</label>
+                        </div>
+                      </div> -->
+                      <div class="col-md-6">
+                        <label>Item Price</label>
+                        <input type="number" formControlName="item_price" class="form-control" [(ngModel)]="model.item_price">
+                        <div *ngIf="EditForm.controls['item_price'].touched && !EditForm.controls['item_price'].valid">
+                          <label *ngIf="EditForm.controls['item_price'].hasError('required')" style="color:red;">Enter item Price</label>
+                          <label *ngIf="EditForm.controls['item_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          <label *ngIf="EditForm.controls['item_price'].hasError('pattern') && !EditForm.controls['item_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -253,31 +313,26 @@
                           <label *ngIf="EditForm.controls['item_title'].hasError('required')" style="color:red;">Enter item title</label>
                         </div>
                       </div>
-                     
                     </div>
                     <div class="row">
-                       <div class="col-md-4">
-                        <label>Item Price</label>
-                        <input type="number" formControlName="item_price" class="form-control" [(ngModel)]="model.item_price">
-                        <div *ngIf="EditForm.controls['item_price'].touched && !EditForm.controls['item_price'].valid">
-                          <label *ngIf="EditForm.controls['item_price'].hasError('required')" style="color:red;">Enter item Price</label>
-                          <label *ngIf="EditForm.controls['item_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <label>Minimum Bar Price</label>
-                        <input type="number" formControlName="min_bar_price" class="form-control" [(ngModel)]="model.min_bar_price">
+                        <input type="number" formControlName="min_bar_price" class="form-control" [formGroup]="EditForm" [ngModel]="model.min_bar_price">
                         <div *ngIf="EditForm.controls['min_bar_price'].touched && !EditForm.controls['min_bar_price'].valid">
                           <label *ngIf="EditForm.controls['min_bar_price'].hasError('required')" style="color:red;">Enter Min Price</label>
                           <label *ngIf="EditForm.controls['min_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          <label *ngIf="EditForm.controls['min_bar_price'].hasError('pattern') && !EditForm.controls['min_bar_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
+
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <label>Maximum Bar Price</label>
-                        <input type="number" formControlName="max_bar_price" class="form-control" [(ngModel)]="model.max_bar_price">
+                        <input type="number" formControlName="max_bar_price" class="form-control" [formGroup]="EditForm" [ngModel]="model.max_bar_price">
                         <div *ngIf="EditForm.controls['max_bar_price'].touched && !EditForm.controls['max_bar_price'].valid">
                           <label *ngIf="EditForm.controls['max_bar_price'].hasError('required')" style="color:red;">Enter Max Price</label>
                           <label *ngIf="EditForm.controls['max_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
+                          <label *ngIf="EditForm.controls['max_bar_price'].hasError('pattern') && !EditForm.controls['max_bar_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
+                          <label *ngIf="EditForm.controls['max_bar_price'].hasError('PriceValidator') && !EditForm.controls['max_bar_price'].hasError('required')" style="color:red;">Incorrect max bar price</label>
                         </div>
                       </div>
                     </div>
@@ -331,13 +386,10 @@
             </div>
             <!-- /.modal-dialog -->
           </div>
-
-
           <!-- /.modal -->
         </div>
         <!--Edit modal -->
       </div>
     </div>
   </div>
-
 </div>

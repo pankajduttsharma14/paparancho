@@ -11,7 +11,7 @@ export class StaffmanagementComponent implements OnInit {
 
   constructor(private router:Router) { 
 
-  	this.router.navigate(['dashboard/staff-management/staffrole']);
+  	// this.router.navigate(['dashboard/staff-management/staffrole']);
   }
 
   ngOnInit() {

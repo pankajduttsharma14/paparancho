@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-setting.component.scss']
 })
 export class AppSettingComponent implements OnInit {
-  public static API_ENDPOINT="http://api.syscraft-barpos.tk/V3/index.php/pos/";
+  public static API_ENDPOINT="http://qa.syscraft-barpos.tk/V3/index.php/pos/";
   constructor() { }
 
   ngOnInit() {

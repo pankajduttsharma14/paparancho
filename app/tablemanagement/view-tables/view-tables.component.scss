@@ -103,6 +103,13 @@
   cursor: pointer;
 }
 
+.disable_table{
+
+  background: #ccc;
+  cursor: pointer; 
+}
+
+
 .table_details h4 {
   font-size: 16px;
 }
@@ -250,4 +257,16 @@
 {
   color: #fff;
 
+}
+
+.table_action_btn
+{
+    background: transparent !important;
+    border: none;
+    color: #fff;
+}
+.card-header .dropdown-menu{
+
+  left: auto !important;
+  right: 0 !important;
 }

@@ -14,12 +14,14 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 export class CategoryComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
 
   p: number = 1;
   private AddCat = {};
   public categories: any = [];
   AddForm: any;
   EditForm: FormGroup;
+  searchCat:any='';
 
   // parameters for form
   ol_id: string;
@@ -81,9 +83,28 @@ export class CategoryComponent implements OnInit {
 
 
   ngOnInit() {}
-  // add categories
+  
+// set categorydata
+  SetCatData(res)
+  {
+    var categories=[];
+      console.log(res);
+    
+        for(var i=0; i<res.data.length;i++)
+        {  
+         categories.push({catId:res.data[i].icid,catName:res.data[i].cat_title});
+          
+        }
 
-  AddCatMsg: string = null;
+        localStorage.setItem('categories',JSON.stringify(categories));
+
+      
+    
+  }
+
+
+  // add categories
+AddCatMsg: string = null;
   AddCategories(formData) {
 
     this.spinnerService.show();
@@ -96,8 +117,12 @@ export class CategoryComponent implements OnInit {
           if (res.status == 200) {
           
             this.AddCatMsg = res.message;
+            
             // get all .categories
-            this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.spinnerService.hide();},
+            this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; 
+              this.SetCatData(res);
+              this.spinnerService.hide();
+            },
               err => {this.spinnerService.hide();},);
             setTimeout(() => {
               this.AddCatMsg = null;
@@ -127,16 +152,35 @@ export class CategoryComponent implements OnInit {
 
   }
   // delete category
+catId:any='';
+    ConfirmDialog(id, trigger:boolean=false)
+  {
+    this.catId=id;
+    if(trigger==true)
+    {
+      
+      this.DeleteCategory(this.catId);  
+      this.dangerModel.hide();
+
+    }
+    else{this.dangerModel.show();}
+    
+  }
 
   DeleteCatMsg: string = null;
   DeleteCategory(id) {
     this.spinnerService.show();
     this.FoodService.DeleteCategory(id).subscribe(res => {
       if (res.status == 200) {
+
         this.spinnerService.hide();
+        
         this.DeleteCatMsg = 'Item Deleted Successfully';
 
-        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; },
+        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; 
+          this.SetCatData(res);
+
+        },
           err => { console.log(err) });
 
         setTimeout(() => {
@@ -201,9 +245,11 @@ export class CategoryComponent implements OnInit {
     this.FoodService.UpdateCategory(data).subscribe(res => {
       
       if (res.status == 200) {
+
         this.spinnerService.hide();
+        
         this.UpdateCatMsg = res.message;
-        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; }, err => { console.log(err)});
+        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.SetCatData(res); }, err => { console.log(err)});
         setTimeout(() => {
           this.UpdateCatMsg = null;
           this.largeModal1.hide();
@@ -228,6 +274,25 @@ export class CategoryComponent implements OnInit {
       }, 3000);
 
     });
+  }
+
+  // dropdown category
+  AlStatus:any=null;
+  
+  SetAlcholic(value)
+  { 
+    
+    if(value.toLowerCase()=='food')
+    {
+       
+       this.AlStatus=true;
+       
+    }
+    else{
+      
+     this.AlStatus=null;
+     
+    }
   }
 
 }

@@ -12,7 +12,7 @@ const routes: Routes = [
     data: {
       title: 'Food'
     },
-    component:FoodComponent,
+    
     children: [
       {
         path: '',
@@ -44,7 +44,8 @@ const routes: Routes = [
       }
 
     ]
-  }
+  },
+  {path: '**', redirectTo: '/404'},
 ];
 
 @NgModule({

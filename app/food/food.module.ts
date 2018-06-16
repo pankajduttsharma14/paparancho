@@ -9,7 +9,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -19,7 +19,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     ModalModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    Ng4LoadingSpinnerModule
+    Ng4LoadingSpinnerModule,
+    Ng2SearchPipeModule
     
     
 

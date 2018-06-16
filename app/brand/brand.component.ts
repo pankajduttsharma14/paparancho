@@ -14,9 +14,11 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 export class BrandComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
   // formsettings
   AddBrandForm: FormGroup;
   EditForm: FormGroup;
+  searchBrand:any='';
 
   ol_id: number;
   brand_title: string;
@@ -62,6 +64,25 @@ export class BrandComponent implements OnInit {
 
   ngOnInit() {}
   BrandMsg: string;
+
+  // set brand data to local storage
+  SetBrandData(res)
+  {
+    var brands=[];
+
+    
+      
+      for(var i=0; i<res.data.length;i++)
+        {  
+         brands.push({brId:res.data[i].brid,brName:res.data[i].brand_title});
+          
+        }
+
+        localStorage.setItem('brands',JSON.stringify(brands));
+
+      
+  }
+
   // Add brands
   AddBrand(formData) {
     this.spinnerService.show();
@@ -69,8 +90,9 @@ export class BrandComponent implements OnInit {
     formData.reset();
     this.FoodService.AddBrand(data).subscribe(res => {
       if (res.status == 200) {
+        
         this.BrandMsg = res.message;
-        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; this.spinnerService.hide();}, err => { console.log(err); this.spinnerService.hide();});
+        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; this.SetBrandData(res); this.spinnerService.hide();}, err => { console.log(err); this.spinnerService.hide();});
         setTimeout(() => {
           this.BrandMsg = null;
           this.largeModal.hide();
@@ -104,13 +126,29 @@ export class BrandComponent implements OnInit {
   }
 
   // Delete Brand
+DId:any='';
+    ConfirmDialog(id, trigger:boolean=false)
+  {
+    this.DId=id;
+    if(trigger==true)
+    {
+      
+      this.DeleteBrand(this.DId);  
+      this.dangerModel.hide();
+
+    }
+    else{this.dangerModel.show();}
+    
+  }
+
   DeleteBrandMsg: string;
   DeleteBrand(id) {
     this.spinnerService.show();
     this.FoodService.DeleteBrand(id).subscribe(res => {
       if (res.status == 200) {
+        
         this.DeleteBrandMsg = res.data.message;
-        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; this.spinnerService.hide();}, err => { console.log(err); this.spinnerService.hide();});
+        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; this.SetBrandData(res); this.spinnerService.hide();}, err => { console.log(err); this.spinnerService.hide();});
         setTimeout(() => {
           this.DeleteBrandMsg = null;
         }, 3000);
@@ -163,8 +201,9 @@ export class BrandComponent implements OnInit {
     this.FoodService.UpdateBrand(data).subscribe(res => {
 
       if (res.status == 200) {
+        
         this.UpdateBrandMsg = res.message;
-        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res; this.spinnerService.hide();}, err => { console.log(err);this.spinnerService.hide();});
+        this.FoodService.GetAllBrands().subscribe(res => { this.brands = res;this.SetBrandData(res); this.spinnerService.hide();}, err => { console.log(err);this.spinnerService.hide();});
         setTimeout(() => {
           this.UpdateBrandMsg = null;
           this.largeModal1.hide();

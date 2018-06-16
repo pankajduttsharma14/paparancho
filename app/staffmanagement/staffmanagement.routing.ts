@@ -11,7 +11,6 @@ const routes: Routes = [
     data: {
       title: 'Staff Management'
     },
-    component:StaffmanagementComponent,
     children: [
       {
         path: '',
@@ -34,8 +33,10 @@ const routes: Routes = [
           title: 'Staff List'
         }
       }
+
     ]
-  }
+  },
+  {path: '**', redirectTo: '/404'},
 ];
 
 @NgModule({
