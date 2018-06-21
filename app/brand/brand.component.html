@@ -15,11 +15,13 @@
         <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
         <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(DId,true)">Yes</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- delete model -->
-
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -40,23 +42,26 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Brand</h3>
-                  <div class="alert alert-success" *ngIf="BrandMsg!=null">Brand has been added successfully</div>
-                  <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand(AddBrandForm)" *ngIf="BrandMsg==null">
+                  <div class="alert" *ngIf="BrandMsg!=null" [ngClass]="{'alert-success':BrandMsg==true, 'alert-danger':BrandMsg==false}">
+                    <span *ngIf="BrandMsg==true"><i class="fa fa-check"  style="color: green;"></i> Brand has been added successfully</span>
+                    <span *ngIf="BrandMsg==false"><i class="fa fa-times"  style="color: red;"></i> Brand can't added!</span>
+                  </div>
+                  <form [formGroup]="AddBrandForm" (ngSubmit)="AddBrand()" *ngIf="BrandMsg==null">
                     <div class="form-group">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
-                              <option value="">Select Outlet</option>
-                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
-                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                            <option value="">Select Outlet</option>
+                            <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                            <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="AddBrandForm.controls['ol_id'].touched && !AddBrandForm.controls['ol_id'].valid">
                             <label *ngIf="AddBrandForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
                             <!-- <label *ngIf="AddBrandForm.controls['ol_id'].hasError('min')" style="color:red;">ID Should start from 1</label> -->
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <label>Brand Title</label>
                           <input type="text" name="" formControlName="brand_title" class="form-control">
                           <div *ngIf="AddBrandForm.controls['brand_title'].touched && !AddBrandForm.controls['brand_title'].valid">
@@ -65,14 +70,15 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <label>Brand Image</label>
-                          <input type="text" formControlName="brand_img" class="form-control">
+                          <input type="file" formControlName="brand_img" class="form-control" (change)="ImageUpload($event)" #fileInput accept="image/*">
                           <div *ngIf="AddBrandForm.controls['brand_img'].touched && !AddBrandForm.controls['brand_img'].valid">
-                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Brand Image Url</label>
+                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('required')" style="color:red;">Select Brand Image</label>
+                            <label *ngIf="AddBrandForm.controls['brand_img'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <label for="status">Status</label>
                           <select formControlName="status" class="form-control">
                             <option value="" [selected]="true">STATUS</option>
@@ -120,7 +126,6 @@
                 <th>Image</th>
                 <th>Brand Modified Date</th>
                 <th>Created Date</th>
-                
                 <th>Actions</th>
               </tr>
             </thead>
@@ -136,7 +141,6 @@
                 </td>
                 <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td>
-                
                 <td>
                   <!-- <a href="#" title="Add" style="font-size: 16px;
                   margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
@@ -170,62 +174,58 @@
         <!-- edit modal -->
         <!-- modal  -->
         <div class="add_box">
-         <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-            (onShown)='Edit($event)'>
+          <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
-                  
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Brand</h3>
                   <div class="alert alert-success" *ngIf="UpdateBrandMsg!=null">Brands has been updated successfully</div>
-                  <form [formGroup]="EditForm" (ngSubmit)=UpdateBrand(EditForm) novalidate>
-                    
+                  <form [formGroup]="EditForm" (ngSubmit)=UpdateBrand() novalidate>
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <label>Brand Id</label>
                         <input type="number" class="form-control" formControlName="brid" [ngModel]="model.brid" readonly>
-                         <div *ngIf="EditForm.controls['brid'].touched && !EditForm.controls['brid'].valid">
-                            <label *ngIf="EditForm.controls['brid'].hasError('required')" style="color:red;">Enter Brand Id</label>
-                            <label *ngIf="EditForm.controls['brid'].hasError('min')" style="color:red;">Id can't be 0</label>
-                          </div>
+                        <div *ngIf="EditForm.controls['brid'].touched && !EditForm.controls['brid'].valid">
+                          <label *ngIf="EditForm.controls['brid'].hasError('required')" style="color:red;">Enter Brand Id</label>
+                          <label *ngIf="EditForm.controls['brid'].hasError('min')" style="color:red;">Id can't be 0</label>
+                        </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <label>Outlet Name</label>
                         <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
-                              <option value="">Select Outlet</option>
-                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
-                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                          <option value="">Select Outlet</option>
+                          <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                          <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                         </select>
                         <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
-                            <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id can't be 0</label>
-                          </div>
+                          <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
+                          <label *ngIf="EditForm.controls['ol_id'].hasError('min')" style="color:red;">Id can't be 0</label>
+                        </div>
                       </div>
                     </div>
-
                     <!-- row 2 -->
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <label>Brand Title</label>
                         <input type="text" class="form-control" formControlName="brand_title" [ngModel]="model.brand_title">
+
                         <div *ngIf="EditForm.controls['brand_title'].touched && !EditForm.controls['brand_title'].valid">
-                            <label *ngIf="EditForm.controls['brand_title'].hasError('required')" style="color:red;">Enter Brand Title</label>
-                            
-                          </div>
+                          <label *ngIf="EditForm.controls['brand_title'].hasError('required')" style="color:red;">Enter Brand Title</label>
+                        </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <label>Brand Image</label>
-                        <input type="text" class="form-control" formControlName="brand_img" [ngModel]="model.brand_img">
+
+                        
+                        <input type="file" formControlName="brand_img" class="form-control" (change)="ImageUpload($event)" #fileInput accept="image/*">
                         <div *ngIf="EditForm.controls['brand_img'].touched && !EditForm.controls['brand_img'].valid">
-                            <label *ngIf="EditForm.controls['brand_img'].hasError('required')" style="color:red;">Enter Brand Image Url</label>
-                            
-                          </div>
-                      </div>
-                      <div class="col-md-4">
+                          <label *ngIf="EditForm.controls['brand_img'].hasError('required')" style="color:red;">Select Brand Image</label>
+                          <label *ngIf="EditForm.controls['brand_img'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
                           <label for="status">Status</label>
-                            
-                          <select formControlName="status" class="form-control" [(ngModel)]="model.status" >
-                            
+                          <select formControlName="status" class="form-control" [(ngModel)]="model.status">
                             <option value="">Status</option>
                             <option value="ACTIVE" [selected]="model.status=='ACTIVE'">ACTIVE</option>
                             <option value="INACTIVE" [selected]="model.status=='INACTIVE'">INACTIVE</option>
@@ -234,26 +234,24 @@
                             <label *ngIf="EditForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
                           </div>
                         </div>
-                    </div>
-                    <div class="row" style="margin-top: 20px;">
+                      </div>
+                      <div class="row" style="margin-top: 20px;">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-success sub_btn" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Brand</button>
+                          <button type="submit" class="btn btn-success sub_btn" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Brand</button>
                         </div>
-                    </div>
+                      </div>
                   </form>
-
+                  </div>
                 </div>
+                <!-- /.modal-content -->
               </div>
-              <!-- /.modal-content -->
+              <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal-dialog -->
+            <!-- /.modal -->
           </div>
-          <!-- /.modal -->
+          <!-- modal -->
+          <!-- edit modal -->
         </div>
-        <!-- modal -->
-        <!-- edit modal -->
-
       </div>
     </div>
   </div>
-</div>

@@ -9,7 +9,7 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
-
+import {TaxRoutingModule} from './taxmanagement/tax.routing';
 
 
 export const routes: Routes = [
@@ -83,6 +83,10 @@ export const routes: Routes = [
         path: 'table-management',
         loadChildren: './tablemanagement/table.module#TableModule'
       },
+      {
+        path: 'tax',
+        loadChildren: './taxmanagement/tax.module#TaxModule'
+      }
       
 
 

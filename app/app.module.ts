@@ -24,7 +24,7 @@ import {VouchersModule} from './vouchers/vouchers.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './views/notifications/modals.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-
+ 
 
 
 const APP_CONTAINERS = [
@@ -54,6 +54,7 @@ import {StaffManagementModule} from './staffmanagement/staffmanagement.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from './tablemanagement/table.module';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import {TaxModule} from './taxmanagement/tax.module';
 
 
 
@@ -85,7 +86,10 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     TableModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    TaxModule,
+    Ng4LoadingSpinnerModule.forRoot(),
+    
+    
 
 
 
@@ -100,6 +104,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
     RegisterComponent,
     AppSettingComponent,
     ModalsComponent,
+    
 
 
 

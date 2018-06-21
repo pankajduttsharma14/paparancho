@@ -12,9 +12,11 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   providers: [FoodService]
 })
 export class ItemsComponent implements OnInit {
-  @ViewChild('largeModal') public largeModal: ModalDirective;
+  @ViewChild('largeModal')  public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
+  @ViewChild('fileInput') fileInput;
+
   p: number = 1;
   public items: any = {};
   AddItemsForm: FormGroup;
@@ -24,12 +26,12 @@ export class ItemsComponent implements OnInit {
   ol_id: number;
   icid: string;
   item_cat_type: string;
-  brand_id: string;
+  // brand_id: string;
   item_title: string;
   item_price: number;
   min_bar_price: number;
   max_bar_price: number;
-  item_img_url: string;
+  item_img_url: string|any;
   item_img_name: string;
   item_stock: number;
   status: string;
@@ -68,7 +70,7 @@ export class ItemsComponent implements OnInit {
       'item_price': ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern(/^[0-9]{1,7}$/)])],
       'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator, Validators.pattern(/^[0-9]{1,7}$/)])],
       'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator, Validators.pattern(/^[0-9]{1,7}$/)])],
-      'item_img_url': ['', Validators.compose([Validators.required, ])],
+      'item_img_url': ['', Validators.compose([Validators.required,this.ImageTypeValidator ])],
       'item_img_name': ['', Validators.compose([Validators.required, ])],
       'item_stock': ['', Validators.compose([Validators.required, ])],
       'status': ['', Validators.compose([Validators.required, ])],
@@ -94,7 +96,7 @@ export class ItemsComponent implements OnInit {
       'item_price': ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern(/^[0-9]{1,7}$/)])],
       'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator,Validators.pattern(/^[0-9]{1,7}$/)])],
       'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator,Validators.pattern(/^[0-9]{1,7}$/)])],
-      'item_img_url': ['', Validators.compose([Validators.required, ])],
+      'item_img_url': ['',Validators.compose([this.ImageTypeValidator])],
       'item_img_name': ['', Validators.compose([Validators.required, ])],
       'item_stock': ['', Validators.compose([Validators.required, ])],
       'status': ['', Validators.compose([Validators.required, ])]
@@ -189,13 +191,12 @@ export class ItemsComponent implements OnInit {
 
 
 
-  AddItems(formData) {
+  AddItems() {
 
 
     this.spinnerService.show();
-    let data = formData.value;
-    formData.reset();
-
+    let data = this.SaveAddForm();;
+    this.CreateAddForm();
     this.FoodService.AddItem(data).subscribe(res => {
         if (res.status == 200) {
           this.AddItemMsg = res.message;
@@ -327,11 +328,11 @@ export class ItemsComponent implements OnInit {
 
   }
   ItemEditMsg: string = null;
-  EditItem(formData) {
+  EditItem() {
 
     this.spinnerService.show();
-    let data = formData.value;
-
+    let data = this.SaveEditForm();
+    this.CreateEditForm();
     this.FoodService.UpdateItem(data).subscribe(res => {
       if (res.status == 200) {
         this.FoodService.GetAllItems().subscribe(res => {
@@ -367,5 +368,75 @@ export class ItemsComponent implements OnInit {
 
   }
 
+  ImageTypeValidator: any = (c: FormControl) => {
+
+
+    if (!c.value) return null;
+
+    else {
+      let cat_img_url = c.value;
+      let type = cat_img_url.split('.').pop();
+
+      if (type == 'jpg' || type == 'png') {
+
+      } else {
+
+        return { 'ImageTypeValidator': true }
+      }
+    }
+
+
+  }
+  ShowModelAdd() {
+    
+    this.CreateAddForm();
+    this.largeModal.show();
+  }
+  SelectedFile:any;
+  ImageUpload(event){
+       if (event.target.files.length > 0) {
+      this.SelectedFile = event.target.files[0];
+    }
+  }  
+  SaveAddForm()
+  {
+
+   
+    let fd=new FormData();
+    fd.append('ol_id',this.AddItemsForm.controls['ol_id'].value);
+    fd.append('icid',this.AddItemsForm.controls['icid'].value);
+    fd.append('item_cat_type',this.AddItemsForm.controls['item_cat_type'].value);
+    // fd.append('brand_id',this.AddItemsForm.controls['brand_id'].value);
+    fd.append('item_title',this.AddItemsForm.controls['item_title'].value);
+    fd.append('item_price',this.AddItemsForm.controls['item_price'].value);
+    fd.append('min_bar_price',this.AddItemsForm.controls['min_bar_price'].value);
+    fd.append('max_bar_price',this.AddItemsForm.controls['max_bar_price'].value);
+    fd.append('item_img_url',this.SelectedFile);
+    fd.append('item_img_name',this.AddItemsForm.controls['item_img_name'].value);
+    fd.append('item_stock',this.AddItemsForm.controls['item_stock'].value);
+    fd.append('status',this.AddItemsForm.controls['status'].value);
+    return fd;
+  }
+  SaveEditForm()
+  {
+
+   
+    let fd=new FormData();
+    
+    fd.append('itmid',this.EditForm.controls['itmid'].value);
+    fd.append('ol_id',this.EditForm.controls['ol_id'].value);
+    fd.append('icid',this.EditForm.controls['icid'].value);
+    fd.append('item_cat_type',this.EditForm.controls['item_cat_type'].value);
+    // fd.append('brand_id',this.EditForm.controls['brand_id'].value);
+    fd.append('item_title',this.EditForm.controls['item_title'].value);
+    fd.append('item_price',this.EditForm.controls['item_price'].value);
+    fd.append('min_bar_price',this.EditForm.controls['min_bar_price'].value);
+    fd.append('max_bar_price',this.EditForm.controls['max_bar_price'].value);
+    fd.append('item_img_url',this.SelectedFile);
+    fd.append('item_img_name',this.EditForm.controls['item_img_name'].value);
+    fd.append('item_stock',this.EditForm.controls['item_stock'].value);
+    fd.append('status',this.EditForm.controls['status'].value);
+    return fd;
+  }
 
 }

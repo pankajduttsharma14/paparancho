@@ -1,0 +1,224 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to delete this category?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+          <p>One fine body&hellip;</p>
+        </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(TaxId,true)">Yes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- delete model -->
+<div class="animated fadeIn">
+  <ng4-loading-spinner></ng4-loading-spinner>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Tax List
+        </div>
+        <!-- modal  -->
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
+              <i class="fa fa-plus"></i> Add Tax
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Tax</h3>
+                  <div class="alert" *ngIf="AddMsg!=null" [ngClass]="{'alert-success':AddMsg==true,'alert-danger':AddMsg==false}">
+                    <span *ngIf="AddMsg==true"><i class="fa fa-check" style="color:green;"></i> Tax has been added successfully !</span>
+                    <span *ngIf="AddMsg==false"><i class="fa fa-times" style="color:red;"></i> Tax can't added !</span>
+                  </div>
+                  <form [formGroup]="AddTaxForm" (ngSubmit)="AddTax(AddTaxForm)" *ngIf="AddTaxMsg==null">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Tax Type</label>
+                          <input type="text" class="form-control" formControlName="tax_type">
+                          <div *ngIf="AddTaxForm.controls['tax_type'].touched && !AddTaxForm.controls['tax_type'].valid">
+                            <label *ngIf="AddTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter tax type</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Tax Percentage</label>
+                          <input type="number" class="form-control" formControlName="percentage">
+                          <div *ngIf="AddTaxForm.controls['percentage'].touched && !AddTaxForm.controls['percentage'].valid">
+                            <label *ngIf="AddTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter tax percentage</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="status">Status</label>
+                          <select formControlName="status" class="form-control">
+                            <option value="" [selected]="true">Status</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="INACTIVE">INACTIVE</option>
+                          </select>
+                          <div *ngIf="AddTaxForm.controls['status'].touched && !AddTaxForm.controls['status'].valid">
+                            <label *ngIf="AddTaxForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddTaxForm.valid">
+                            <i class="fa fa-plus"></i> Add Tax</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <div class="card-body">
+          <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchCat">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="ErrorMsg">{{ErrorMsg}}</div>
+          <div class="alert" *ngIf="DeleteMsg!=null" [ngClass]="{'alert-success':DeleteMsg==true,'alert-danger':DeleteMsg==false}">
+            <span *ngIf="DeleteMsg==true"><i class="fa fa-check" style="color:green;"></i> Tax has been deleted successfully !</span>
+            <span *ngIf="DeleteMsg==false"><i class="fa fa-times" style="color:red;"></i> Tax can't deleted!</span>
+          </div>
+          <table class="table" *ngIf="!ErrorMsg">
+            <thead>
+              <tr>
+                <!-- <th></th> -->
+                <th>Tax Id</th>
+                <th>Tax Type</th>
+                <th>Tax percentage</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor='let data of TaxList | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p} '>
+                <td>{{data.id}}</td>
+                <td>{{data.tax_type}}</td>
+                <td>{{data.percentage+"%"}}</td>
+                <td>
+                  <span title="Edit" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)">
+                                        <i class="fa fa-edit"></i>
+                                    </span>
+                  <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.id)">
+                                        <i class="fa fa-trash"></i>
+                                    </span>
+                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">
+                                        <i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                                        <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                                    </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          <!--  <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul> -->
+        </div>
+        <!-- edit modal -->
+        <!-- edit modal -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--Edit modal  -->
+<div class="add_box">
+  <div bsModal #largeModal1="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" (onShown)='Edit($event)'>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h3 class="modal_heading">Edit Tax</h3>
+          <div class="alert" *ngIf="EditMsg!=null" [ngClass]="{'alert-success':EditMsg==true,'alert-danger':EditMsg==false}">
+            <span *ngIf="EditMsg==true"><i class="fa fa-check" style="color:green;"></i> Tax has been updated successfully !</span>
+            <span *ngIf="EditMsg==false"><i class="fa fa-times" style="color:red;"></i> Tax can't updated !</span>
+          </div>
+          <form [formGroup]="EditTaxForm" (ngSubmit)="EditTax(EditTaxForm)" *ngIf="EditMsg==null">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12">
+                  <label>Tax Type</label>
+                  <input type="hidden" name="" formControlName="id" style="display: none;" [ngModel]="model.id">
+                  <input type="text" class="form-control" formControlName="tax_type" [ngModel]="model.tax_type">
+                  <div *ngIf="EditTaxForm.controls['tax_type'].touched && !EditTaxForm.controls['tax_type'].valid">
+                    <label *ngIf="EditTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter tax type</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label>Tax Percentage</label>
+                  <input type="number" class="form-control" formControlName="percentage" [ngModel]="model.percentage">
+                  <div *ngIf="EditTaxForm.controls['percentage'].touched && !EditTaxForm.controls['percentage'].valid">
+                    <label *ngIf="EditTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter tax percentage</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="status">Status</label>
+                  <select formControlName="status" class="form-control" [ngModel]="model.status">
+                    <option value="">Status</option>
+                    <option value="ACTIVE" [selected]="model.status=='ACTIVE'">ACTIVE</option>
+                    <option value="INACTIVE" [selected]="model.status=='INACTIVE'">INACTIVE</option>
+                  </select>
+                  <div *ngIf="EditTaxForm.controls['status'].touched && !EditTaxForm.controls['status'].valid">
+                    <label *ngIf="EditTaxForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" style="margin-top: 10px;">
+                  <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditTaxForm.valid">
+                    <i class="fa fa-plus"></i> Update Tax</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
+<!-- Edit modal -->

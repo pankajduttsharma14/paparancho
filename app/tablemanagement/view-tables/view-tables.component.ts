@@ -90,7 +90,7 @@ export class ViewTablesComponent implements OnInit {
       this.TableService.GetOrderByTableId(TableId).subscribe(res => {
 
         if (res.status == 200) {
-          this.TableOrders = res.data;
+          this.TableOrders = res.order_ids;
           this.spinnerService.hide();
 
         } else {

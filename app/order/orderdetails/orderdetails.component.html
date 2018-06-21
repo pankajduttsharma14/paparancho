@@ -17,7 +17,7 @@
           </ul>
         </div>
         <div class="card-body">
-
+          
           <table class="table" style="width:100%;">
             <thead>
               <tr>
@@ -50,12 +50,30 @@
 	                </td> -->
               </tr>
               <!-- {{OrderDetails | json}} -->
+             
+              <tr *ngIf="OrderDetails.Orderdata">
+                <th></th>
+                <th></th>
+                <th></th>
+                
+                <th colspan="1" style="text-align: right;" ><span>Sub Total</span></th>
+                <th style="text-align: right;" >{{OrderDetails.Orderdata[0].total_amt}}</th>
+              </tr> 
+              <tr *ngIf="OrderDetails.Orderdata">
+                <th></th>
+                <th></th>
+                <th></th>
+                
+                <th colspan="1" style="text-align: right;" >Tax</th>
+                <th style="text-align: right;" >{{OrderDetails.Orderdata[0].tax_amt}}</th>
+              </tr>
               <tr style="background: #efefef; text-transform: uppercase;" *ngIf="OrderDetails.Orderdata">
                 <th></th>
                 <th></th>
+                
                 <th>Total Items {{OrderDetails.Orderdata[0].item_total}}</th>
-                <th colspan="1" style="text-align: right;" ><p *ngIf="OrderDetails.Orderdata[0].status=='Completed'">Grand Total</p></th>
-                <th style="text-align: right;" ><p *ngIf="OrderDetails.Orderdata[0].status=='Completed'">{{OrderDetails.Orderdata[0].grand_total}}</p></th>
+                <th colspan="1" style="text-align: right;" ><span *ngIf="OrderDetails.Orderdata[0].status=='Completed'"> Total Amount</span></th>
+                <th style="text-align: right;" ><span *ngIf="OrderDetails.Orderdata[0].status=='Completed'">{{OrderDetails.Orderdata[0].grand_total}}</span></th>
               </tr>
             </tbody>
           </table>

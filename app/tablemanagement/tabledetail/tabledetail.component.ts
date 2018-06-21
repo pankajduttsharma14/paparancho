@@ -11,7 +11,7 @@ export class TabledetailComponent implements OnInit {
 
   constructor(private TableService:TableService) { 
 
-      // this.TableService.GetAllTable();
+      this.TableService.GetAllTable();
   }
 
   ngOnInit() {

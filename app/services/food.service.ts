@@ -14,11 +14,13 @@ export class FoodService {
   private options:RequestOptions;
 
   constructor(private http:Http) { 
-       this.BASE_URL = AppSettingComponent.API_ENDPOINT;
+    this.BASE_URL = AppSettingComponent.API_ENDPOINT;
     this.headers=new Headers();
-    this.headers.append('Content-Type', 'application/json');
+    // this.headers.append('Content-Type', 'application/json');
     this.headers.append('client-service', 'PR2018PS');  
     this.headers.append('auth-key', '5ccd7b534b19d30030c6503f3a852d00');
+    this.headers.append('enctype', 'multipart/form-data');
+
     this.options=new RequestOptions({headers:this.headers});
 
   }
@@ -53,11 +55,10 @@ export class FoodService {
 
 
   // Add categories
-   AddCategory(data):Observable<any>
+   AddCategory(data:any):Observable<any>
   {
-    let body=data;
-    
-    const url:string=this.BASE_URL+"addcategorie";
+    let body:any=data;
+    const url:string=this.BASE_URL+"outletmasters/addcategorie";
     return this.http.post(url,body,this.options).map(res=>res.json());
 
 
@@ -106,8 +107,8 @@ export class FoodService {
     return this.http.get(url,this.options).map(res=>res.json());
   }
 
-    // edit brand
-  UpdateCategory(body){
+    // edit category
+  UpdateCategory(body:any){
     const url:string=this.BASE_URL+"editcategorie";
     return this.http.post(url,body,this.options).map(res=>res.json());
   }

@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,7 +21,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     ReactiveFormsModule,
     Ng4LoadingSpinnerModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    
     
     
 

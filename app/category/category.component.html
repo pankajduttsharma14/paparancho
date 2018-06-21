@@ -1,3 +1,4 @@
+
 <!-- delete model -->
 <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-danger" role="document">
@@ -30,7 +31,7 @@
         <!-- modal  -->
         <div class="add_box">
           <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
               <i class="fa fa-plus"></i> Add Category
             </button>
           </div>
@@ -93,10 +94,15 @@
                         </div>
                         <div class="col-md-6">
                           <label for="">Category Image</label>
-                          <input type="text" formControlName="cat_img_url" class="form-control">
+                          <!-- <input type="text" formControlName="cat_img_url" class="form-control"> -->
+                          <!-- <button (click)="fileInput.click()" class="btn btn-primary"><i class="fa fa-upload"></i>Upload Image</button> -->
+                          <input  type="file" class="form-control" (change)="onFileChange($event)" #fileInput formControlName="cat_img_url" accept="image/*" ImageTypeValidator>
+                         
+
                           <div *ngIf="AddForm.controls['cat_img_url'].touched && !AddForm.controls['cat_img_url'].valid">
-                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
-                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
+                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('required')" style="color:red;">Please select image</label>
+                            <label *ngIf="AddForm.controls['cat_img_url'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>
+
                           </div>
                         </div>
                       </div>
@@ -278,10 +284,15 @@
                         </div>
                         <div class="col-md-6">
                           <label for="">Category Image</label>
-                          <input type="text" formControlName="cat_img_url" class="form-control" [ngModel]="model.cat_img_url">
+                          <!-- <input type="text" formControlName="cat_img_url" class="form-control" > -->
+                          
+                          <input  type="file" class="form-control" (change)="onFileChange($event)" #fileInput formControlName="cat_img_url" accept="image/*" ImageTypeValidator
+                          >
+
+                          
                           <div *ngIf="EditForm.controls['cat_img_url'].touched && !EditForm.controls['cat_img_url'].valid">
-                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('required')" style="color:red;">Enter Image Url</label>
-                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('pattern')" style="color:red;">Incorrect Url</label>
+                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('required')" style="color:red;">Please select image</label>
+                            <label *ngIf="EditForm.controls['cat_img_url'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>
                           </div>
                         </div>
                       </div>

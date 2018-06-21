@@ -70,11 +70,11 @@ export const navItems = [
         url: 'order/order-list',
         icon: 'icon-puzzle'
       },
-      {
-        name: 'Print Bill',
-        url: 'order/print-bill',
-        icon: 'icon-puzzle'
-      }
+      // {
+      //   name: 'Print Bill',
+      //   url: 'order/print-bill',
+      //   icon: 'icon-puzzle'
+      // }
 
 
     ]
@@ -121,19 +121,6 @@ export const navItems = [
     // ]
   },
   // Tax management
-
-  //  {
-  //   name: 'Tax Management',
-  //   url: '/tax',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Add Tax Pricing',
-  //   //     url: '/tax/tax-pricing',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   // ]
-  // },
   {
     name: 'Table Management',
     url: 'table-management',
@@ -146,6 +133,19 @@ export const navItems = [
       },
     ]
   },
+   {
+    name: 'Tax Management',
+    url: 'tax',
+    icon: 'icon-puzzle',
+    children: [
+      {
+        name: 'Tax List',
+        url: 'tax/tax-list',
+        icon: 'icon-puzzle'
+      },
+    ]
+  },
+  
 
   // KITCHEN management
 

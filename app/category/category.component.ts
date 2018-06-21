@@ -1,27 +1,36 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { FoodService } from '../services/food.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Observable } from 'rxjs/Rx';
+
+
+
+
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
-  providers: [FoodService, Ng4LoadingSpinnerService]
+  providers: [FoodService, Ng4LoadingSpinnerService],
+
 })
 export class CategoryComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
+  @ViewChild('fileInput') fileInput;
+
+
 
   p: number = 1;
   private AddCat = {};
   public categories: any = [];
   AddForm: any;
-  EditForm: FormGroup;
-  searchCat:any='';
+  EditForm: any;
+  searchCat: any = '';
 
   // parameters for form
   ol_id: string;
@@ -29,7 +38,7 @@ export class CategoryComponent implements OnInit {
   parent_id: string;
   cat_title: string
   cat_img_name: string;
-  cat_img_url: string;
+  cat_img_url: any;
   isAlcoholic: boolean;
   status: string;
 
@@ -42,16 +51,37 @@ export class CategoryComponent implements OnInit {
   constructor(private FoodService: FoodService,
     private router: Router,
     private fb: FormBuilder,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    
+    
 
   ) {
-    
+
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
 
       this.router.navigate(['login']);
 
     }
+    
+  
+
+
+    this.spinnerService.show();
+    // get all .categories
+    this.FoodService.GetAllCategories().subscribe(res => {
+        this.categories = res.data;
+        this.spinnerService.hide();
+      },
+      err => {
+        console.log(err);
+        this.spinnerService.hide();
+      });
+    this.CreateAddForm();
+    this.CreateEditForm();
+  }
+  
+  CreateAddForm() {
     // form settings
     this.AddForm = this.fb.group({
       'ol_id': ['', Validators.required],
@@ -59,10 +89,15 @@ export class CategoryComponent implements OnInit {
       'parent_id': ['', Validators.required],
       'cat_title': ['', Validators.required],
       'cat_img_name': ['', Validators.required],
-      'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
+      // 'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
+      'cat_img_url': [null, Validators.compose([Validators.required, this.ImageTypeValidator])],
       'isAlcoholic': ['', Validators.required],
       'status': ['', Validators.required],
     });
+  }
+
+
+  CreateEditForm() {
     this.EditForm = this.fb.group({
       'icid': ['', ],
       'ol_id': ['', Validators.required],
@@ -70,60 +105,61 @@ export class CategoryComponent implements OnInit {
       'parent_id': ['', Validators.required],
       'cat_title': ['', Validators.required],
       'cat_img_name': ['', Validators.required],
-      'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
+      // 'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
+      'cat_img_url': [null, Validators.compose([this.ImageTypeValidator])],
       'isAlcoholic': ['', Validators.required],
       'status': ['', Validators.required],
 
     });
-    this.spinnerService.show(); 
-    // get all .categories
-    this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.spinnerService.hide();},
-      err => { console.log(err);this.spinnerService.hide();});
+  }
+ 
+  ngOnInit() {
+    
+
   }
 
-
-  ngOnInit() {}
-  
-// set categorydata
-  SetCatData(res)
-  {
-    var categories=[];
-      console.log(res);
+  // set categorydata
+  SetCatData(res) {
     
-        for(var i=0; i<res.data.length;i++)
-        {  
-         categories.push({catId:res.data[i].icid,catName:res.data[i].cat_title});
-          
-        }
+    var categories = [];
+    console.log(res);
 
-        localStorage.setItem('categories',JSON.stringify(categories));
+    for (var i = 0; i < res.data.length; i++) {
+      categories.push({ catId: res.data[i].icid, catName: res.data[i].cat_title });
 
-      
-    
+    }
+
+    localStorage.setItem('categories', JSON.stringify(categories));
+
+
+
   }
 
 
   // add categories
-AddCatMsg: string = null;
-  AddCategories(formData) {
+  AddCatMsg: string = null;
+  AddCategories() {
 
     this.spinnerService.show();
-    let data = formData.value;
+    let data: any = this.SaveData();
+    this.CreateAddForm();
+
     if (data) {
-      formData.reset();
+      // formData.reset();
       this.FoodService.AddCategory(data).subscribe(
         res => {
-          
+
           if (res.status == 200) {
-          
+
             this.AddCatMsg = res.message;
-            
+
             // get all .categories
-            this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; 
-              this.SetCatData(res);
-              this.spinnerService.hide();
-            },
-              err => {this.spinnerService.hide();},);
+            this.FoodService.GetAllCategories().subscribe(res => {
+                this.categories = res.data;
+                this.SetCatData(res);
+                this.spinnerService.hide();
+              },
+              err => { this.spinnerService.hide(); }, );
             setTimeout(() => {
               this.AddCatMsg = null;
               this.largeModal.hide();
@@ -143,28 +179,25 @@ AddCatMsg: string = null;
           this.AddCatMsg = "Category can't added";
           this.spinnerService.hide();
           setTimeout(() => {
-              this.AddCatMsg = null;
-              this.largeModal.hide();
-            }, 3000);
+            this.AddCatMsg = null;
+            this.largeModal.hide();
+          }, 3000);
         }
       );
     }
 
   }
   // delete category
-catId:any='';
-    ConfirmDialog(id, trigger:boolean=false)
-  {
-    this.catId=id;
-    if(trigger==true)
-    {
-      
-      this.DeleteCategory(this.catId);  
+  catId: any = '';
+  ConfirmDialog(id, trigger: boolean = false) {
+    this.catId = id;
+    if (trigger == true) {
+
+      this.DeleteCategory(this.catId);
       this.dangerModel.hide();
 
-    }
-    else{this.dangerModel.show();}
-    
+    } else { this.dangerModel.show(); }
+
   }
 
   DeleteCatMsg: string = null;
@@ -174,13 +207,14 @@ catId:any='';
       if (res.status == 200) {
 
         this.spinnerService.hide();
-        
+
         this.DeleteCatMsg = 'Item Deleted Successfully';
 
-        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; 
-          this.SetCatData(res);
+        this.FoodService.GetAllCategories().subscribe(res => {
+            this.categories = res.data;
+            this.SetCatData(res);
 
-        },
+          },
           err => { console.log(err) });
 
         setTimeout(() => {
@@ -220,7 +254,7 @@ catId:any='';
     'status': '',
     'isAlcoholic': '',
   }
-  Edit($event=0) {
+  Edit($event = 0) {
 
     this.model = null;
     this.model = {
@@ -240,16 +274,19 @@ catId:any='';
   UpdateCatMsg: string = null;
   UpdateCategory(formData) {
     this.spinnerService.show();
-    let data = formData.value;
-
+    let data: any = this.SaveEditData();
+    this.CreateEditForm();
     this.FoodService.UpdateCategory(data).subscribe(res => {
-      
+
       if (res.status == 200) {
 
         this.spinnerService.hide();
-        
+
         this.UpdateCatMsg = res.message;
-        this.FoodService.GetAllCategories().subscribe(res => { this.categories = res.data; this.SetCatData(res); }, err => { console.log(err)});
+        this.FoodService.GetAllCategories().subscribe(res => {
+          this.categories = res.data;
+          this.SetCatData(res);
+        }, err => { console.log(err) });
         setTimeout(() => {
           this.UpdateCatMsg = null;
           this.largeModal1.hide();
@@ -277,22 +314,95 @@ catId:any='';
   }
 
   // dropdown category
-  AlStatus:any=null;
-  
-  SetAlcholic(value)
-  { 
-    
-    if(value.toLowerCase()=='food')
-    {
-       
-       this.AlStatus=true;
-       
-    }
-    else{
-      
-     this.AlStatus=null;
-     
+  AlStatus: any = null;
+
+  SetAlcholic(value) {
+
+    if (value.toLowerCase() == 'food') {
+
+      this.AlStatus = true;
+
+    } else {
+
+      this.AlStatus = null;
+
     }
   }
+
+  SelectedFile: any;
+  fileName: any;
+  onFileChange(event) {
+    // this.resetFile();
+    if (event.target.files.length > 0) {
+      this.SelectedFile = event.target.files[0];
+    }
+  }
+
+
+  // save form data
+  SaveData(): any {
+
+
+
+
+    let data = new FormData();
+    data.append('ol_id', this.AddForm.controls['ol_id'].value);
+    data.append('cat_type', this.AddForm.controls['cat_type'].value);
+    data.append('parent_id', this.AddForm.controls['parent_id'].value);
+    data.append('cat_title', this.AddForm.controls['cat_title'].value);
+    data.append('cat_img_name', this.AddForm.controls['cat_img_name'].value);
+    // data.append('cat_img_url', this.SelectedFile, this.SelectedFile.name);
+    data.append('cat_img_url', this.SelectedFile);
+    data.append('isAlcoholic', this.AddForm.controls['isAlcoholic'].value);
+    data.append('status', this.AddForm.controls['status'].value);
+    return data;
+
+
+
+  }
+
+  SaveEditData(): any
+
+  {
+    let data = new FormData();
+    data.append('icid', this.EditForm.controls['icid'].value);
+    data.append('ol_id', this.EditForm.controls['ol_id'].value);
+    data.append('cat_type', this.EditForm.controls['cat_type'].value);
+    data.append('parent_id', this.EditForm.controls['parent_id'].value);
+    data.append('cat_title', this.EditForm.controls['cat_title'].value);
+    data.append('cat_img_name', this.EditForm.controls['cat_img_name'].value);
+    data.append('cat_img_url', this.SelectedFile, this.SelectedFile.name);
+    data.append('isAlcoholic', this.EditForm.controls['isAlcoholic'].value);
+    data.append('status', this.EditForm.controls['status'].value);
+    return data;
+  }
+  // image type validator
+
+  ImageTypeValidator: any = (c: FormControl) => {
+
+
+    if (!c.value) return null;
+
+    else {
+      let cat_img_url = c.value;
+      let type = cat_img_url.split('.').pop();
+
+      if (type == 'jpg' || type == 'png') {
+
+      } else {
+
+        return { 'ImageTypeValidator': true }
+      }
+    }
+
+
+  }
+  ShowModelAdd() {
+    
+    this.CreateAddForm();
+    this.largeModal.show();
+  }
+  resetFile() { this.fileInput.nativeElement.value = ""; }
+
 
 }
