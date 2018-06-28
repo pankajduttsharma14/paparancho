@@ -17,22 +17,23 @@ import {FoodService} from '../../services/food.service';
 
 export class LoginComponent{
 
-	
+
 	myfrm={uid1:'',pas1:''}
 
 	loginError:boolean=false;
 // constructor
 constructor(private auth: AuthService, private router:Router, private FoodService:FoodService){
 
+	
 	var status=localStorage.getItem('loginStatus');
 
-	
+
 	if(status==="true")
 	{
 		this.router.navigate(['dashboard']);
 	}
 	else{
-		this.router.navigate(['login']);	
+		this.router.navigate(['login']);
 	}
 }
 
@@ -43,9 +44,9 @@ constructor(private auth: AuthService, private router:Router, private FoodServic
 
     this.FoodService.GetAllCategories().subscribe(res=>{
       	for(var i=0; i<res.data.length;i++)
-      	{	
+      	{
      		categories.push({catId:res.data[i].icid,catName:res.data[i].cat_title});
-      		
+
       	}
 
       	localStorage.setItem('categories',JSON.stringify(categories));
@@ -60,12 +61,12 @@ constructor(private auth: AuthService, private router:Router, private FoodServic
   {
     var brands=[];
 
-    this.FoodService.GetAllBrands().subscribe(res=>{    
-    	
+    this.FoodService.GetAllBrands().subscribe(res=>{
+
     	for(var i=0; i<res.data.length;i++)
-      	{	
+      	{
      		brands.push({brId:res.data[i].brid,brName:res.data[i].brand_title});
-      		
+
       	}
 
       	localStorage.setItem('brands',JSON.stringify(brands));
@@ -83,10 +84,10 @@ LoginAuth(userData):any
 		let body = userData;
 		this.auth.loginAuthService(body).subscribe(
 		res=>{
-         		if(res.status==200 && res.id==body.mobile)
-         		{			
+         		if(res.status==200)
+         		{
 						 this.LoginLoader=true;
-						 localStorage.setItem('userData',res.id);
+						 localStorage.setItem('userData',res.user_id);
 						 localStorage.setItem('loginStatus',"true");
 						 this.SetCatData();
 						 this.SetBrandData();
@@ -94,13 +95,13 @@ LoginAuth(userData):any
 							setTimeout(()=>{
 								this.LoginLoader=false;
 								this.router.navigate(['dashboard']);
-								
+
 
 							},1000);
-						 
 
 
-				}	
+
+				}
          		else
          		{
 							this.LoginLoader=false;
@@ -119,16 +120,16 @@ LoginAuth(userData):any
 				setTimeout(()=>{
 				  	this.loginError=false;
 				  },3000);
-         		
-				
+
+
             }
 
 		);
-		
+
 
 
 
 	}
 
-	
+
 }

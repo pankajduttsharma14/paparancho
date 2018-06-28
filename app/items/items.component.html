@@ -186,60 +186,62 @@
               </div>
             </div>
           </div>
-          <table class="table">
-            <thead>
-              <tr>
-                <!-- <th></th> -->
-                <th>Id</th>
-                <th>Item Title</th>
-                <th>Item Stock</th>
-                <th>Price</th>
-                <th>Min Bar Price</th>
-                <th>Max Bar Price</th>
-                <th>Item Image</th>
-                <!-- <th>Modified Date</th> -->
-                <!-- <th>Created Date</th> -->
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor='let data of items.data | filter: searchItem | paginate: { itemsPerPage: 10, currentPage: p}'>
-                <!-- <td>
-                  <input type="checkbox" name="checkbox">
-                </td> -->
-                <td>{{data.itmid}}</td>
-                <td>{{data.item_title}}</td>
-                <td>{{data.item_stock}}</td>
-                <td>
-                  <i class="fa fa-rupee"></i> {{data.item_price}}
-                </td>
-                <td>
-                  <i class="fa fa-rupee"></i> {{data.min_bar_price}}
-                </td>
-                <td>
-                  <i class="fa fa-rupee"></i> {{data.max_bar_price}}
-                </td>
-                <td><img [src]="data.item_img_url" alt="image" height="50px"></td>
-                <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
-                <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                <td>
-                  <!-- <a href="#" title="Add" style="font-size: 16px;
-                  margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
-                  <span title="Edit" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)">
-                    <i class="fa fa-edit"></i>
-                  </span>
-                  <span title="Delete" style="font-size: 16px;
-                  margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.itmid)">
-                    <i class="fa fa-trash"></i>
-                  </span>
-                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
-                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+          <div class="table-responsive">
+            <table class="table" style="width: 1200px; min-width: 100%;">
+              <thead>
+                <tr>
+                  <!-- <th></th> -->
+                  <!-- <th>Id</th> -->
+                  <th>Item Title</th>
+                  <th>Item Stock</th>
+                  <th>Price (<i class="fa fa-rupee"></i>)</th>
+                  <th>Min Bar Price (<i class="fa fa-rupee"></i>)</th>
+                  <th>Max Bar Price (<i class="fa fa-rupee"></i>)</th>
+                  <th>Item Image</th>
+                  <!-- <th>Modified Date</th> -->
+                  <!-- <th>Created Date</th> -->
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let data of items | filter: searchItem | paginate: { itemsPerPage: 10, currentPage: p}'>
+                  <!-- <td>
+                    <input type="checkbox" name="checkbox">
+                  </td> -->
+                  <!-- <td>{{data.itmid}}</td> -->
+                  <td width="20%" style="word-break: break-all;">{{data.item_title}}</td>
+                  <td>{{data.item_stock}}</td>
+                  <td>
+                     {{data.item_price | number : '1.2-2'}}
+                  </td>
+                  <td>
+                     {{data.min_bar_price | number : '1.2-2'}}
+                  </td>
+                  <td>
+                     {{data.max_bar_price | number : '1.2-2'}}
+                  </td>
+                  <td><img [src]="data.item_img_url" alt="image" height="50px"></td>
+                  <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
+                  <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
+                  <td>
+                    <!-- <a href="#" title="Add" style="font-size: 16px;
+                    margin-right: 10px;"><i class="fa fa-plus-circle"></i></a> -->
+                    <span title="Edit" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)">
+                      <i class="fa fa-edit"></i>
                     </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                    <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.itmid)">
+                      <i class="fa fa-trash"></i>
+                    </span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                        <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                      </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>  
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
         </div>
         <!--Edit modal  -->

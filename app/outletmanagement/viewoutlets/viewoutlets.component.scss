@@ -1,7 +1,13 @@
-.app-header
+.actions_main a
 {
-	background: #ff0 !important;
+		cursor: pointer;
+		color: #2199e8;
+	margin-left:10px;
+	font-size:16px;	
+	display:inline-block;
+
 }
+
 .modal_heading
 {
 	font-size:18px;
@@ -37,6 +43,3 @@
 	color: #fff;
 
 }
-.add_box .form-control{
-	margin-bottom: 10px;
-}	

@@ -14,16 +14,23 @@
     		<button type="button" class="btn btn-success" (click)="SwitchFilter(false)">All</button>
   		</div>
         <div class="card-body">
-          
+          <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="search">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
           <table class="table">
             <thead>
               <tr>
                 
-                <th>Order Id</th>
-                <th>Table No.</th>
+                <th>Order #</th>
+                <th>Table #</th>
                 <th>Staff Name</th>
-                <th>Orderd From</th>
-                <th>Date - Time</th>
+                <th>Ordered From</th>
+                <th>Date/Time</th>
                 <th>Sub Total (<i class="fa fa-rupee"></i>)</th>
                 <th>Tax (<i class="fa fa-rupee"></i>)</th>
                 <th>Total Amount (<i class="fa fa-rupee"></i>)</th>
@@ -35,7 +42,7 @@
             </thead>
             <tbody>
 
-              <tr *ngFor='let data of OrderList  | dateToday:switch | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
+              <tr *ngFor='let data of OrderList | dateToday:switch | filter:search | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
 	                
 	                <td>{{data.id}}</td>
 	                <td>{{data.stid}}</td>
@@ -43,7 +50,7 @@
 	                <td>{{data.order_from}}</td>
 	               
 	                
-	                <td>{{data.createdAt | date:'dd/MM/yyyy'}} - {{data.order_time}}</td>
+	                <td>{{data.createdAt | date:'dd/MM/yyyy'}} <br> {{data.order_time}}</td>
                   <td>{{data.total_amt}}</td>
                   <td>{{data.tax_amt}}</td>
 	                <td>{{(data.total_amt*1+1*data.tax_amt) | number : '1.2-2'}}</td>

@@ -22,7 +22,16 @@ export class OrderlistComponent implements OnInit {
   	}
     // get all records
     this.OrderService.GetAllOrder().subscribe(
-      res=>{this.OrderList=res.data;},err=>{console.log(err)}); 
+      res=>{
+      //this.OrderList=res.data;
+      var data=new Array();
+      for(var i=0;i<res.data.length;i++)
+      { var  resData=res.data[i];
+        data.push({id:resData.id,stid:resData.stid,staff_name:resData.staff_name,order_from:resData.order_from,createdAt:resData.createdAt,order_time:resData.order_time,total_amt:resData.total_amt,tax_amt:resData.tax_amt,payment_by:resData.payment_by,status:resData.status});
+      }
+      this.OrderList=data;
+
+      },err=>{console.log(err)}); 
     
     
     

@@ -45,7 +45,7 @@ export class CategoryComponent implements OnInit {
   // fill dropdown
   public category_type: string[] = ['FOOD', 'DRINK'];
   public Status: string[] = ['Active', 'Inactive'];
-  public alchoholic: any = [{ 'value': true, 'data': 'Yes' }, { 'value': false, 'data': 'No' }];
+  public alchoholic: any = [{ 'value': true, 'data': 'Yes' }, { 'value': false, 'data': 'N/A' }];
   urlPattern = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
 
   constructor(private FoodService: FoodService,
@@ -68,9 +68,15 @@ export class CategoryComponent implements OnInit {
 
 
     this.spinnerService.show();
+
     // get all .categories
     this.FoodService.GetAllCategories().subscribe(res => {
-        this.categories = res.data;
+
+        //this.categories = res.data;
+      
+        this.categories = this.FilterCategoryData(res.data);
+
+
         this.spinnerService.hide();
       },
       err => {
@@ -80,7 +86,16 @@ export class CategoryComponent implements OnInit {
     this.CreateAddForm();
     this.CreateEditForm();
   }
-  
+  FilterCategoryData(data):any
+  {
+      var categories_data=new Array();
+        for(var i=0;i<data.length;i++)
+        {
+          categories_data.push({icid:data[i].icid,cat_type:data[i].cat_type,cat_title:data[i].cat_title,isAlcoholic:data[i].isAlcoholic,status:data[i].status,cat_img_url:data[i].cat_img_url});
+        }
+        return categories_data;
+
+  }
   CreateAddForm() {
     // form settings
     this.AddForm = this.fb.group({
@@ -155,7 +170,7 @@ export class CategoryComponent implements OnInit {
 
             // get all .categories
             this.FoodService.GetAllCategories().subscribe(res => {
-                this.categories = res.data;
+                this.categories =this.FilterCategoryData(res.data);
                 this.SetCatData(res);
                 this.spinnerService.hide();
               },
@@ -163,7 +178,7 @@ export class CategoryComponent implements OnInit {
             setTimeout(() => {
               this.AddCatMsg = null;
               this.largeModal.hide();
-            }, 3000);
+            }, 1000);
 
           } else {
             this.AddCatMsg = "Category can't added";
@@ -171,7 +186,7 @@ export class CategoryComponent implements OnInit {
             setTimeout(() => {
               this.AddCatMsg = null;
               this.largeModal.hide();
-            }, 3000);
+            }, 1000);
 
           }
         },
@@ -181,7 +196,7 @@ export class CategoryComponent implements OnInit {
           setTimeout(() => {
             this.AddCatMsg = null;
             this.largeModal.hide();
-          }, 3000);
+          }, 1000);
         }
       );
     }
@@ -211,7 +226,7 @@ export class CategoryComponent implements OnInit {
         this.DeleteCatMsg = 'Item Deleted Successfully';
 
         this.FoodService.GetAllCategories().subscribe(res => {
-            this.categories = res.data;
+            this.categories = this.FilterCategoryData(res.data);
             this.SetCatData(res);
 
           },
@@ -219,16 +234,16 @@ export class CategoryComponent implements OnInit {
 
         setTimeout(() => {
           this.DeleteCatMsg = null;
-        }, 3000);
+        }, 1000);
       } else {
         setTimeout(() => {
           this.DeleteCatMsg = null;
-        }, 3000);
+        }, 1000);
       }
     }, err => {
       setTimeout(() => {
         this.DeleteCatMsg = null;
-      }, 3000);
+      }, 1000);
     });
   }
 
@@ -284,14 +299,14 @@ export class CategoryComponent implements OnInit {
 
         this.UpdateCatMsg = res.message;
         this.FoodService.GetAllCategories().subscribe(res => {
-          this.categories = res.data;
+          this.categories = this.FilterCategoryData(res.data);
           this.SetCatData(res);
         }, err => { console.log(err) });
         setTimeout(() => {
           this.UpdateCatMsg = null;
           this.largeModal1.hide();
 
-        }, 3000);
+        }, 1000);
 
 
       } else {
@@ -300,7 +315,7 @@ export class CategoryComponent implements OnInit {
           this.UpdateCatMsg = null;
           this.largeModal1.hide();
 
-        }, 3000);
+        }, 1000);
       }
     }, err => {
 
@@ -308,7 +323,7 @@ export class CategoryComponent implements OnInit {
         this.UpdateCatMsg = null;
         this.largeModal1.hide();
 
-      }, 3000);
+      }, 1000);
 
     });
   }
@@ -317,10 +332,11 @@ export class CategoryComponent implements OnInit {
   AlStatus: any = null;
 
   SetAlcholic(value) {
-
+    this.AlStatus=null;
     if (value.toLowerCase() == 'food') {
 
       this.AlStatus = true;
+      this.AddForm.controls['isAlcoholic'].setErrors(null);
 
     } else {
 
@@ -353,7 +369,16 @@ export class CategoryComponent implements OnInit {
     data.append('cat_img_name', this.AddForm.controls['cat_img_name'].value);
     // data.append('cat_img_url', this.SelectedFile, this.SelectedFile.name);
     data.append('cat_img_url', this.SelectedFile);
+    if(this.AddForm.controls['isAlcoholic'].value=='')
+    {
+      data.append('isAlcoholic', 'false');
+      
+    }
+    else{
+
     data.append('isAlcoholic', this.AddForm.controls['isAlcoholic'].value);
+    }
+
     data.append('status', this.AddForm.controls['status'].value);
     return data;
 
@@ -371,7 +396,7 @@ export class CategoryComponent implements OnInit {
     data.append('parent_id', this.EditForm.controls['parent_id'].value);
     data.append('cat_title', this.EditForm.controls['cat_title'].value);
     data.append('cat_img_name', this.EditForm.controls['cat_img_name'].value);
-    data.append('cat_img_url', this.SelectedFile, this.SelectedFile.name);
+    data.append('cat_img_url', this.SelectedFile);
     data.append('isAlcoholic', this.EditForm.controls['isAlcoholic'].value);
     data.append('status', this.EditForm.controls['status'].value);
     return data;
@@ -400,6 +425,7 @@ export class CategoryComponent implements OnInit {
   ShowModelAdd() {
     
     this.CreateAddForm();
+    this.AlStatus=null;
     this.largeModal.show();
   }
   resetFile() { this.fileInput.nativeElement.value = ""; }

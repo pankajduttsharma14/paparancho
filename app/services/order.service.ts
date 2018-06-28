@@ -25,8 +25,7 @@ export class OrderService {
   // Get all orders
 	GetAllOrder():Observable<any>	
 	{
-		const url : string= this.BASE_URL+"outletorderlist";
-    
+		const url : string= this.BASE_URL+"outletorderlist";    
 		
     return this.http.get(url,this.options).map(res=>res.json());
 	}
@@ -42,5 +41,17 @@ export class OrderService {
     const url: string= this.BASE_URL+"cancelorder/orderid/"+id;
     return this.http.get(url,this.options).map(res=>res.json());
   }
+  GenerateBill(id):Observable<any>{
+    const url: string= this.BASE_URL+"generatebill/orderid/"+id;
+    return this.http.get(url,this.options).map(res=>res.json());
+  }
+  PaymentReceived(data)
+  {
+     let body=data;    
+    const url:string=this.BASE_URL+"payment";
+    return this.http.post(url,body,this.options).map(res=>res.json());
+  }
+
+
   
 }

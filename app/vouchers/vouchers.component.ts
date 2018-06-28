@@ -19,6 +19,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 export class VouchersComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
   public Vouchers;
   p: number = 1;
   EditForm: FormGroup;
@@ -45,13 +46,7 @@ export class VouchersComponent implements OnInit {
   ngOnInit() {
   }
   // Add voucher
-  VoucherData = {};
-  VoucherMsg: string = null;
-  AddVoucher(formData): any {
-    this.spinnerService.show();
-    var data = formData.value;
-    var time = data.time;
-    function formatAMPM(time) {
+   formatAMPM(time) {
       var hours = time.getHours();
       var minutes = time.getMinutes();
       var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -61,6 +56,13 @@ export class VouchersComponent implements OnInit {
       var strTime = hours + ':' + minutes + ' ' + ampm;
       return strTime;
     }
+  VoucherData = {};
+  VoucherMsg: string = null;
+  AddVoucher(formData): any {
+    this.spinnerService.show();
+    var data = formData.value;
+    var time = data.time;
+    
 
     this.VoucherData = {
       'vcr_name': data.VName,
@@ -68,7 +70,7 @@ export class VouchersComponent implements OnInit {
       'value': data.Vvalue,
       'status': data.status1,
       'valid_till_date': data.valid_till,
-      'valid_before': formatAMPM(time),
+      'valid_before': this.formatAMPM(time),
 
     };
 
@@ -181,15 +183,27 @@ export class VouchersComponent implements OnInit {
     }
 
 
+
+
 }
 
 UpdateVoucherMsg:string=null;
 // Update voucher msg
   UpdateVoucher(formData) {
     this.spinnerService.show();
-  console.log(formData.value);
+  
     let data=formData.value;
-    this.VouchersService.UpdateVoucher(data).subscribe(res=>{
+    var post = {
+    "id":data.id,
+    "vcr_name":data.vcr_name,
+    "type":data.type,
+    "value":data.value,
+    "status":data.status,
+    "valid_till_date":data.valid_till_date,
+    "valid_before":this.formatAMPM(data.valid_before),
+
+  }
+    this.VouchersService.UpdateVoucher(post).subscribe(res=>{
         if(res.status==200)
         {
           this.UpdateVoucherMsg="Voucher updated successfully!";
@@ -218,6 +232,25 @@ UpdateVoucherMsg:string=null;
       },3000);
     });
 
+
+  }
+
+  VoucherId: any = '';
+  ConfirmDialog(id, trigger: boolean = false) {
+    this.VoucherId = id;
+    if (trigger == true) {
+
+      this.DeleteVoucher(this.VoucherId);
+      this.dangerModel.hide();
+
+    } else { this.dangerModel.show(); }
+
+  }
+  TodayDate:any;
+  ShowModel()
+  {
+    this.TodayDate = new Date().toJSON().split('T')[0];
+    this.largeModal.show();
 
   }
 

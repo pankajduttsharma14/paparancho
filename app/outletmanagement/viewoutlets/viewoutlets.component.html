@@ -1,0 +1,154 @@
+<div class="animated fadeIn">
+  <ng4-loading-spinner></ng4-loading-spinner>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Outlet List
+        </div>
+        <!-- modal  -->
+        <div class="add_box">
+          <div class="button_control">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
+              <i class="fa fa-plus"></i> Add Outlet
+            </button>
+          </div>
+          <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h3 class="modal_heading">Add Outlet</h3>
+                  <form [formGroup]="AddForm" (ngSubmit)="AddOutlet()">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Outlet Name</label>
+                          <input type="text" formControlName="ol_name" class="form-control">
+                          <div *ngIf="AddForm.controls['ol_name'].touched && !AddForm.controls['ol_name'].valid">
+                            <label *ngIf="AddForm.controls['ol_name'].hasError('required')" style="color:red;">Enter outlet name</label>
+                          </div>
+                        </div>
+                        <div class="col-md-12" style="display: none;">
+                          <input type="hidden" name="" formControlName="ol_lat">
+                          <input type="hidden" name="" formControlName="ol_long">
+                        </div>
+                        <div class="col-md-12">
+                          <label>Outlet Address</label>
+                          <textarea formControlName="ol_address" class="form-control" (blur)="GetLocation($event)"></textarea>
+                          <div *ngIf="AddForm.controls['ol_address'].touched && !AddForm.controls['ol_address'].valid">
+                            <label *ngIf="AddForm.controls['ol_address'].hasError('required')" style="color:red;">Enter outlet address</label>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <label>Outlet Email</label>
+                          <input type="text" formControlName="email_id" class="form-control">
+                          <div *ngIf="AddForm.controls['email_id'].touched && !AddForm.controls['email_id'].valid">
+                            <label *ngIf="AddForm.controls['email_id'].hasError('required')" style="color:red;">Enter outlet email id</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Outlet Opeing Time</label>
+                          <input type="text" formControlName="open_time" class="form-control">
+                          <div *ngIf="AddForm.controls['open_time'].touched && !AddForm.controls['open_time'].valid">
+                            <label *ngIf="AddForm.controls['open_time'].hasError('required')" style="color:red;">Select outlet opening time</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label>Outlet Closing Time</label>
+                          <input type="text" formControlName="close_time" class="form-control">
+                          <div *ngIf="AddForm.controls['close_time'].touched && !AddForm.controls['close_time'].valid">
+                            <label *ngIf="AddForm.controls['close_time'].hasError('required')" style="color:red;">Select outlet opening time</label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <label for="status">Outlet Status</label>
+                          <select formControlName="status" class="form-control">
+                            <option value="" [selected]="true">Status</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="INACTIVE">INACTIVE</option>
+                          </select>
+                          <div *ngIf="AddForm.controls['status'].touched && !AddForm.controls['status'].valid">
+                            <label *ngIf="AddForm.controls['status'].hasError('required')" style="color:red;">Select Status</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                          <button type="submit" class="sub_btn btn btn-success" [disabled]="!AddForm.valid"><i class="fa fa-plus"></i> Add Outlet</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+        </div>
+        <!-- modal -->
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">Category has been deleted</div>
+          <div class="row justify-content-end">
+            <div class="col-3">
+              <div class="input-group searchBox" style="margin-bottom: 10px;">
+                <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchCat">
+                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table" style="width: 100%; min-width: 1200px;">
+              <thead>
+                <tr>
+                  <!-- <th></th> -->
+                  <th>Outlet Name</th>
+                  <th width="25%" style="word-wrap: break-word;">Outlet Address</th>
+                  <th>Email Id</th>
+                  <th>Opening Time</th>
+                  <th>Closing Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let data of OutletList | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p} '>
+                  <!-- <td>
+                    <input type="checkbox" name="checkbox">
+                  </td> -->
+                  <td>{{data.ol_name}}</td>
+                  <td width="25%" style="word-wrap: break-word;">{{data.ol_address}}</td>
+                  <td>{{data.email_id}}</td>
+                  <td>{{data.open_time}}</td>
+                  <td>{{data.close_time}}</td>
+                  <td>
+                    <span title="Edit" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
+                    <!-- <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteCategory(data.icid)"><i class="fa fa-trash"></i></span> -->
+                    <span title="Delete" style="font-size: 16px;
+                    margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.icid)"><i class="fa fa-trash"></i></span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                        <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                      </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          <!--  <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

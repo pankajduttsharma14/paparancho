@@ -1,4 +1,5 @@
 <div class="app-body">
+  
   <main class="main d-flex align-items-center">
     <div class="container">
       <div class="row">
@@ -17,8 +18,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Username" name="mobile" [(ngModel)]="myfrm.uid1" #mobile="ngModel" required>
-                   <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" class="error">Mobile Number Required</div>
+                  <input type="text" class="form-control" placeholder="Username" name="user_name" [(ngModel)]="myfrm.uid1" #user_name="ngModel" required>
+                   <div *ngIf="user_name.invalid && (user_name.dirty || user_name.touched)" class="error">UserId Required</div>
                   </div>
 
                   <div class="input-group mb-4">

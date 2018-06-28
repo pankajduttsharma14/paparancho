@@ -1,3 +1,4 @@
+
 <app-header
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 'auto', height: 50, alt: 'Logo'}"
@@ -47,9 +48,10 @@
     </li>
   </ul>
 </app-header>
+
   <app-sidebar [fixed]="true" [display]="'lg'">
 <div class="app-body">
-  
+
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>

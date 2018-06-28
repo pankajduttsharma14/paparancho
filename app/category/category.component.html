@@ -110,10 +110,10 @@
                         <div class="col-md-6">
                           
                           <label>Is Alcoholic?</label>
-                          <select formControlName="isAlcoholic" class="form-control">
+                          <select formControlName="isAlcoholic" class="form-control" [attr.disabled]="AlStatus" >
                             <option value="">Is Alcoholic?</option>
                             <option value="true">Yes</option>
-                            <option value="false">No</option>
+                            <option value="false" [selected]="AlStatus">No</option>
 
                           </select>
                           <div *ngIf="AddForm.controls['isAlcoholic'].touched && !AddForm.controls['isAlcoholic'].valid">
@@ -163,7 +163,7 @@
             <thead>
               <tr>
                 <!-- <th></th> -->
-                <th>Category Id</th>
+                <!-- <th>Category Id</th> -->
                 <th>Category Type</th>
                 <th>Category Title</th>
                 <th>Is Alcoholic?</th>
@@ -180,11 +180,11 @@
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
                 </td> -->
-                <td>{{data.icid}}</td>
+                <!-- <td>{{data.icid}}</td> -->
                 <td>{{data.cat_type}}</td>
-                <td>{{data.cat_title}}</td>
-                <td><span *ngIf="data.isAlcoholic=='true'">Yes</span><span *ngIf="data.isAlcoholic=='false'">No</span></td>
-                <td><img [src]="data.cat_img_url" alt="image" height="50"></td>
+                <td>{{data.cat_title | uppercase}}</td>
+                <td><span *ngIf="data.isAlcoholic=='true'">Yes</span><span *ngIf="data.isAlcoholic=='false'">N/A</span></td>
+                <td><img [src]="data.cat_img_url" alt="image" height="50" style="max-width:80px;"></td>
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                 <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                 
@@ -284,12 +284,8 @@
                         </div>
                         <div class="col-md-6">
                           <label for="">Category Image</label>
-                          <!-- <input type="text" formControlName="cat_img_url" class="form-control" > -->
-                          
-                          <input  type="file" class="form-control" (change)="onFileChange($event)" #fileInput formControlName="cat_img_url" accept="image/*" ImageTypeValidator
+                         <input  type="file" class="form-control" (change)="onFileChange($event)" #fileInput formControlName="cat_img_url" accept="image/*" ImageTypeValidator
                           >
-
-                          
                           <div *ngIf="EditForm.controls['cat_img_url'].touched && !EditForm.controls['cat_img_url'].valid">
                             <label *ngIf="EditForm.controls['cat_img_url'].hasError('required')" style="color:red;">Please select image</label>
                             <label *ngIf="EditForm.controls['cat_img_url'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>
@@ -298,12 +294,13 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
+                          
                           <label>Is Alcoholic?</label>
                           <br>
-                          <select formControlName="isAlcoholic" class="form-control" [(ngModel)]="model.isAlcoholic">
+                          <select formControlName="isAlcoholic" class="form-control" [(ngModel)]="model.isAlcoholic" [attr.disabled]="model.cat_type=='FOOD'?true:null">
                             <option value="">Is Alcoholic?</option>
                             <option [value]="true" [selected]="model.isAlcoholic=='true'">Yes</option>
-                            <option [value]="false" [selected]="model.isAlcoholic=='false'">No</option>
+                            <option [value]="false" [selected]="model.isAlcoholic=='false' || model.cat_type=='FOOD'">No</option>
                           </select>
                           <div *ngIf="EditForm.controls['isAlcoholic'].touched && !EditForm.controls['isAlcoholic'].valid">
                             <label *ngIf="EditForm.controls['isAlcoholic'].hasError('required')" style="color:red;">Select Drink Type</label>

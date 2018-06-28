@@ -270,15 +270,10 @@ export class BrandComponent implements OnInit {
       if (type == 'jpg' || type == 'png') {
 
       } else {
-
         return { 'ImageTypeValidator': true }
       }
     }
-
-
   }
-
-
 
   // save add from
   SaveAddForm() {

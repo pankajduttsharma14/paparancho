@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy} from '@angular/common';
-import {FormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -24,7 +24,8 @@ import {VouchersModule} from './vouchers/vouchers.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './views/notifications/modals.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
- 
+import {OutletModule} from './outletmanagement/outlet.module';
+
 
 
 const APP_CONTAINERS = [
@@ -55,6 +56,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TableModule} from './tablemanagement/table.module';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import {TaxModule} from './taxmanagement/tax.module';
+import { StatusfilterPipe } from './pipes/statusfilter.pipe';
+
 
 
 
@@ -88,8 +91,10 @@ import {TaxModule} from './taxmanagement/tax.module';
     TableModule,
     TaxModule,
     Ng4LoadingSpinnerModule.forRoot(),
-    
-    
+    ReactiveFormsModule,
+    OutletModule
+
+
 
 
 
@@ -104,12 +109,8 @@ import {TaxModule} from './taxmanagement/tax.module';
     RegisterComponent,
     AppSettingComponent,
     ModalsComponent,
+    StatusfilterPipe,
     
-
-
-
-
-
 
   ],
   providers: [{

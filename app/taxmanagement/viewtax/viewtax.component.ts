@@ -15,9 +15,11 @@ export class ViewtaxComponent implements OnInit {
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
   public TaxList: any = [];
+  p: number = 1;
   public ErrorMsg: string = null;
   AddTaxForm: FormGroup;
   EditTaxForm: FormGroup;
+  // searchCat:string|any;
 
   constructor(private TaxService: TaxService,
     private router: Router,

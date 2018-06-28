@@ -11,22 +11,28 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService{
-	
+		
+	private options:any;
+	private headers:any;
 	private BASE_URL: string = AppSettingComponent.API_ENDPOINT;
-	constructor(private http:Http, private router:Router){}
-	
+	constructor(private http:Http, private router:Router){
 
+		this.headers = new Headers();
+		this.headers.append('Content-Type', 'application/json');
+        this.headers.append('client-service', 'PR2018PS');	
+        this.headers.append('auth-key', '5ccd7b534b19d30030c6503f3a852d00');
+        this.options=new RequestOptions({headers:this.headers});
+	}
+		
 	// login auth service
 	public loginAuthService(body):Observable<any>
 	{
-		const headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-        headers.append('client-service', 'PR2018PS');	
-        headers.append('auth-key', '5ccd7b534b19d30030c6503f3a852d00');
+		
         const url : string= this.BASE_URL+"checkin";
-        const options=new RequestOptions({headers:headers});
-        return this.http.post(url,body, options).map(res=> res.json());
+       
+        return this.http.post(url,body, this.options).map(res=> res.json());
 	}
+
 	logOut():any
 	{	
 		localStorage.removeItem('userData');
@@ -34,4 +40,12 @@ export class AuthService{
 		this.router.navigate(['login']);
 		
 	}
+
+	//Chnage Password Service
+	UpdatePassword(body):Observable<any>{
+		const url : string= this.BASE_URL+"change-password";
+       	return this.http.post(url,body, this.options).map(res=> res.json());
+	}
+
+
 }

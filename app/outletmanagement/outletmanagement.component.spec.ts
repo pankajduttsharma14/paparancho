@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabledetailComponent } from './tabledetail.component';
+import { OutletmanagementComponent } from './outletmanagement.component';
 
-describe('TabledetailComponent', () => {
-  let component: TabledetailComponent;
-  let fixture: ComponentFixture<TabledetailComponent>;
+describe('OutletmanagementComponent', () => {
+  let component: OutletmanagementComponent;
+  let fixture: ComponentFixture<OutletmanagementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabledetailComponent ]
+      declarations: [ OutletmanagementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TabledetailComponent);
+    fixture = TestBed.createComponent(OutletmanagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

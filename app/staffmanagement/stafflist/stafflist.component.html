@@ -102,7 +102,8 @@
                           <input type="text" formControlName="first_name" class="form-control">
                           <div *ngIf="StaffListForm.controls['first_name'].touched && !StaffListForm.controls['first_name'].valid">
                             <label *ngIf="StaffListForm.controls['first_name'].hasError('required')" style="color:red;">Enter First Name</label>
-                            <label *ngIf="StaffListForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label>
+                            <!-- <label *ngIf="StaffListForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label> -->
+                            <label *ngIf="StaffListForm.controls['first_name'].hasError('maxlength')" style="color:red;">Max 30 digits Allowed!</label>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -110,7 +111,8 @@
                           <input type="text" formControlName="last_name" class="form-control">
                           <div *ngIf="StaffListForm.controls['last_name'].touched && !StaffListForm.controls['last_name'].valid">
                             <label *ngIf="StaffListForm.controls['last_name'].hasError('required')" style="color:red;">Enter Last Name</label>
-                            <label *ngIf="StaffListForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label>
+                            <!-- <label *ngIf="StaffListForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label> -->
+                            <label *ngIf="StaffListForm.controls['last_name'].hasError('maxlength')" style="color:red;">Max 30 digits Allowed!</label>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -199,19 +201,19 @@
             <thead>
               <tr>
                 <!-- <th></th> -->
-                <th>Staff Id</th>
+                <!-- <th>Staff Id</th> -->
                 <th>Outlet Id</th>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Contact</th>
+                <th>Phone Number</th>
                 <!-- <th>Pass Code</th> -->
                 <!-- <th width="20%" style="word-break: break-all;">Address</th> -->
                 <!-- <th>Age</th>
                 <th>Gender</th> -->
                 <!-- <th>Modified Date</th>
                 <th>Created Date</th> -->
-                <th>Login Id</th>
-                <!-- <th>Login Status</th> -->
+                <th>Staff Login Id</th>
+                <th>Login Status</th>
                 <!-- <th>Active Status</th> -->
                 <th>Actions</th>
               </tr>
@@ -221,8 +223,11 @@
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
                 </td> -->
-                <td>{{data.staff_id}}</td>
-                <td>{{data.ol_id}}</td>
+                <!-- <td>{{data.staff_id}}</td> -->
+                <td>
+                  <span *ngIf="data.ol_id==1">Papa Rancho</span>
+                  <span *ngIf="data.ol_id==2">Trance</span>
+                </td>
                 <td>{{data.first_name+" "+data.last_name}}</td>
                 <td>{{data.role_name}}</td>
                 <td>{{data.mob_number}}</td>
@@ -234,7 +239,7 @@
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
 
-                <!-- <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td> -->
+                <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td>
                 
                 <td>
                   <span title="Edit" style="font-size: 16px;
@@ -269,7 +274,7 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Staff</h3>
-                  <div class="alert alert-success" *ngIf="UpdateStaffListMsg!=null">{{UpdateStaffListMsg}}</div>
+                  <div class="alert alert-success" *ngIf="UpdateStaffListMsg!=null">Staff record has been updated successfully</div>
                   
                    <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off'  *ngIf="UpdateStaffListMsg==null">
                     <div class="form-group">
@@ -281,7 +286,7 @@
                         </div>
                         <div class="col-md-6">
                           <label>Staff Login Id/Phone Number</label>
-                          <input type="text" formControlName="staff_login_id" class="form-control" [ngModel]="model.staff_login_id">
+                          <input type="text" formControlName="staff_login_id" class="form-control" [ngModel]="model.staff_login_id" readonly>
                           <div *ngIf="EditForm.controls['staff_login_id'].touched && !EditForm.controls['staff_login_id'].valid">
                             <label *ngIf="EditForm.controls['staff_login_id'].hasError('required')" style="color:red;">Enter Staff Login Id/Phone Number</label>
                           </div>

@@ -8,6 +8,22 @@ export const navItems = [
     //   text: 'NEW'
     // }
   },
+  // outlet
+  // {
+  //   name: 'Outlet Management',
+  //   url: 'outlet-management',
+  //   icon: 'icon-puzzle',
+  //   children: [
+  //     {
+  //       name: 'Outlet List',
+  //       url: 'outlet-management/outletlist',
+  //       icon: 'icon-puzzle'
+  //     },
+      
+  //    ]
+  // },
+
+
   // user management
   {
     name: 'Staff Management',
@@ -34,11 +50,11 @@ export const navItems = [
     url: 'food',
     icon: 'icon-puzzle',
     children: [
-      {
-        name: 'Brands',
-        url: 'food/brands',
-        icon: 'icon-puzzle'
-      },
+      // {
+      //   name: 'Brands',
+      //   url: 'food/brands',
+      //   icon: 'icon-puzzle'
+      // },
       {
         name: 'Categories',
         url:  'food/categories',
@@ -70,55 +86,19 @@ export const navItems = [
         url: 'order/order-list',
         icon: 'icon-puzzle'
       },
-      // {
-      //   name: 'Print Bill',
-      //   url: 'order/print-bill',
-      //   icon: 'icon-puzzle'
-      // }
+      
 
 
     ]
   },
-  // GIFT management
-
-  //  {
-  //   name: 'Gift Master',
-  //   url: '/gift',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Create Gift Card',
-  //   //     url: '/gift/create-card',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'View Gift Card',
-  //   //     url: '/gift/view-card',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'View Gift Card',
-  //   //     url: '/gift/view-card',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-
-
-  //   // ]
-  // },
-
+  
   // Voucher management
 
    {
     name: 'Vouchers',
     url: 'vouchers',
     icon: 'icon-puzzle',
-    // children: [
-    //   {
-    //     name: 'Vouchers List',
-    //     url: 'voucher/vouchers-list',
-    //     icon: 'icon-puzzle'
-    //   },
-    // ]
+    
   },
   // Tax management
   {
@@ -145,69 +125,4 @@ export const navItems = [
       },
     ]
   },
-  
-
-  // KITCHEN management
-
-  //  {
-  //   name: 'Kitchen Management',
-  //   url: '/kitchen',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Add Kitchen',
-  //   //     url: '/kitchen/add-kitchen',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'View Kitchen',
-  //   //     url: '/kitchen/view-kitchen',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   // ]
-  // },
-  // REPORTS MANAGEMENT
-
-  //  {
-  //   name: 'Reports',
-  //   url: '/reports',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Order Report',
-  //   //     url: '/reports/order-report',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'Product Sale Reports',
-  //   //     url: '/reports/sale-reports',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'Custom Reports',
-  //   //     url: '/reports/custom-reports',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   // ]
-  // },
-  // system admin
-  // {
-  //   name: 'Settings',
-  //   url: '/settings',
-  //   icon: 'icon-puzzle',
-  //   // children: [
-  //   //   {
-  //   //     name: 'Manage User',
-  //   //     url: '/system/manage-user',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-  //   //   {
-  //   //     name: 'Set Rules',
-  //   //     url: '/system/set-rules',
-  //   //     icon: 'icon-puzzle'
-  //   //   },
-
-  //   // ]
-  // },
-
 ];

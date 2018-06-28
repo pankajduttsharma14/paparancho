@@ -32,11 +32,11 @@
         </div>
         <!-- modal  -->
         <div class="add_box">
-          <div class="button_control">
+          <!-- <div class="button_control">
             <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
               <i class="fa fa-plus"></i> Add Tax
             </button>
-          </div>
+          </div> -->
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -46,7 +46,7 @@
                     <span *ngIf="AddMsg==true"><i class="fa fa-check" style="color:green;"></i> Tax has been added successfully !</span>
                     <span *ngIf="AddMsg==false"><i class="fa fa-times" style="color:red;"></i> Tax can't added !</span>
                   </div>
-                  <form [formGroup]="AddTaxForm" (ngSubmit)="AddTax(AddTaxForm)" *ngIf="AddTaxMsg==null">
+                  <form [formGroup]="AddTaxForm" (ngSubmit)="AddTax(AddTaxForm)" *ngIf="AddMsg==null">
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-12">
@@ -59,10 +59,10 @@
                       </div>
                       <div class="row">
                         <div class="col-md-12">
-                          <label>Tax Percentage</label>
+                          <label>Tax Value</label>
                           <input type="number" class="form-control" formControlName="percentage">
                           <div *ngIf="AddTaxForm.controls['percentage'].touched && !AddTaxForm.controls['percentage'].valid">
-                            <label *ngIf="AddTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter tax percentage</label>
+                            <label *ngIf="AddTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter Tax Value</label>
                           </div>
                         </div>
                       </div>
@@ -97,14 +97,14 @@
         </div>
         <!-- modal -->
         <div class="card-body">
-          <div class="row justify-content-end">
+         <!--  <div class="row justify-content-end">
             <div class="col-3">
               <div class="input-group searchBox" style="margin-bottom: 10px;">
                 <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchCat">
-                <!-- <div class="input-group-addon"><i class="fa fa-search"></i></div> -->
+                
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="alert alert-danger" *ngIf="ErrorMsg">{{ErrorMsg}}</div>
           <div class="alert" *ngIf="DeleteMsg!=null" [ngClass]="{'alert-success':DeleteMsg==true,'alert-danger':DeleteMsg==false}">
             <span *ngIf="DeleteMsg==true"><i class="fa fa-check" style="color:green;"></i> Tax has been deleted successfully !</span>
@@ -114,26 +114,26 @@
             <thead>
               <tr>
                 <!-- <th></th> -->
-                <th>Tax Id</th>
+                <!-- <th>Tax Id</th> -->
                 <th>Tax Type</th>
-                <th>Tax percentage</th>
+                <th>Tax Value</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor='let data of TaxList | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p} '>
-                <td>{{data.id}}</td>
+              <tr *ngFor='let data of TaxList | paginate: { itemsPerPage: 10, currentPage: p} '>
+                <!-- <td>{{data.id}}</td> -->
                 <td>{{data.tax_type}}</td>
-                <td>{{data.percentage+"%"}}</td>
+                <td>{{data.percentage}}</td>
                 <td>
                   <span title="Edit" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)">
                                         <i class="fa fa-edit"></i>
                                     </span>
-                  <span title="Delete" style="font-size: 16px;
+                 <!--  <span title="Delete" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.id)">
                                         <i class="fa fa-trash"></i>
-                                    </span>
+                                    </span> -->
                   <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">
                                         <i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
                                         <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
@@ -185,10 +185,10 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label>Tax Percentage</label>
+                  <label>Tax Value</label>
                   <input type="number" class="form-control" formControlName="percentage" [ngModel]="model.percentage">
                   <div *ngIf="EditTaxForm.controls['percentage'].touched && !EditTaxForm.controls['percentage'].valid">
-                    <label *ngIf="EditTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter tax percentage</label>
+                    <label *ngIf="EditTaxForm.controls['percentage'].hasError('required')" style="color:red;">Enter Tax Value</label>
                   </div>
                 </div>
               </div>

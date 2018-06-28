@@ -1,0 +1,263 @@
+<div class="animated fadeIn">
+  <ng4-loading-spinner></ng4-loading-spinner>
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- msg -->
+      <div class="alert" *ngIf="PaymentStatus!=null" [ngClass]="{'alert-success':PaymentStatus==true,'alert-danger':PaymentStatus==false}">
+        <span *ngIf="PaymentStatus==true"><i class="fa fa-check" style="color:green;"></i> Payment Successful!</span>
+        <span *ngIf="PaymentStatus==false"><i class="fa fa-times" style="color:red;"></i> Payment Failed!</span>
+      </div>
+      <!-- msg -->
+      <!-- Bill Preview  -->
+      <div class="card" *ngIf="hideStatus">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Bill Preview
+        </div>
+        <div class="order_box">
+          <ul>
+            <!-- <li *ngIf="OrderDetails[0].order_id"><span>Order Id</span>{{OrderDetails[0].order_id}}</li>
+            <li *ngIf="OrderDetails[0].createdAt"><span>Order Date</span> {{OrderDetails[0].createdAt | date:'dd/mm/yy'}}</li>
+            <li *ngIf="OrderDetails[0].id"><span>Table Number</span>{{OrderDetails[0].id}}</li> -->
+          </ul>
+        </div>
+        <div class="card-body" *ngIf="OrderDetails.Orderdata">
+          <div *ngIf="OrderDetails.Orderdata[0].status=='Cancelled'">Order Cancelled</div>
+          <div id="print-section">
+            <table class="table" style="width:10.000.00%;" *ngIf="OrderDetails.Orderdata[0].status!='Cancelled'">
+              <tr *ngIf="OrderDetails.Orderdata">
+                <td>Bill Number </td>
+                <td>{{OrderDetails.Orderdata[0].bill_no}}</td>
+                <td>Date & Time</td>
+                <td>{{OrderDetails.Orderdata[0].order_time}}</td>
+              </tr>
+            </table>
+            <table class="table" style="width:10.000.00%;" *ngIf="OrderDetails.Orderdata[0].status!='Cancelled'">
+              <thead>
+                <tr>
+                  <th>Items</th>
+                  <th>Qty.</th>
+                  <th>Status</th>
+                  <th>Rate <span>(<i class="fa fa-rupee"></i>)</span></th>
+                  <th style="text-align: right;">Amount <span>(<i class="fa fa-rupee"></i>)</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let data of OrderDetails.data' style="position: relative;">
+                  <td>{{data.item_name}}</td>
+                  <td>{{data.item_qty}}</td>
+                  <td>
+                    <!-- <span class="badge badge-success">{{data.status}}</span> -->
+                    <span class="badge badge-danger" *ngIf="data.status=='Cancelled'">{{data.status | uppercase}}</span>
+                    <span class="badge badge-warning" *ngIf="data.status=='Pending'">{{data.status | uppercase}}</span>
+                    <span class="badge badge-success" *ngIf="data.status=='Completed'">{{data.status | uppercase}}</span>
+                    <span class="badge badge-primary" *ngIf="data.status=='Served'">{{data.status | uppercase}}</span>
+                  </td>
+                  <td>{{data.price | number:'1.2-2'}}</td>
+                  <td align="right">{{(data.item_qty*data.price) | number:'1.2-2'}}</td>
+                  <!-- <td class="actions_main">
+                    <a title="Edit"><i class="fa fa-edit"></i></a>
+                    <a title="Delete"><i class="fa fa-trash"></i></a>
+                    <a title="View Detail" [routerLink]="[data.id]"><i class="fa fa-eye"></i></a>
+                  </td> -->
+                </tr>
+                <!-- {{OrderDetails | json}} -->
+                <tr *ngIf="OrderDetails.Orderdata">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th colspan="1" style="text-align: right;"><span>Sub Total</span></th>
+                  <th style="text-align: right;">{{OrderDetails.Orderdata[0].total_amt}}</th>
+                </tr>
+                <tr *ngIf="OrderDetails.Orderdata">
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th colspan="1" style="text-align: right;">Tax</th>
+                  <th style="text-align: right;">{{OrderDetails.Orderdata[0].tax_amt}}</th>
+                </tr>
+                <tr style="background: #efefef; text-transform: uppercase;" *ngIf="OrderDetails.Orderdata">
+                  <th></th>
+                  <th></th>
+                  <th>Total Items : {{OrderDetails.Orderdata[0].item_total}}</th>
+                  <th colspan="1" style="text-align: right;"><span> Total Amount</span></th>
+                  <th style="text-align: right;"><span>{{OrderDetails.Orderdata[0].grand_total}}</span></th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="button_groups" *ngIf="OrderDetails.Orderdata">
+            <div *ngIf="OrderDetails.Orderdata[0].status!='Cancelled'">
+              <!-- <a [routerLink]="['/dashboard/order/complete-orders/',OrderDetails.data[0].order_id]" class="btn btn-primary" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-print"></i> Print  Bill</a> -->
+              <a (click)="print()" class="btn btn-primary" *ngIf="OrderDetails.Orderdata[0].status=='Pending' || OrderDetails.Orderdata[0].status=='Completed'"><i class="fa fa-print"></i> Print  Bill</a>
+              <!-- <button type="button" class="btn btn-warning" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button> -->
+              <button type="button" class="btn btn-success" (click)="ChangeStatus(hideStatus)" *ngIf="OrderDetails.Orderdata[0].status!='Completed' ||  OrderDetails.Orderdata[0].status!='Cancelled'"><i class="fa fa-money"></i> Payment Recived</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Bill Preview  -->
+      <!-- Payment Start  -->
+      <div class="card" *ngIf="!hideStatus">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Payment
+        </div>
+        <div class="order_box">
+        </div>
+        <div class="card-body">
+          <form [formGroup]="PaymentForm" (ngSubmit)="PaymentReceived(PaymentForm)">
+            <table class="table" style="width:100%;" *ngIf="OrderDetails.Orderdata[0].status!='Cancelled'">
+              <tr>
+                <td>Order Number</td>
+                <td>
+                  <label>{{OrderDetails.Orderdata[0].order_id}}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>Payment Mode</td>
+                <td>
+                  <select class="form-control" [(ngModel)]="PaymentForm.payment_by" formControlName="payment_by">
+                    <option value="" [selected]="true">--Payment Mode--</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="PayTM">PayTM</option>
+                  </select>
+                  <div *ngIf="PaymentForm.controls['payment_by'].touched && !PaymentForm.controls['payment_by'].valid">
+                    <label *ngIf="PaymentForm.controls['payment_by'].hasError('required')" style="color:red;">Select Payment Mode</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Total Payable (<i class="fa fa-rupee"></i>)</td>
+                <td>
+                  <label>{{OrderDetails.Orderdata[0].grand_total}}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>Total Received (<i class="fa fa-rupee"></i>)</td>
+                <td>
+                  <input class="form-control" type="text" (blur)="CalcAmount($event.target.value)" formControlName="amount_paid">
+                  <div *ngIf="PaymentForm.controls['amount_paid'].touched && !PaymentForm.controls['amount_paid'].valid">
+                    <label *ngIf="PaymentForm.controls['amount_paid'].hasError('required')" style="color:red;">Enter Paid Amount</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Change(<i class="fa fa-rupee"></i>)</td>
+                <td>
+                  <label>{{amount_return}}</label>
+                </td>
+              </tr>
+              <tr>
+                <th colspan="2">
+                  <button type="submit" class="btn btn-success" [disabled]="!PaymentForm.valid"><i class="fa fa-check"></i> Payment Received</button>
+                  <button (click)="ChangeStatus(hideStatus)" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</button>
+                </th>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+      <!-- Payment End  -->
+    </div>
+  </div>
+</div>
+<div id="print-section1" [hidden]="false">
+  <table width="278" style="font-family: Arial; text-align: left; font-size: 10px; height: auto;">
+    <thead>
+      <tr>
+        <th colspan="2">Trance "THE PUB"</th>
+        <th colspan="3" align="right">Phone: 4249999</th>
+      </tr>
+      <tr>
+        <th colspan="5">Gemini Mall, AB Road, Indore, Madhya Pradesh 452011</th>
+        
+      </tr>
+      <tr>
+        <th colspan="3">GSTIN: 23AFAPV1273P1Z4</th>
+        <th colspan="2" align="right">TIN: 23651204251</th>
+        
+      </tr>
+      <tr>
+        <th colspan="5">Bill No:123456</th>
+      </tr>
+      <tr style="border-top: 1px solid #000;">
+        <th style="border-top: 1px solid #ccc;">Sno.</th>
+        <th style="border-top: 1px solid #ccc;">Items</th>
+        <th style="border-top: 1px solid #ccc;">Qty.</th>
+        <th style="border-top: 1px solid #ccc;">Rate</th>
+        <th align="right" style="border-top: 1px solid #ccc;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Peanut Chat</td>
+        <td>2</td>
+        <td>40.00</td>
+        <td align="right">80.00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Channa Rost</td>
+        <td>1</td>
+        <td>120.00</td>
+        <td align="right">120.00</td>
+      </tr>
+      <tr>
+        <td align="right" colspan="4" style="border-bottom: 1px solid #ccc;">Sub Total</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">170.00</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="right" style="border-bottom: 1px solid #ccc;">CGST</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">2.5%</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="right" style="border-bottom: 1px solid #ccc;">SGST</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">2.5%</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="right"><b>Sub Total</b></td>
+        <td align="right"><b>210.00</b></td>
+      </tr>
+      <!-- alchoholic -->
+      <tr>
+        <td>3</td>
+        <td>Kingfisher Strong</td>
+        <td>2</td>
+        <td>180.00</td>
+        <td align="right">360.00</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Bira White</td>
+        <td>1</td>
+        <td>270.00</td>
+        <td align="right">270.00</td>
+      </tr>
+      <tr>
+        <td align="right" colspan="4" style="border-bottom: 1px solid #ccc;">Sub Total</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">450.00</td>
+      </tr>
+      <tr>
+        <td align="right" colspan="4" style="border-bottom: 1px solid #ccc;">Discount(10%)</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">-45.00</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="right" style="border-bottom: 1px solid #ccc;">
+          VAT(18%)</td>
+        <td align="right" style="border-bottom: 1px solid #ccc;">72.90</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="right" style="border-bottom: 1px solid #ccc;"><b>Sub Total</b></td>
+        <td align="right" style="border-bottom: 1px solid #ccc;"><b>477.90</b></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" align="right"><b>Grand Total</b></td>
+        <td align="right"><b>687.90</b></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

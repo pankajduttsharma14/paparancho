@@ -9,13 +9,13 @@
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Order Details
         </div>
-        <div class="order_box">
+       <!--  <div class="order_box" *ngIf="OrderDetails">
           <ul>
-            <!-- <li *ngIf="OrderDetails[0].order_id"><span>Order Id</span>{{OrderDetails[0].order_id}}</li>
+            <li *ngIf="OrderDetails[0].order_id"><span>Order Id</span>{{OrderDetails[0].order_id}}</li>
             <li *ngIf="OrderDetails[0].createdAt"><span>Order Date</span> {{OrderDetails[0].createdAt | date:'dd/mm/yy'}}</li>
-            <li *ngIf="OrderDetails[0].id"><span>Table Number</span>{{OrderDetails[0].id}}</li> -->
+            <li *ngIf="OrderDetails[0].id"><span>Table Number</span>{{OrderDetails[0].id}}</li>
           </ul>
-        </div>
+        </div> -->
         <div class="card-body">
           
           <table class="table" style="width:100%;">
@@ -25,6 +25,7 @@
                 <th>Items</th>
                 <th>Qty.</th>
                 <th>Status</th>
+                <th>Remark</th>
                 <th>Rate <span>(<i class="fa fa-rupee"></i>)</span></th>
                 <th style="text-align: right;">Amount <span>(<i class="fa fa-rupee"></i>)</span></th>
               </tr>
@@ -41,6 +42,7 @@
                   <span class="badge badge-success" *ngIf="data.status=='Completed'">{{data.status | uppercase}}</span>
                   <span class="badge badge-primary" *ngIf="data.status=='Served'">{{data.status | uppercase}}</span>
                 </td>
+                <td>{{data.remarks}}</td>
                 <td>{{data.price | number:'1.2-2'}}</td>
                 <td align="right">{{(data.item_qty*data.price) | number:'1.2-2'}}</td>
                 <!-- <td class="actions_main">
@@ -49,9 +51,10 @@
 	                  <a title="View Detail" [routerLink]="[data.id]"><i class="fa fa-eye"></i></a>
 	                </td> -->
               </tr>
-              <!-- {{OrderDetails | json}} -->
+              
              
               <tr *ngIf="OrderDetails.Orderdata">
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -63,6 +66,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
                 
                 <th colspan="1" style="text-align: right;" >Tax</th>
                 <th style="text-align: right;" >{{OrderDetails.Orderdata[0].tax_amt}}</th>
@@ -70,6 +74,8 @@
               <tr style="background: #efefef; text-transform: uppercase;" *ngIf="OrderDetails.Orderdata">
                 <th></th>
                 <th></th>
+                <th></th>
+                
                 
                 <th>Total Items {{OrderDetails.Orderdata[0].item_total}}</th>
                 <th colspan="1" style="text-align: right;" ><span *ngIf="OrderDetails.Orderdata[0].status=='Completed'"> Total Amount</span></th>
@@ -80,7 +86,7 @@
 
           <div class="button_groups" *ngIf="OrderDetails.Orderdata">
             <div *ngIf="OrderDetails.Orderdata[0].status!='Completed'">
-              <button type="button" class="btn btn-success" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Complete Order</button>
+              <a [routerLink]="['/dashboard/order/complete-orders/',OrderDetails.data[0].order_id]" class="btn btn-success" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Generate Bill</a>
               <!-- <button type="button" class="btn btn-warning" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button> -->
               <button type="button" class="btn btn-danger" (click)="CancelOrder(OrderDetails.data[0].order_id)" *ngIf="ServedStatus!=true && OrderDetails.Orderdata[0].status!='Cancelled'"><i class="fa fa-times"></i> Cancel Order</button>
             </div>

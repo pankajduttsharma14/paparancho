@@ -17,6 +17,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 export class ViewTablesComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
+  @ViewChild('dangerModal') public dangerModel: ModalDirective;
   AddTable: FormGroup;
   EditTable: FormGroup;
 
@@ -39,7 +40,7 @@ export class ViewTablesComponent implements OnInit {
     this.AddTable = this.fb.group({
       "ol_id": ['', [Validators.required, Validators.min(0)]],
 
-      "seat_cap": ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      "seat_cap": ['', [Validators.required, Validators.min(1) ]],
       "is_available": ['', [Validators.required]],
       "status": ['', [Validators.required]],
     });
@@ -48,7 +49,7 @@ export class ViewTablesComponent implements OnInit {
   CreateEditForm(): void {
     this.EditTable = this.fb.group({
       "stid": [''],
-      "seat_cap": ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      "seat_cap": ['', [Validators.required, Validators.min(1)]],
       "status": ['', [Validators.required]],
 
     });
@@ -256,15 +257,14 @@ export class ViewTablesComponent implements OnInit {
 
   }
 
-  EditTableMsg: any = null;
+  EditTableMsg: boolean = null;
   UpdateTable(formData) {
-    this.EditTableMsg = Array();
+    this.EditTableMsg=null;
     this.spinnerService.show();
     let data = formData.value;
     this.TableService.UpdateTable(data).subscribe(res => {
       if (res.status == 200) {
-        this.EditTableMsg.push({ 'message': 'Table has been updated successfully!' });
-        
+        this.EditTableMsg=true;        
         this.TableService.GetAllTable().subscribe(res => {
             if (res.status == 200) {
               this.GetTables = res.data;
@@ -272,6 +272,7 @@ export class ViewTablesComponent implements OnInit {
             } else {
               this.GetTablesMsg = "No Tables For Display";
               this.spinnerService.hide();
+
             }
           },
           err => {
@@ -285,7 +286,7 @@ export class ViewTablesComponent implements OnInit {
 
         }, 3000);
       } else {
-        this.EditTableMsg.push({ 'message': "Can't update table!" });
+        this.EditTableMsg=false;
 
 
         setTimeout(() => {
@@ -296,7 +297,7 @@ export class ViewTablesComponent implements OnInit {
       }
 
     }, err => {
-      this.EditTableMsg.push({ 'message': "Can't update table!" });
+      this.EditTableMsg=false;
       setTimeout(() => {
         this.largeModal1.hide();
         this.EditTableMsg = null;
@@ -304,5 +305,20 @@ export class ViewTablesComponent implements OnInit {
       }, 3000);
     });
   }
+
+  // Confirm box
+   // delete category
+  TableId: any = '';
+  ConfirmDialog(id, trigger: boolean = false) {
+    this.TableId = id;
+    if (trigger == true) {
+
+      this.ClearTable(this.TableId);
+      this.dangerModel.hide();
+
+    } else { this.dangerModel.show(); }
+
+  }
+
 
 }

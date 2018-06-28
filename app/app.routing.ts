@@ -10,11 +10,12 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 import {TaxRoutingModule} from './taxmanagement/tax.routing';
+import {OutletRoutingModule} from './outletmanagement/outlet.routing';
 
 
 export const routes: Routes = [
 
-  
+
   {
     path: '',
     redirectTo:'login',
@@ -55,7 +56,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DefaultLayoutComponent,
     data: {
-      title: 'dashboard'
+      title: ''
     },
 
     children: [
@@ -86,11 +87,11 @@ export const routes: Routes = [
       {
         path: 'tax',
         loadChildren: './taxmanagement/tax.module#TaxModule'
+      },
+      {
+        path: 'outlet-management',
+        loadChildren: './outletmanagement/outlet.module#OutletModule'
       }
-      
-
-
-
     ]
   }
 ];

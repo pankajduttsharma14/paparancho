@@ -1,3 +1,25 @@
+
+<!-- Clear model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to clear this table?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(TableId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Clear model -->
 <div class="table_layout row">
   <ng4-loading-spinner></ng4-loading-spinner>
   <!-- model -->
@@ -36,29 +58,29 @@
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Number of Chairs</label>
+                    <label>Seat Capacity</label>
                     <input type="number" formControlName="seat_cap" class="form-control">
                     <div *ngIf="AddTable.controls['seat_cap'].touched && !AddTable.controls['seat_cap'].valid">
-                      <label *ngIf="AddTable.controls['seat_cap'].hasError('required')" style="color:red;">Enter Number of Chairs</label>
-                      <label *ngIf="AddTable.controls['seat_cap'].hasError('min')" style="color:red;">Add atlest one chair</label>
+                      <label *ngIf="AddTable.controls['seat_cap'].hasError('required')" style="color:red;">Enter Seat Capacity</label>
+                      <label *ngIf="AddTable.controls['seat_cap'].hasError('min')" style="color:red;">Please Enter atleast One Chair</label>
                       <label *ngIf="AddTable.controls['seat_cap'].hasError('max')" style="color:red;">Max 10 chairs Allowed!</label>
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <label>Table Avalibility</label>
+                    <label>Table Availability</label>
                     <select formControlName="is_available" class="form-control">
-                      <option value="" [selected]="true">Table Avalibility</option>
+                      <option value="" [selected]="true">Table Availability</option>
                       <option value="FREE">Free</option>
                       <option value="BOOKED">Booked</option>
                       <option value="PARTIALY BOOKED">Partialy Booked</option>
                       <option value="LOCKED">Locked</option>
                     </select>
                     <div *ngIf="AddTable.controls['is_available'].touched && !AddTable.controls['is_available'].valid">
-                      <label *ngIf="AddTable.controls['is_available'].hasError('required')" style="color:red;">Select Avalibility</label>
+                      <label *ngIf="AddTable.controls['is_available'].hasError('required')" style="color:red;">Select Availability</label>
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <label>Table status</label>
+                    <label>Table Status</label>
                     <select formControlName="status" class="form-control">
                       <option value="" [selected]="true">Table Status</option>
                       <option value="INSERVICE">Inservice</option>
@@ -117,7 +139,7 @@
             <span class="caret"></span>
           </button>
           <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="ClearTable(TableDetail[0].stid)">Clear Table</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="ConfirmDialog(TableDetail[0].stid)">Clear Table</a></li>
             <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="EditServiceTable()">Edit Table</a></li>
             <!-- <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
             <li class="divider dropdown-divider"></li>
@@ -134,13 +156,13 @@
           <p><b>{{TableDetail[0].stid}}</b></p>
         </div>
         <div class="odd" *ngIf="TableDetail!=null">
-          <h3><i class="icon-note"></i> Status</h3>
+          <h3><i class="icon-note"></i> Table Availability</h3>
           <p><span [ngClass]="{'free_text': TableDetail[0].is_available=='FREE', 'booked_text': TableDetail[0].is_available=='BOOKED','semi_booked_text':TableDetail[0].is_available=='PARTIALY BOOKED', 'locked_text': TableDetail[0].is_available=='LOCKED'}" *ngIf="TableDetail[0].status!='OUTOFSERVICE'"><i class="icon-lock" *ngIf="TableDetail[0].is_available=='LOCKED'"></i> {{TableDetail[0].is_available}} </span> 
 
             <span *ngIf="TableDetail[0].status=='OUTOFSERVICE'" style="color: red;">{{TableDetail[0].status}}</span></p>
         </div>
         <div class="even" *ngIf="TableDetail!=null">
-          <h3><i class="icon-arrow-right-circle"></i> Seat Capicity: <strong>{{SeatCap.length}}</strong></h3>
+          <h3><i class="icon-arrow-right-circle"></i> Seat Capacity: <strong>{{SeatCap.length}}</strong></h3>
           <ul class="chair_loop">
             <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
           </ul>
@@ -154,7 +176,7 @@
               <a [routerLink]="['/dashboard/order/order-details/',orders.id]" class="id_status">
                   <span class="pull-left">{{orders.id}}</span> <span class="pull-right">{{orders.status}}</span> 
                 </a>
-              <a class="print_icon" title="Print Bill"><i class="fa fa-print"></i></a>
+              <!-- <a class="print_icon" title="Print Bill"><i class="fa fa-print"></i></a> -->
             </div>
           </li>
         </ul>
@@ -169,8 +191,11 @@
           <div class="modal-body">
             <h3 class="modal_heading">Edit Service Table</h3>
             <div *ngIf="EditTableMsg!=null" style="padding: 15px 15px 0 15px;">
-              <!-- <div class="alert" [ngClass]="{'alert-success':EditTableMsg[0].status==true,'alert-danger':EditTableMsg[0].status==false}">{{EditTableMsg[0].message}}</div> -->
-              <div class="alert alert-success">{{EditTableMsg[0].message}}</div>
+              <div class="alert" [ngClass]="{'alert-success':EditTableMsg==true,'alert-danger':EditTableMsg==false}">
+                <span *ngIf="EditTableMsg==true"><i class="fa fa-check" style="color: green;"></i>Table has been updated successfully!</span>
+                <span *ngIf="EditTableMsg==false"><i class="fa fa-times" style="color: red;"></i>Table can't updated!</span>
+
+              </div>
             </div>
             <form [formGroup]="EditTable" (ngSubmit)="UpdateTable(EditTable)" *ngIf="EditTableMsg==null">
               <div class="form-group">
@@ -179,11 +204,11 @@
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Number of Chairs</label>
+                    <label>Seat Capacity</label>
                     <input type="number" formControlName="seat_cap" class="form-control" [ngModel]="model.seat_cap">
                     <div *ngIf="EditTable.controls['seat_cap'].touched && !EditTable.controls['seat_cap'].valid">
-                      <label *ngIf="EditTable.controls['seat_cap'].hasError('required')" style="color:red;">Enter Number of Chairs</label>
-                      <label *ngIf="EditTable.controls['seat_cap'].hasError('min')" style="color:red;">Add atlest one chair</label>
+                      <label *ngIf="EditTable.controls['seat_cap'].hasError('required')" style="color:red;">Enter Seat Capacity</label>
+                      <label *ngIf="EditTable.controls['seat_cap'].hasError('min')" style="color:red;">Add atleast one chair</label>
                       <label *ngIf="EditTable.controls['seat_cap'].hasError('max')" style="color:red;">Max 10 chairs Allowed!</label>
                     </div>
                   </div>
@@ -201,7 +226,7 @@
                 </div>
                 <div class="row">
                   <div class="col-md-12" style="margin-top: 10px;">
-                    <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditTable.valid"><i class="fa fa-plus"></i> Add Table</button>
+                    <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditTable.valid"><i class="fa fa-edit"></i> Update Table</button>
                   </div>
                 </div>
               </div>

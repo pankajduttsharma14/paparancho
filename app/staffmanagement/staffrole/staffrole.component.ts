@@ -55,7 +55,8 @@ export class StaffroleComponent implements OnInit {
     this.StaffRoleForm = this.fb.group({
       "ol_id": ['', Validators.compose([Validators.required, Validators.min(0)])],
       "title": ['', Validators.required],
-      "mod_permission": ['', Validators.compose([Validators.required, Validators.min(0)])],
+      "mod_permission": [''],
+      // "mod_permission": ['', Validators.compose([Validators.required, Validators.min(0)])],
       "status": ['', Validators.required]
 
 
@@ -68,7 +69,8 @@ export class StaffroleComponent implements OnInit {
       'srl_id': ['', Validators.compose([Validators.required, Validators.min(0)])],
       "ol_id": ['', Validators.compose([Validators.required, Validators.min(0)])],
       "title": ['', Validators.required],
-      "mod_permission": ['', Validators.compose([Validators.required, Validators.min(0)])],
+      // "mod_permission": ['', Validators.compose([Validators.required, Validators.min(0)])],
+      "mod_permission": [''],
       "status": ['', Validators.required]
 
     });

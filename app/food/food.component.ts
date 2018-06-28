@@ -12,7 +12,6 @@ export class FoodComponent implements OnInit {
   constructor(private router:Router) { 
   	this.router.navigate(['dashboard/food/categories']);
   }
-
   ngOnInit() {
   }
 

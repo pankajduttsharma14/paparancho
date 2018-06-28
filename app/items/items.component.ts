@@ -43,7 +43,7 @@ export class ItemsComponent implements OnInit {
     }
     this.spinnerService.show();
     this.FoodService.GetAllItems().subscribe(res => {
-      this.items = res;
+      this.items = res.data;
       this.spinnerService.hide();
     }, err => { this.spinnerService.hide(); });
 
@@ -51,10 +51,17 @@ export class ItemsComponent implements OnInit {
 
     this.CreateEditForm();
     this.CreateAddForm();
-
-
-
   }
+  
+  ItemFilterData(data):any
+  {
+      var item_data=new Array();
+        for(var i=0;i<data.length;i++)
+        {
+          item_data.push({itmid:data[i].itmid,item_title:data[i].item_title,item_stock:data[i].item_stock,item_price:data[i].item_price,min_bar_price:data[i].min_bar_price,max_bar_price:data[i].max_bar_price,item_img_url:data[i].item_img_url,});
+        }
+        return item_data;
+}
 
 
   CreateAddForm(): void {
@@ -67,9 +74,9 @@ export class ItemsComponent implements OnInit {
       'item_cat_type': [''],
       // 'brand_id': ['', Validators.compose([Validators.required])],
       'item_title': ['', Validators.compose([Validators.required])],
-      'item_price': ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern(/^[0-9]{1,7}$/)])],
-      'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator, Validators.pattern(/^[0-9]{1,7}$/)])],
-      'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator, Validators.pattern(/^[0-9]{1,7}$/)])],
+      'item_price': ['', Validators.compose([Validators.required, Validators.min(1)])],
+      'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator])],
+      'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator])],
       'item_img_url': ['', Validators.compose([Validators.required,this.ImageTypeValidator ])],
       'item_img_name': ['', Validators.compose([Validators.required, ])],
       'item_stock': ['', Validators.compose([Validators.required, ])],
@@ -93,9 +100,9 @@ export class ItemsComponent implements OnInit {
       'item_cat_type': [''],
       // 'brand_id': ['', Validators.compose([Validators.required, ])],
       'item_title': ['', Validators.compose([Validators.required, ])],
-      'item_price': ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern(/^[0-9]{1,7}$/)])],
-      'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator,Validators.pattern(/^[0-9]{1,7}$/)])],
-      'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator,Validators.pattern(/^[0-9]{1,7}$/)])],
+      'item_price': ['', Validators.compose([Validators.required, Validators.min(1)])],
+      'min_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator])],
+      'max_bar_price': ['', Validators.compose([Validators.required, Validators.min(1), this.PriceValidator])],
       'item_img_url': ['',Validators.compose([this.ImageTypeValidator])],
       'item_img_name': ['', Validators.compose([Validators.required, ])],
       'item_stock': ['', Validators.compose([Validators.required, ])],
@@ -112,8 +119,8 @@ export class ItemsComponent implements OnInit {
   AddItemMsg: string = null;
   ngOnInit() {
     this.catList = JSON.parse(localStorage.getItem('categories'));
-    console.log(this.catList);
-    this.brandList = JSON.parse(localStorage.getItem('brands'));
+    
+    // this.brandList = JSON.parse(localStorage.getItem('brands'));
 
 
 
@@ -201,7 +208,7 @@ export class ItemsComponent implements OnInit {
         if (res.status == 200) {
           this.AddItemMsg = res.message;
           this.FoodService.GetAllItems().subscribe(res => {
-            this.items = res;
+            this.items = res.data;
             this.spinnerService.hide();
           }, err => { this.spinnerService.hide(); });
           setTimeout(() => {
@@ -254,7 +261,7 @@ export class ItemsComponent implements OnInit {
           this.DeleteItemMsg = "Item Deleted Successfully";
           this.FoodService.GetAllItems().subscribe(res => {
               if (res.status == 200) {
-                this.items = res;
+                this.items = res.data;
               }
               this.spinnerService.hide();
             },
@@ -336,7 +343,7 @@ export class ItemsComponent implements OnInit {
     this.FoodService.UpdateItem(data).subscribe(res => {
       if (res.status == 200) {
         this.FoodService.GetAllItems().subscribe(res => {
-          this.items = res;
+          this.items = res.data;
           this.spinnerService.hide();
         }, err => { this.spinnerService.hide(); });
         this.ItemEditMsg = res.message;

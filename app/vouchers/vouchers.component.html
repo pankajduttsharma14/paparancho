@@ -1,3 +1,24 @@
+<!-- delete model -->
+<div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Do you really want to clear this table?</h4>
+        <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
+        <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(VoucherId,true)">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- delete model -->
 <style type="text/css">
   .ui-inputtext {
     width: 100% !important;
@@ -17,7 +38,7 @@
         </div>
         <div class="add_box">
           <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModel()">
               <i class="fa fa-plus"></i> Add Voucher
             </button>
           </div>
@@ -28,7 +49,7 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Voucher</h3>
                   <div class="alert alert-success" *ngIf="VoucherMsg!=null">{{VoucherMsg}}</div>
-
+                  
                   <form nonvalidate #myForm="ngForm" (ngSubmit)="AddVoucher(myForm)">
                     <div class="form-group">
                       <label>Voucher Name</label>
@@ -62,11 +83,11 @@
                     </div>
                     <div class="form-group">
                       <label>Valid Till</label>
-                      <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till" #valid_till="ngModel" required>
+                      <input type="date" name="valid_till" class="form-control" [(ngModel)]="myForm.valid_till" #valid_till="ngModel" [min]="TodayDate" required>
                       <label *ngIf="valid_till.errors && (valid_till.dirty || valid_till.touched)" style="color: red;">Select Date</label>
                     </div>
                     <div class="form-group time_picker">
-                      <label>Vaild Time</label>
+                      <label>Valid Before</label>
                       <p-calendar [(ngModel)]="myForm.time" [timeOnly]="true" hourFormat="12" #time="ngModel" name="time" required styleClass="custom_time"></p-calendar>
                       <label *ngIf="time.errors && (time.dirty || time.touched)" style="color: red;">Enter Valid Time</label>
                     </div>
@@ -92,14 +113,14 @@
               <thead>
                 <tr>
                   <!-- <th></th> -->
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Voucher Name</th>
                   <th>Voucher Type</th>
                   <th>Voucher Value</th>
                   <th>Valid Till</th>
                   <th>Valid Before</th>
                   <th>Created On</th>
-                  <th>Voucher Status</th>
+                  <!-- <th>Voucher Status</th> -->
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -108,19 +129,22 @@
                   <!-- <td>
                     <input type="checkbox" name="checkbox">
                   </td> -->
-                  <td>{{data.id}}</td>
+                  <!-- <td>{{data.id}}</td> -->
                   <td>{{data.vcr_name}}</td>
                   <td>{{data.type}}</td>
                   <td>{{data.value}}</td>
                   <td>{{data.valid_till_date | date:'dd/MM/yy'}}</td>
                   <td>{{data.valid_before}}</td>
                   <td>{{data.createdAt | date:'dd/MM/yy'}}</td>
-                  <td>
+                  <!-- <td>
                     <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}">{{data.status}}</span>
-                  </td>
+                  </td> -->
                   <td class="actions_main">
                     <span title="Edit" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
-                    <span title="Delete" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteVoucher(data.id)"><i class="fa fa-trash"></i></span>
+                    <span title="Delete" style="font-size: 16px; margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.id)"><i class="fa fa-trash"></i></span>
+                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                      <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -134,8 +158,9 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-body">
-                  <h3 class="modal_heading">Add Staff</h3>
+                  <h3 class="modal_heading">Edit Voucher</h3>
                   <div class="alert alert-success" *ngIf="UpdateVoucherMsg!=null">{{UpdateVoucherMsg}}</div>
+                  
                   <form [formGroup]="EditForm" (ngSubmit)="UpdateVoucher(EditForm)">
 
                     <div class="form-group">
@@ -143,9 +168,7 @@
                         <div class="col-md-6">
                           <label>Voucher Id</label>
                           <input type="number" formControlName="id" class="form-control" [ngModel]="model.id" readonly>
-                          <!-- <div *ngIf="EditForm.controls['id'].touched && !EditForm.controls['id'].valid">
-                            <label *ngIf="EditForm.controls['id'].hasError('required')" style="color:red;">Staff Login Id</label>
-                          </div> -->
+                         
                         </div>
                         <div class="col-md-6">
                           <label>Voucher Name</label>
@@ -192,13 +215,13 @@
                         </div>
                         <div class="form-group col-md-12">
                           <label>Valid Till</label>
-                          <input type="date" class="form-control" required formControlName="valid_till_date" [ngModel]="model.valid_till_date">
+                          <input type="date" class="form-control" required formControlName="valid_till_date" [ngModel]="model.valid_till_date" [min]="TodayDate">
                           <div *ngIf="EditForm.controls['valid_till_date'].touched && !EditForm.controls['valid_till_date'].valid">
                             <label *ngIf="EditForm.controls['valid_till_date'].hasError('required')" style="color:red;">Enter Valid Date</label>
                           </div>
                         </div>
                         <div class="form-group time_picker col-md-12">
-                          <label>Vaild Time</label>
+                          <label>Valid Before</label>
                           <p-calendar [(ngModel)]="model.valid_before" [timeOnly]="true" hourFormat="12" required styleClass="custom_time" formControlName="valid_before"></p-calendar>
                           <label *ngIf="EditForm.controls['valid_before'].hasError('required')" style="color:red;">Select Valid Time</label>
                         </div>

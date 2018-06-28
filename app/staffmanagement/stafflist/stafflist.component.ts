@@ -16,18 +16,18 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   providers: [StaffService, Ng4LoadingSpinnerService],
   encapsulation: ViewEncapsulation.None,
 
-  
+
 
 })
 
 
 export class StafflistComponent implements OnInit {
   StaffListForm: FormGroup;
-  
+
   EditForm: FormGroup;
   // form settings
   "ol_id": number;
-  "staff_id":number;
+  "staff_id": number;
   "staff_login_id": string;
   // "pass_code": string;
   "password": string;
@@ -44,11 +44,11 @@ export class StafflistComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
-  
+
   p: number = 1;
   public StaffList: any = {};
-  public StaffRoles:any=[];
-  public searchStaff:any='';
+  public StaffRoles: any = [];
+  public searchStaff: any = '';
   constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
@@ -57,17 +57,20 @@ export class StafflistComponent implements OnInit {
     // get staff list
     this.spinnerService.show();
     this.StaffService.GetStaffList().subscribe(
-      res => { this.StaffList = res;
-        this.spinnerService.hide(); },
+      res => {
+        this.StaffList = res;
+        this.spinnerService.hide();
+      },
       err => { this.spinnerService.hide(); });
 
     // get staff Roles
 
     this.spinnerService.show();
     this.StaffService.GetStaffRoles().subscribe(
-      res => { this.StaffRoles = res;this.spinnerService.hide(); },
-      err => { this.spinnerService.hide();});  
-    
+      res => { this.StaffRoles = res;
+        this.spinnerService.hide(); },
+      err => { this.spinnerService.hide(); });
+
   }
 
   ngOnInit() {
@@ -79,9 +82,9 @@ export class StafflistComponent implements OnInit {
       "password": ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       "role_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
       // "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "first_name": ['', Validators.compose([Validators.required])],
+      "first_name": ['', Validators.compose([Validators.required,Validators.maxLength(30)])],
       // "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "last_name": ['', Validators.compose([Validators.required])],
+      "last_name": ['', Validators.compose([Validators.required,Validators.maxLength(30)])],
       "mob_number": ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]{10}$/)])],
       "address": ['', Validators.compose([Validators.required])],
       "age": ['', Validators.compose([Validators.required, Validators.min(18), Validators.pattern(/^\d{1,2}$/)])],
@@ -99,9 +102,9 @@ export class StafflistComponent implements OnInit {
       "role_id": ['', Validators.compose([Validators.required, Validators.min(1)])],
       "login_status": ['', Validators.compose([Validators.required])],
       // "first_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "first_name": ['', Validators.compose([Validators.required])],
+      "first_name": ['', Validators.compose([Validators.required,Validators.maxLength(30)])],
       // "last_name": ['', Validators.compose([Validators.required, Validators.pattern(/^([^0-9]*)$/)])],
-      "last_name": ['', Validators.compose([Validators.required])],
+      "last_name": ['', Validators.compose([Validators.required,Validators.maxLength(30)])],
       "mob_number": ['', Validators.compose([Validators.required, Validators.pattern(/^[0-9]{10}$/)])],
       "address": ['', Validators.compose([Validators.required])],
       "age": ['', Validators.compose([Validators.required, Validators.min(18), Validators.pattern(/^\d{1,2}$/)])],
@@ -109,13 +112,13 @@ export class StafflistComponent implements OnInit {
       "status": ['', Validators.compose([Validators.required])],
 
     });
-    
+
   }
 
 
   // Add Staff
   StaffMsg: string;
-  
+
   AddStaffList(formData) {
     this.spinnerService.show();
     let data = formData.value;
@@ -127,8 +130,10 @@ export class StafflistComponent implements OnInit {
 
             this.StaffMsg = res.message;
             // get all .categories
-            this.StaffService.GetStaffList().subscribe(res => { this.StaffList = res;
-                this.spinnerService.hide(); },
+            this.StaffService.GetStaffList().subscribe(res => {
+                this.StaffList = res;
+                this.spinnerService.hide();
+              },
               err => { this.spinnerService.hide(); }, );
             setTimeout(() => {
               this.spinnerService.hide();
@@ -140,7 +145,7 @@ export class StafflistComponent implements OnInit {
             this.StaffMsg = "Staff can't added";
             this.spinnerService.hide();
             setTimeout(() => {
-              
+
               this.StaffMsg = null;
               this.largeModal.hide();
             }, 3000);
@@ -150,10 +155,10 @@ export class StafflistComponent implements OnInit {
           this.StaffMsg = "Staff can't added";
           this.spinnerService.hide();
           setTimeout(() => {
-              
-              this.StaffMsg = null;
-              this.largeModal.hide();
-            }, 3000);
+
+            this.StaffMsg = null;
+            this.largeModal.hide();
+          }, 3000);
         }
       );
     }
@@ -162,22 +167,19 @@ export class StafflistComponent implements OnInit {
   }
 
 
-  staffId:any='';
+  staffId: any = '';
   // Delete Staff
-  ConfirmDialog(id, trigger:boolean=false)
-  {
-    this.staffId=id;
-    if(trigger==true)
-    {
-      
-      this.DeleteStaffList(this.staffId);  
+  ConfirmDialog(id, trigger: boolean = false) {
+    this.staffId = id;
+    if (trigger == true) {
+
+      this.DeleteStaffList(this.staffId);
       this.dangerModel.hide();
 
-    }
-    else{this.dangerModel.show();}
-    
+    } else { this.dangerModel.show(); }
+
   }
-    
+
 
   DeleteStaffListMsg: string = null;
   // Delete Staff role
@@ -189,8 +191,10 @@ export class StafflistComponent implements OnInit {
 
 
         this.StaffService.GetStaffList().subscribe(
-          res => { this.StaffList = res;
-            this.spinnerService.hide(); },
+          res => {
+            this.StaffList = res;
+            this.spinnerService.hide();
+          },
           err => { this.spinnerService.hide(); });
 
 
@@ -221,7 +225,7 @@ export class StafflistComponent implements OnInit {
     console.log(data);
     this.Editrow = new Array();
     this.Editrow.push(data);
-    
+
 
     modal.show();
   }
@@ -229,7 +233,7 @@ export class StafflistComponent implements OnInit {
   model = {
     "staff_id": '',
     "ol_id": '',
-    'staff_login_id':'',
+    'staff_login_id': '',
     // "pass_code": '',
     "password": '',
     "role_id": '',
@@ -249,7 +253,7 @@ export class StafflistComponent implements OnInit {
     this.model = {
       "staff_id": this.Editrow[0].staff_id,
       "ol_id": this.Editrow[0].ol_id,
-      'staff_login_id':this.Editrow[0].staff_login_id,
+      'staff_login_id': this.Editrow[0].staff_login_id,
       // "pass_code": this.Editrow[0].pass_code,
       "password": this.Editrow[0].password,
       "role_id": this.Editrow[0].role_id,
@@ -277,10 +281,14 @@ export class StafflistComponent implements OnInit {
       if (res.status == 200) {
         this.UpdateStaffListMsg = res.message;
         this.StaffService.GetStaffList().subscribe(
-          res => { this.StaffList = res;
-            this.spinnerService.hide(); },
-          err => { console.log(err);
-            this.spinnerService.hide(); });
+          res => {
+            this.StaffList = res;
+            this.spinnerService.hide();
+          },
+          err => {
+            console.log(err);
+            this.spinnerService.hide();
+          });
 
 
         setTimeout(() => {
