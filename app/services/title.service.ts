@@ -8,12 +8,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-@Injectable()
 
+@Injectable()
 export class TitleService{
-	constructor()
-	{
-		setTitle(newTitle: string) 
-		{ getDOM().setTitle(newTitle); }
-	}
+	// constructor()
+	// {
+	// 	// setTitle(newTitle:string) 
+	// 	// { getDOM().setTitle(newTitle); }
+	// }
 }

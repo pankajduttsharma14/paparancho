@@ -25,6 +25,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalsComponent } from './views/notifications/modals.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import {OutletModule} from './outletmanagement/outlet.module';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AnonymousGuardService } from './services/AnonymousGuardService';
+
 
 
 
@@ -115,7 +118,7 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
   ],
   providers: [{
     provide: LocationStrategy,
-    useClass: PathLocationStrategy,},AuthService,Ng4LoadingSpinnerService],
+    useClass: PathLocationStrategy,},AuthService,Ng4LoadingSpinnerService,AuthGuardService,AnonymousGuardService],
     exports:[ModalsComponent,ModalModule],
     bootstrap: [ AppComponent ]
 })

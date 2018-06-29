@@ -30,10 +30,10 @@ export class BrandComponent implements OnInit {
   public brands: any = {};
   p: number = 1;
   constructor(private FoodService: FoodService, private router: Router, private formbuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     this.spinnerService.show();
     this.FoodService.GetAllBrands().subscribe(res => {
       this.brands = res;

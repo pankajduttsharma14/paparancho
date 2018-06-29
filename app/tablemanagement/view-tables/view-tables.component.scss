@@ -270,3 +270,21 @@
   left: auto !important;
   right: 0 !important;
 }
+
+
+.box-container {
+  position: relative;
+  
+  
+}
+
+.box-swap {
+  position: absolute;
+  text-align: center;
+  
+  
+
+  &.static-block {
+    transition: all 0.3s ease-out;
+  }
+}

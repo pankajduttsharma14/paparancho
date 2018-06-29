@@ -57,12 +57,12 @@ export class CategoryComponent implements OnInit {
 
   ) {
 
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
 
-      this.router.navigate(['login']);
+    //   this.router.navigate(['login']);
 
-    }
+    // }
     
   
 

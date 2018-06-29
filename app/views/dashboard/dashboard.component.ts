@@ -11,11 +11,11 @@ declare var localStorage:any;
 export class DashboardComponent implements OnInit {
 
   constructor(private router:Router){
-    var status=localStorage.getItem('loginStatus');
-    if(status!="true")
-    {
-      this.router.navigate(['login']);
-    }
+    // var status=localStorage.getItem('loginStatus');
+    // if(status!="true")
+    // {
+    //   this.router.navigate(['login']);
+    // }
   }
   
  

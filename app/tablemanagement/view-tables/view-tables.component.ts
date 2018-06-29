@@ -24,10 +24,10 @@ export class ViewTablesComponent implements OnInit {
 
   constructor(private TableService: TableService, private router: Router, private fb: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
 
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     this.CreateForm();
     this.CreateEditForm();
 
@@ -320,5 +320,7 @@ export class ViewTablesComponent implements OnInit {
 
   }
 
+
+  
 
 }

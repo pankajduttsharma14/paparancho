@@ -15,10 +15,10 @@ export class OrderdetailsComponent implements OnInit {
   OrderDetails: any = [{}];
   OrderData: any = [{}];
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private OrderService: OrderService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
 
 
 

@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Do you really want to delete this category?</h4>
+        <h4 class="modal-title">Do you really want to delete this Item?</h4>
         <button type="button" class="close" (click)="dangerModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="row">
                       <div class="col-md-6">
-                        <label>Upload Image</label>
+                        <label>Item Image</label>
                         <input type="file" formControlName="item_img_url" class="form-control" #fileInput (change)="ImageUpload($event)" ImageTypeValidator>
                         <div *ngIf="AddItemsForm.controls['item_img_url'].touched && !AddItemsForm.controls['item_img_url'].valid">
                           <label *ngIf="AddItemsForm.controls['item_img_url'].hasError('required')" style="color:red;">Select Image</label>

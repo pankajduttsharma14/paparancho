@@ -111,7 +111,7 @@
     <div class="card">
       <div class="card-header">
         <i class="fa fa-align-justify"></i> All Tables
-        <button type="button" class="btn btn-secondary sub_btn pull-right" data-toggle="modal" (click)="largeModal.show()">
+        <button type="button" class="btn btn-secondary sub_btn pull-right" data-toggle="modal" (click)="largeModal.show()" style="color: #fff;">
           <i class="fa fa-plus"></i> Add Service Table
         </button>
       </div>
@@ -213,7 +213,7 @@
                     </div>
                   </div>
                   <div class="col-md-12">
-                    <label>Table status</label>
+                    <label>Table Status</label>
                     <select formControlName="status" class="form-control" [(ngModel)]="model.status">
                       <option value="">Table Status</option>
                       <option value="INSERVICE"  [selected]="model.status=='INSERVICE'">Inservice</option>

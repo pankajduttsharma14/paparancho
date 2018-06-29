@@ -15,11 +15,11 @@ export class OrderlistComponent implements OnInit {
   public OrderList=[];
   p: number = 1;
   constructor(private router:Router, private OrderService:OrderService) { 
-  	var status=localStorage.getItem('loginStatus');
-  	if(status!="true")
-  	{
-  		this.router.navigate(['login']);
-  	}
+  	// var status=localStorage.getItem('loginStatus');
+  	// if(status!="true")
+  	// {
+  	// 	this.router.navigate(['login']);
+  	// }
     // get all records
     this.OrderService.GetAllOrder().subscribe(
       res=>{

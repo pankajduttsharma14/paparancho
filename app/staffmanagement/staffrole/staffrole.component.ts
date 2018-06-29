@@ -28,10 +28,10 @@ export class StaffroleComponent implements OnInit {
 
   constructor(private StaffService: StaffService,
     private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     // get staff roles
     this.spinnerService.show();
     this.StaffService.GetStaffRoles().subscribe(

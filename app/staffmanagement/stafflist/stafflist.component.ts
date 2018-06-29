@@ -50,10 +50,10 @@ export class StafflistComponent implements OnInit {
   public StaffRoles: any = [];
   public searchStaff: any = '';
   constructor(private StaffService: StaffService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     // get staff list
     this.spinnerService.show();
     this.StaffService.GetStaffList().subscribe(

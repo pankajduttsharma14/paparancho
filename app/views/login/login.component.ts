@@ -25,16 +25,16 @@ export class LoginComponent{
 constructor(private auth: AuthService, private router:Router, private FoodService:FoodService){
 
 	
-	var status=localStorage.getItem('loginStatus');
+	// var status=localStorage.getItem('loginStatus');
 
 
-	if(status==="true")
-	{
-		this.router.navigate(['dashboard']);
-	}
-	else{
-		this.router.navigate(['login']);
-	}
+	// if(status==="true")
+	// {
+	// 	this.router.navigate(['dashboard']);
+	// }
+	// else{
+	// 	this.router.navigate(['login']);
+	// }
 }
 
  // Asign Categories and brands to local Storage

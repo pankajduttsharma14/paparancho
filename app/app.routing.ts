@@ -11,6 +11,8 @@ import { RegisterComponent } from './views/register/register.component';
 
 import {TaxRoutingModule} from './taxmanagement/tax.routing';
 import {OutletRoutingModule} from './outletmanagement/outlet.routing';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { AnonymousGuardService as HomeGuard } from './services/AnonymousGuardService';
 
 
 export const routes: Routes = [
@@ -19,7 +21,8 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo:'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate:[HomeGuard],
 
 
   },
@@ -29,6 +32,7 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     pathMatch: 'full',
+    canActivate:[HomeGuard]
  },
  {
     path: '404',
@@ -55,6 +59,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DefaultLayoutComponent,
+    canActivate:[AuthGuard],
     data: {
       title: ''
     },
@@ -62,35 +67,43 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'food',
-        loadChildren: './food/food.module#FoodModule'
+        loadChildren: './food/food.module#FoodModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'staff-management',
-        loadChildren: './staffmanagement/staffmanagement.module#StaffManagementModule'
+        loadChildren: './staffmanagement/staffmanagement.module#StaffManagementModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'order',
-        loadChildren: './order/order.module#OrderModule'
+        loadChildren: './order/order.module#OrderModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'vouchers',
-        loadChildren: './vouchers/vouchers.module#VouchersModule'
+        loadChildren: './vouchers/vouchers.module#VouchersModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'table-management',
-        loadChildren: './tablemanagement/table.module#TableModule'
+        loadChildren: './tablemanagement/table.module#TableModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'tax',
-        loadChildren: './taxmanagement/tax.module#TaxModule'
+        loadChildren: './taxmanagement/tax.module#TaxModule',
+        canActivateChild:[AuthGuard]
       },
       {
         path: 'outlet-management',
-        loadChildren: './outletmanagement/outlet.module#OutletModule'
+        loadChildren: './outletmanagement/outlet.module#OutletModule',
+        canActivateChild:[AuthGuard]
       }
     ]
   }
@@ -98,6 +111,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers:[AuthGuard]
 })
 export class AppRoutingModule {}

@@ -30,10 +30,10 @@ export class CompleteOrdersComponent implements OnInit {
 
   
   constructor(private TableService: TableService, private router: Router, private fb: FormBuilder, private spinnerService: Ng4LoadingSpinnerService,private activatedRoute: ActivatedRoute, private OrderService: OrderService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
 
   }
  ngOnInit() {

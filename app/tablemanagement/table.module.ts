@@ -11,6 +11,8 @@ import { ViewTablesComponent } from './view-tables/view-tables.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
+
+
 @NgModule({
 imports:[CommonModule,NgxPaginationModule,FormsModule,ReactiveFormsModule,TableRoutingModule,ModalModule,Ng4LoadingSpinnerModule,BsDropdownModule],
 declarations:[TablemanagementComponent, ViewTablesComponent ]

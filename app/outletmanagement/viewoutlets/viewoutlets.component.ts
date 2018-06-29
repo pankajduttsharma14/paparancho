@@ -31,10 +31,10 @@ export class ViewoutletsComponent implements OnInit {
     private spinnerService: Ng4LoadingSpinnerService,
     private fb:FormBuilder
   ) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     this.GetAllOutlets();
     this.CreateAddForm();
     

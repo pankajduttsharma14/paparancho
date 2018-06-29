@@ -18,7 +18,7 @@ export class ItemsComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
 
   p: number = 1;
-  public items: any = {};
+  public items: any = [];
   AddItemsForm: FormGroup;
   EditForm: FormGroup;
   searchItem: any = '';
@@ -37,10 +37,10 @@ export class ItemsComponent implements OnInit {
   status: string;
 
   constructor(private FoodService: FoodService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     this.spinnerService.show();
     this.FoodService.GetAllItems().subscribe(res => {
       this.items = res.data;

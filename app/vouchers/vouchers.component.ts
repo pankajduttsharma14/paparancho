@@ -24,10 +24,10 @@ export class VouchersComponent implements OnInit {
   p: number = 1;
   EditForm: FormGroup;
   constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService){
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     // get all vouchers
     this.spinnerService.show();
     this.VouchersService.GetAllVouchers().subscribe(res => { this.Vouchers = res.data;this.spinnerService.hide(); }, err => { this.spinnerService.hide(); });

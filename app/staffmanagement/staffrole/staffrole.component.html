@@ -177,11 +177,11 @@
                   <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffRole(EditForm)">
                     <div class="form-group">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display: none;">
                           <label>Staff Role Id</label>
                           <input type="number" formControlName="srl_id" class="form-control" [ngModel]="model.srl_id" readonly>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <label>Outlet Name</label>
                           
                           <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
@@ -195,21 +195,21 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                           <label>Role Title</label>
                           <input type="text" name="" formControlName="title" [ngModel]="model.title" class="form-control">
                           <div *ngIf="EditForm.controls['title'].touched && !EditForm.controls['title'].valid">
                             <label *ngIf="EditForm.controls['title'].hasError('required')" style="color:red;">Enter Title</label>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4" style="display: none;">
                           <label>Mod Permission</label>
                           <input type="number" name="" formControlName="mod_permission" [ngModel]="model.mod_permission" class="form-control">
                           <div *ngIf="EditForm.controls['mod_permission'].touched && !EditForm.controls['mod_permission'].valid">
                             <label *ngIf="EditForm.controls['mod_permission'].hasError('required')" style="color:red;">Enter Mod Permission</label>
                           </div>
-                        </div>
-                        <div class="col-md-4">
+                        </div> -->
+                        <div class="col-md-12">
                           <label for="status">Status</label>
                           <select formControlName="status" class="form-control" [(ngModel)]="model.status">
                             <option value="">Status</option>

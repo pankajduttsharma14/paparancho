@@ -26,10 +26,10 @@ export class ViewtaxComponent implements OnInit {
     private spinnerService: Ng4LoadingSpinnerService,
     private Fb: FormBuilder
   ) {
-    var status = localStorage.getItem('loginStatus');
-    if (status != "true") {
-      this.router.navigate(['login']);
-    }
+    // var status = localStorage.getItem('loginStatus');
+    // if (status != "true") {
+    //   this.router.navigate(['login']);
+    // }
     // Get all tax
     this.spinnerService.show();
     this.TaxService.GetAllTax().subscribe(res => {
