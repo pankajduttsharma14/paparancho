@@ -10,6 +10,7 @@ import { CompleteOrdersComponent } from './complete-orders/complete-orders.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { OutstandingbillsComponent } from './outstandingbills/outstandingbills.component';
 
 @NgModule({
 	imports:[
@@ -23,7 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 	
 ],
 
-	declarations:[OrderlistComponent,DateTodayPipe, OrderdetailsComponent,OrderComponent,CompleteOrdersComponent],
+	declarations:[OrderlistComponent,DateTodayPipe, OrderdetailsComponent,OrderComponent,CompleteOrdersComponent, OutstandingbillsComponent],
 	
 
 

@@ -55,9 +55,9 @@
                   <td>{{data.tax_amt}}</td>
 	                <td>{{(data.total_amt*1+1*data.tax_amt) | number : '1.2-2'}}</td>
                    <td>
-                    <!-- <span class="badge badge-warning" *ngIf="data.payment_by.length==0">Pending</span> -->
-                    <!-- <span *ngIf="data.payment_by.length!=0" class="badge badge-success">{{data.payment_by}}</span> -->
-                    <span class="badge badge-success">{{data.payment_by}}</span>
+                    <span class="badge badge-warning" *ngIf="data.payment_by==null">Payment Due</span>
+                    <span *ngIf="data.payment_by!=null" class="badge badge-success">{{data.payment_by}}</span>
+                    
                   </td>
                   <td>
                     <!-- <span class="badge badge-success">{{data.status}}</span> -->

@@ -52,6 +52,11 @@ export class OrderService {
     return this.http.post(url,body,this.options).map(res=>res.json());
   }
 
+  GetPendingBills():Observable<any>
+  {
+    const url:string=this.BASE_URL+"outstandingbills";
+    return this.http.get(url,this.options).map(res=>res.json()); 
+  }
 
   
 }

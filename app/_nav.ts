@@ -86,7 +86,12 @@ export const navItems = [
         url: 'order/order-list',
         icon: 'icon-puzzle'
       },
-      
+
+      {
+        name: 'Outstanding Bills',
+        url: 'order/outstanding-bills',
+        icon: 'icon-puzzle'
+      },
 
 
     ]

@@ -68,6 +68,7 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
 
 
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -113,6 +114,7 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
     AppSettingComponent,
     ModalsComponent,
     StatusfilterPipe,
+    
     
 
   ],
