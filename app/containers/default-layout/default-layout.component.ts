@@ -1,24 +1,27 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild,OnInit, AfterViewInit } from '@angular/core';
 import { navItems } from './../../_nav';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import {NotificationService} from '../../services/notification.service';
+
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html',
-
+  templateUrl: './default-layout.component.html'
+  
+  
 
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit {
   public navItems = navItems;
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
   ChangePasswordForm: FormGroup;
   @ViewChild('largeModal') public largeModal: ModalDirective;
-  constructor(private router: Router, private AuthService: AuthService, private fb: FormBuilder) {
+  constructor(private router: Router, private AuthService: AuthService, private fb: FormBuilder, private NotificationService:NotificationService) {
 
 
     this.changes = new MutationObserver((mutations) => {
@@ -29,7 +32,14 @@ export class DefaultLayoutComponent {
       attributes: true
     });
     this.CreateChangeForm();
+    
   }
+ 
+  
+  ngOnInit(){
+     this.GetNotifications();
+  }
+   
 
   logout(): any {
     this.AuthService.logOut();
@@ -42,6 +52,7 @@ export class DefaultLayoutComponent {
     this.AuthService.UpdatePassword(formData.value).subscribe(res => {
       if (res.status == 200) {
         this.PassMsg = true;
+
         setTimeout(() => {
           this.PassMsg = null;
           this.largeModal.hide();
@@ -112,10 +123,22 @@ export class DefaultLayoutComponent {
     }
   }
   
-  
-  
+NotificationsList=[];
+  GetNotifications()
+  {
 
-
-
+    this.NotificationService.GetAllNotifications().subscribe(res=>{
+        if(res.status==200)
+        {
+            this.NotificationsList=res.data;
+        }
+        else
+        {
+            return;
+        }
+    },err=>{
+        return;
+    });
+  }
 
 }

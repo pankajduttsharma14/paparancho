@@ -8,7 +8,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild{
 
   constructor(public router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-  	console.log("Working");
+  	
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
 
@@ -19,7 +19,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild{
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  	console.log("Working");
+  	
     var status = localStorage.getItem('loginStatus');
     if (status != "true") {
 

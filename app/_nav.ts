@@ -87,11 +87,11 @@ export const navItems = [
         icon: 'icon-puzzle'
       },
 
-      {
-        name: 'Outstanding Bills',
-        url: 'order/outstanding-bills',
-        icon: 'icon-puzzle'
-      },
+      // {
+      //   name: 'Outstanding Bills',
+      //   url: 'order/outstanding-bills',
+      //   icon: 'icon-puzzle'
+      // },
 
 
     ]

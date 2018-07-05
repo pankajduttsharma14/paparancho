@@ -14,6 +14,7 @@ export class OrderlistComponent implements OnInit {
   switch:boolean;
   public OrderList=[];
   p: number = 1;
+  search:any;
   constructor(private router:Router, private OrderService:OrderService) { 
   	// var status=localStorage.getItem('loginStatus');
   	// if(status!="true")

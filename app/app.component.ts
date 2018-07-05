@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import {NotificationService} from './services/notification.service';
 import {
   Router,
   // import as RouterEvent to avoid confusion with the DOM Event
@@ -19,18 +20,21 @@ import 'rxjs/add/operator/mergeMap';
   // tslint:disable-next-line
   selector: 'body',
   template: '<router-outlet></router-outlet>',
+  providers:[NotificationService],
+  
+ 
   
 })
 
 export class AppComponent implements OnInit {
   ChangePasswordForm:FormGroup;
-
   @ViewChild('largeModel') public largeModel;
-  constructor(private router: Router, private fb:FormBuilder, private titleService: Title, private activatedRoute: ActivatedRoute, private loading:Ng4LoadingSpinnerService) {
+  constructor(private router: Router, private fb:FormBuilder, private titleService: Title, private activatedRoute: ActivatedRoute, private loading:Ng4LoadingSpinnerService,private NotificationService:NotificationService) {
       this.loading.show();
       router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);
     })
+
     
   }
 
@@ -39,7 +43,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    this.router.events.subscribe((evt) => {
+   this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
          
         return;
@@ -58,6 +62,9 @@ export class AppComponent implements OnInit {
       .filter((route) => route.outlet === 'primary')
       .mergeMap((route) => route.data)
       .subscribe((event) => this.titleService.setTitle(event['title']));
+
+
+
   }
 
   // loader on route change
@@ -85,9 +92,10 @@ export class AppComponent implements OnInit {
   }
 
 
-
  
-  
+    
+ 
+ 
 
 
 

@@ -7,61 +7,10 @@
           <i class="fa fa-align-justify"></i>Today's Outstanding Bills
         </div>
         <div class="card-body">
-          <h3 *ngIf="PendingOrdersError">No Pending Orders</h3>
+          
 
-          <!-- {{PendingOrders | json}} -->
-           <table class="table" *ngIf="!PendingOrdersError">
-            <thead>
-              <tr>
-                
-                <th>Order #</th>
-                <th>Table #</th>
-                <th>Staff Name</th>
-                <th>Ordered From</th>
-                <th>Order Time</th>
-                <th>Sub Total (<i class="fa fa-rupee"></i>)</th>
-                <th>Discount (<i class="fa fa-rupee"></i>)</th>
-                <th>Tax (<i class="fa fa-rupee"></i>)</th>
-                <th>Total Amount (<i class="fa fa-rupee"></i>)</th>
-                <th>Payment By</th>
-                <th>Actions</th>
-
-              </tr>
-            </thead>
-            <tbody>
-
-              <tr *ngFor='let data of PendingOrders | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
-                  
-                  <td>{{data.id}}</td>
-                  <td>{{data.stid}}</td>
-                  <td>{{data.stewards}}</td>
-                  <td>{{data.order_from}}</td>
-                  <td>{{data.order_time}}</td>
-                  <td>{{data.total_amt}}</td>
-                  <td>
-                    <span *ngIf="data.disc_amt==null">0.00</span>
-                    <span *ngIf="data.disc_amt!=null">{{data.disc_amt}}</span>
-                  </td>
-                  <td>{{data.tax_amt}}</td>
-                  <td>{{data.grand_total}}</td>
-                   <td>
-                    <span class="badge badge-warning" *ngIf="data.payment_by==null">Payment Due</span>
-                    <span *ngIf="data.payment_by!=null" class="badge badge-success">{{data.payment_by}}</span>
-                    
-                  </td>
-                
-                  <td class="actions_main">
-                    <!-- <a title="Edit"><i class="fa fa-edit"></i></a>  -->
-                    <!-- <a title="Delete"><i class="fa fa-trash"></i></a> -->
-                    <a title="View Detail" [routerLink]="['/dashboard/order/order-details/',data.id]"><i class="fa fa-eye"></i></a>
-                  </td>
-
-              </tr>
-
-
-
-            </tbody>
-          </table>
+          
+          
         </div>
       </div>
     </div>

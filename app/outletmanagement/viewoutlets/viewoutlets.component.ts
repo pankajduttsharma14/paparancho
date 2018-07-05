@@ -23,6 +23,7 @@ declare const google: any;
 export class ViewoutletsComponent implements OnInit {
   @ViewChild('largeModal') public largeModal: ModalDirective;
   searchCat: any;
+  p:number=1;
   OutletList: any = [];
   ErrorMsg: boolean = false;
   AddForm:FormGroup;

@@ -14,27 +14,28 @@ export class OutstandingbillsComponent implements OnInit {
   constructor(private OrderService: OrderService, private loading: Ng4LoadingSpinnerService) {}
 
   ngOnInit() {
-  	this.GetPendingBills();
+  	// this.GetPendingBills();
   }
 
-  PendingOrders: any = [];
-  PendingOrdersError: boolean = false;
-  GetPendingBills() {
-    this.PendingOrdersError = false;
-    this.loading.show();
-    this.OrderService.GetPendingBills().subscribe(res => {
+  // PendingOrders: any = [];
+  // PendingOrdersError: boolean = false;
+  // GetPendingBills() {
+    
+  //   this.PendingOrdersError = false;
+  //   this.loading.show();
+  //   this.OrderService.GetPendingBills().subscribe(res => {
 
-      if (res.status == 200) {
-        this.loading.hide();
-        this.PendingOrders = res.data;
-      } else {
-        this.loading.hide();
-        this.PendingOrdersError = true;
-      }
-    }, err => {
-      this.loading.hide();
-      this.PendingOrdersError = true;
+  //     if (res.status == 200) {
+  //       this.loading.hide();
+  //       this.PendingOrders = res.data;
+  //     } else {
+  //       this.loading.hide();
+  //       this.PendingOrdersError = true;
+  //     }
+  //   }, err => {
+  //     this.loading.hide();
+  //     this.PendingOrdersError = true;
 
-    });
-  }
+  //   });
+  // }
 }

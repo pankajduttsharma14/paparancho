@@ -2,28 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/js/src/utilities/';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips/js/';
+import { DashboardService } from '../../services/dashboard.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { OrderService } from '../../services/order.service';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 declare var localStorage:any;
 @Component({
   templateUrl: 'dashboard.component.html',
+  providers:[DashboardService,OrderService]
   
 })
 export class DashboardComponent implements OnInit {
-
-  constructor(private router:Router){
-    // var status=localStorage.getItem('loginStatus');
-    // if(status!="true")
-    // {
-    //   this.router.navigate(['login']);
-    // }
+  p=1;
+  constructor(private router:Router, private DashboardService:DashboardService,private loading: Ng4LoadingSpinnerService, private OrderService:OrderService){
+   
   }
   
- 
-
-
-
-
-  // lineChart1
+ // lineChart1
   public lineChart1Data: Array<any> = [
     {
       data: [65, 59, 84, 84, 51, 55, 40],
@@ -383,6 +380,8 @@ export class DashboardComponent implements OnInit {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  DashboardData:any;
+
   ngOnInit(): void {
     // generate random values for mainChart
     for (let i = 0; i <= this.mainChartElements; i++) {
@@ -390,7 +389,51 @@ export class DashboardComponent implements OnInit {
       this.mainChartData2.push(this.random(80, 100));
       this.mainChartData3.push(65);
     }
+
+    // get dashboard data 
+    this.DashboardService.GetDashboardData().subscribe(res=>{
+        if(res.status==200)
+        {
+            this.DashboardData=res.data;
+        }
+        else{
+          return;
+        }
+
+    },err=>{
+
+        return;
+
+    });   
+
+
+    this.GetPendingBills();
+
   }
 
   radioModel: string = 'Month';
+
+
+  // Get Pending Orders List
+   PendingOrders: any = [];
+  PendingOrdersError: boolean = false;
+  GetPendingBills() {
+    
+    this.PendingOrdersError = false;
+    this.loading.show();
+    this.OrderService.GetPendingBills().subscribe(res => {
+
+      if (res.status == 200) {
+        this.loading.hide();
+        this.PendingOrders = res.data;
+      } else {
+        this.loading.hide();
+        this.PendingOrdersError = true;
+      }
+    }, err => {
+      this.loading.hide();
+      this.PendingOrdersError = true;
+
+    });
+  }
 }

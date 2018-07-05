@@ -317,6 +317,15 @@ export class StafflistComponent implements OnInit {
     });
   }
 
+  ViewPass:string='password';
+  PasswordSwitch()
+  {
+      this.ViewPass=this.ViewPass=='password' ? 'text':'password';             //   SWITCH PASSWORD VIEW
+
+  }
+
+  
+
 
 
 

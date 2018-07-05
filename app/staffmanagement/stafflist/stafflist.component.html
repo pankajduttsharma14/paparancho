@@ -77,7 +77,9 @@
                         </div> -->
                         <div class="col-md-6">
                           <label>Password</label>
-                          <input type="password" formControlName="password" class="form-control">
+                          <div style="position: relative;"><input [attr.type]="ViewPass" formControlName="password" class="form-control"> 
+                            <i class="fa eye_icon" [ngClass]="{'fa-eye':ViewPass=='password', 'fa-eye-slash':ViewPass=='text'}" (click)="PasswordSwitch()"></i>
+                          </div>
                           <div *ngIf="StaffListForm.controls['password'].touched && !StaffListForm.controls['password'].valid">
                             <label *ngIf="StaffListForm.controls['password'].hasError('required')" style="color:red;">Enter Password</label>
                             <label *ngIf="StaffListForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
@@ -316,7 +318,10 @@
                         </div> -->
                         <div class="col-md-6">
                           <label>Password</label>
-                          <input type="password" formControlName="password" class="form-control" [ngModel]="model.password">
+                          <div style="position: relative;">
+                            <input [attr.type]="ViewPass" formControlName="password" class="form-control" [ngModel]="model.password">
+                            <i class="fa eye_icon" [ngClass]="{'fa-eye':ViewPass=='password', 'fa-eye-slash':ViewPass=='text'}" (click)="PasswordSwitch()"></i>
+                          </div>
                           <div *ngIf="EditForm.controls['password'].touched && !EditForm.controls['password'].valid">
                             <label *ngIf="EditForm.controls['password'].hasError('required')" style="color:red;">Enter Password</label>
                             <label *ngIf="EditForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>

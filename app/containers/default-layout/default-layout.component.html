@@ -1,48 +1,47 @@
 <style type="text/css">
-  .app-header
-{
+.app-header {
   background: #ff0 !important;
 }
-.modal_heading
-{
-  font-size:18px;
+
+.modal_heading {
+  font-size: 18px;
   background: #20a8d8;
   color: #fff;
   padding: 10px;
   font-weight: bold;
   text-transform: uppercase;
-
 }
 
-.sub_btn
-{
+.sub_btn {
   background: #20a8d8;
 }
-.form-control, .time_picker p-calendar .ui-inputtext {
-    width: 100% !important;
-    height: 35px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 0 !important;
+
+.form-control,
+.time_picker p-calendar .ui-inputtext {
+  width: 100% !important;
+  height: 35px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 0 !important;
 }
-.custom_time
-{
+
+.custom_time {
   width: 100%;
 }
-.button_control
-{
+
+.button_control {
   text-align: right;
   margin: 10px 10px 0;
 }
-.button_control button
-{
+
+.button_control button {
   color: #fff;
-
 }
-.add_box .form-control{
-  margin-bottom: 10px;
-} 
-</style>
 
+.add_box .form-control {
+  margin-bottom: 10px;
+}
+
+</style>
 <app-header [fixed]="true" [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 'auto', height: 50, alt: 'Logo'}" [navbarBrandMinimized]="{src: 'assets/img/brand/logo.png', width: 'auto', height: 30, alt: 'Logo'}" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
@@ -113,7 +112,7 @@
   </main>
   <app-aside [fixed]="true" [display]="false">
     <tabset>
-      <tab>
+      <!-- <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
         <div class="list-group list-group-accent">
           <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Today</div>
@@ -209,87 +208,27 @@
             </div>
           </div>
         </div>
-      </tab>
+      </tab> -->
       <tab>
-        <ng-template tabHeading><i class="icon-speech"></i></ng-template>
+        <ng-template tabHeading><i class="icon-bell"></i></ng-template>
         <div class="p-3">
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
+          <div class="message" *ngFor="let data of NotificationsList">
+            <!-- <div class="py-3 pb-5 mr-3 float-left">
               <div class="avatar">
                 <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                 <span class="avatar-status badge-success"></span>
               </div>
-            </div>
+            </div> -->
             <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
+              <small class="text-muted float-right mt-1">{{data.time}}</small>
             </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-          </div>
-          <hr>
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
-              <div class="avatar">
-                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status badge-success"></span>
-              </div>
-            </div>
-            <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
-            </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-          </div>
-          <hr>
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
-              <div class="avatar">
-                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status badge-success"></span>
-              </div>
-            </div>
-            <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
-            </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-          </div>
-          <hr>
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
-              <div class="avatar">
-                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status badge-success"></span>
-              </div>
-            </div>
-            <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
-            </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-          </div>
-          <hr>
-          <div class="message">
-            <div class="py-3 pb-5 mr-3 float-left">
-              <div class="avatar">
-                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                <span class="avatar-status badge-success"></span>
-              </div>
-            </div>
-            <div>
-              <small class="text-muted">Lukasz Holeczek</small>
-              <small class="text-muted float-right mt-1">1:52 PM</small>
-            </div>
-            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+            <div class="text-truncate font-weight-bold"><i class="fa fa-caret-right" style="color: #20a8d8;"></i> {{data.title}}</div>
+            <small class="text-muted">{{data.detail}}</small>
+            <hr>
           </div>
         </div>
       </tab>
-      <tab>
+      <!-- <tab>
         <ng-template tabHeading><i class="icon-settings"></i></ng-template>
         <div class="p-3">
           <h6>Settings</h6>
@@ -359,7 +298,7 @@
           </div>
           <small class="text-muted">25GB/256GB</small>
         </div>
-      </tab>
+      </tab> -->
     </tabset>
   </app-aside>
 </div>
@@ -370,24 +309,21 @@
 <!-- ChangePassword -->
 <!-- modal  -->
 <div class="add_box">
-  
   <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-body">
           <h3 class="modal_heading">Change Password</h3>
           <!-- alert msg -->
-             <div class="alert" *ngIf="PassMsg!=null" [ngClass]="{'alert-success':PassMsg==true, 'alert-danger':PassMsg==false}">
-                    <span *ngIf="PassMsg==true"><i class="fa fa-check"  style="color: green;"></i> Password has been updated successfully!</span>
-                    <span *ngIf="PassMsg==false"><i class="fa fa-times"  style="color: red;"></i> Incorrect old password!</span>
-                  </div>
+          <div class="alert" *ngIf="PassMsg!=null" [ngClass]="{'alert-success':PassMsg==true, 'alert-danger':PassMsg==false}">
+            <span *ngIf="PassMsg==true"><i class="fa fa-check"  style="color: green;"></i> Password has been updated successfully!</span>
+            <span *ngIf="PassMsg==false"><i class="fa fa-times"  style="color: red;"></i> Incorrect old password!</span>
+          </div>
           <!-- alert msg -->
-
           <form [formGroup]="ChangePasswordForm" (ngSubmit)="UpdatePassword(ChangePasswordForm)">
             <div class="row" style="display: none;">
               <input type="hidden" formControlName="user_id" [ngModel]="uid">
             </div>
-
             <div class="row">
               <div class="col-md-12">
                 <label>Old Password</label>

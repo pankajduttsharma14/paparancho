@@ -124,8 +124,8 @@ export class CompleteOrdersComponent implements OnInit {
           <style>
           @media print
           {
-        table {page-break-after:always}
-}
+              table {page-break-after:always}
+          }
           th
           {
             color:#1a1a1a;
