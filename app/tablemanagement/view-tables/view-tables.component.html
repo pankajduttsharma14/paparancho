@@ -1,4 +1,3 @@
-
 <!-- Clear model -->
 <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-danger" role="document">
@@ -16,9 +15,12 @@
         <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
         <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(TableId,true)">Yes</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- Clear model -->
 <div class="table_layout row">
   <ng4-loading-spinner></ng4-loading-spinner>
@@ -109,8 +111,21 @@
   <!-- model -->
   <div class="col-lg-8 col-md-8">
     <div class="card">
-      <div class="card-header">
-        <i class="fa fa-align-justify"></i> All Tables
+      <div class="card-header left_card_header">
+        <div class="btn-group pull-left" dropdown>
+          <button dropdownToggle type="button" class="table_action_btn dropdown-toggle">
+            {{TableHeading}}
+            <span class="caret"></span>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="GetAllTables()" *ngIf="TableHeading!='All Tables'">All Tables</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="GetRunningTables()" *ngIf="TableHeading!='Running Tables'">Running Tables</a></li>
+            <!-- <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+            </li> -->
+          </ul>
+        </div>
         <button type="button" class="btn btn-secondary sub_btn pull-right" data-toggle="modal" (click)="largeModal.show()" style="color: #fff;">
           <i class="fa fa-plus"></i> Add Service Table
         </button>
@@ -131,7 +146,7 @@
   <div class="col-md-4">
     <!-- {{TableOrders | json}} -->
     <div class="card">
-      <div class="card-header">
+      <div class="card-header right_card_header">
         <span><i class="fa fa-align-justify"></i> Table Details</span>
         <div *ngIf="TableDetail!=null" class="btn-group pull-right" dropdown>
           <button dropdownToggle type="button" class="table_action_btn dropdown-toggle">
@@ -139,7 +154,7 @@
             <span class="caret"></span>
           </button>
           <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="ConfirmDialog(TableDetail[0].stid)">Clear Table</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="ConfirmDialog(TableDetail[0])">Clear Table</a></li>
             <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="EditServiceTable()">Edit Table</a></li>
             <!-- <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
             <li class="divider dropdown-divider"></li>
@@ -157,15 +172,15 @@
         </div>
         <div class="odd" *ngIf="TableDetail!=null">
           <h3><i class="icon-note"></i> Table Availability</h3>
-          <p><span [ngClass]="{'free_text': TableDetail[0].is_available=='FREE', 'booked_text': TableDetail[0].is_available=='BOOKED','semi_booked_text':TableDetail[0].is_available=='PARTIALY BOOKED', 'locked_text': TableDetail[0].is_available=='LOCKED'}" *ngIf="TableDetail[0].status!='OUTOFSERVICE'"><i class="icon-lock" *ngIf="TableDetail[0].is_available=='LOCKED'"></i> {{TableDetail[0].is_available}} </span> 
-
+          <p><span [ngClass]="{'free_text': TableDetail[0].is_available=='FREE', 'booked_text': TableDetail[0].is_available=='BOOKED','semi_booked_text':TableDetail[0].is_available=='PARTIALY BOOKED', 'locked_text': TableDetail[0].is_available=='LOCKED'}" *ngIf="TableDetail[0].status!='OUTOFSERVICE'"><i class="icon-lock" *ngIf="TableDetail[0].is_available=='LOCKED'"></i> {{TableDetail[0].is_available}} </span>
             <span *ngIf="TableDetail[0].status=='OUTOFSERVICE'" style="color: red;">{{TableDetail[0].status}}</span></p>
         </div>
         <div class="even" *ngIf="TableDetail!=null">
-          <h3><i class="icon-arrow-right-circle"></i> Seat Capacity: <strong>{{SeatCap.length}}</strong></h3>
-          <ul class="chair_loop">
+          <h3><i class="icon-arrow-right-circle"></i> Seat Capacity</h3>
+          <!-- <ul class="chair_loop">
             <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
-          </ul>
+          </ul> -->
+          <p>{{SeatCap.length}}</p>
         </div>
       </div>
       <div class="orders_list" *ngIf="TableOrders">
@@ -194,7 +209,6 @@
               <div class="alert" [ngClass]="{'alert-success':EditTableMsg==true,'alert-danger':EditTableMsg==false}">
                 <span *ngIf="EditTableMsg==true"><i class="fa fa-check" style="color: green;"></i>Table has been updated successfully!</span>
                 <span *ngIf="EditTableMsg==false"><i class="fa fa-times" style="color: red;"></i>Table can't updated!</span>
-
               </div>
             </div>
             <form [formGroup]="EditTable" (ngSubmit)="UpdateTable(EditTable)" *ngIf="EditTableMsg==null">
@@ -216,7 +230,7 @@
                     <label>Table Status</label>
                     <select formControlName="status" class="form-control" [(ngModel)]="model.status">
                       <option value="">Table Status</option>
-                      <option value="INSERVICE"  [selected]="model.status=='INSERVICE'">Inservice</option>
+                      <option value="INSERVICE" [selected]="model.status=='INSERVICE'">Inservice</option>
                       <option value="OUTOFSERVICE" [selected]="model.status=='OUTOFSERVICE'">Out of service</option>
                     </select>
                     <div *ngIf="EditTable.controls['status'].touched && !EditTable.controls['status'].valid">

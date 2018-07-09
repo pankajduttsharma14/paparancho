@@ -1,0 +1,34 @@
+
+<section class="pricedashboard_main">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- slider -->
+      <!-- {{ItemsList |json}} -->
+      <div class="col-md-10" style="overflow-x: hidden;">
+        <div class="fix_box" style="position: relative; height: 100vh; overflow:hidden;">
+        <ul style="list-style: none; padding: 0;"  #Price_list_box [ngClass]="{'marquee':AnimationState==true}">
+          <li *ngFor="let lists of ItemsList; let i = index" class="list_box" [attr.id]="'box'+i">
+            <h3 class="heading">{{(lists.cat_title | slice:0:12)+'...'}}</h3>
+            <ul class="list_items">
+              <li style="color: #fff; list-style:none;" *ngFor="let list of lists.items">
+                <span class="pull-left">{{(list.item_title | slice:0:20)+'...'}}</span>
+                <span class="pull-right price"><i class="fa fa-rupee"></i> {{list.item_price}}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        </div>
+      </div>
+      <!-- slider -->
+      <!-- offer -->
+      <div class="col-md-2">
+          <div class="Advert_box">
+              <img src="../assets/img/happyhours.png" alt="Image" style="max-width: 100%; margin-bottom: 10px;">
+              <img src="../assets/img/glass.png" alt="Image" style="max-width: 100%; margin-bottom: 10px;">
+              <img src="../assets/img/snacks.png" alt="Image" style="max-width: 100%; margin-bottom: 10px;">
+          </div>
+      </div>
+      <!-- offer -->
+    </div>
+  </div>
+</section>

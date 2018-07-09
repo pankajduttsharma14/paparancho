@@ -64,7 +64,7 @@
                         <label>Category</label>
                         <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)">
                           <option value="" [selected]="true">Select Category</option>
-                          <option *ngFor="let item of catList" [value]="item.catId">{{item.catName}}</option>
+                          <option *ngFor="let item of catList" [value]="item.icid">{{item.cat_title}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['icid'].touched && !AddItemsForm.controls['icid'].valid">
                           <label *ngIf="AddItemsForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
@@ -193,6 +193,7 @@
                   <!-- <th></th> -->
                   <!-- <th>Id</th> -->
                   <th>Item Title</th>
+                  <th>Category</th>
                   <th>Item Stock</th>
                   <th>Price (<i class="fa fa-rupee"></i>)</th>
                   <th>Min Bar Price (<i class="fa fa-rupee"></i>)</th>
@@ -210,6 +211,7 @@
                   </td> -->
                   <!-- <td>{{data.itmid}}</td> -->
                   <td width="20%" style="word-break: break-all;">{{data.item_title}}</td>
+                  <td>{{data.cat_title}}</td>
                   <td>{{data.item_stock}}</td>
                   <td>
                      {{data.item_price | number : '1.2-2'}}
@@ -281,7 +283,7 @@
                         <label>Category</label>
                         <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)" [(ngModel)]="model.icid">
                           <option value="">Select Category</option>
-                          <option *ngFor="let item of catList" [value]="item.catId" [selected]="item.catId==model.icid">{{item.catName}}</option>
+                          <option *ngFor="let item of catList" [value]="item.icid" [selected]="item.icid==model.icid">{{item.cat_title}}</option>
                         </select>
                         <div *ngIf="EditForm.controls['icid'].touched && !EditForm.controls['icid'].valid">
                           <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
@@ -342,7 +344,7 @@
                     <div class="row">
                        <div class="col-md-6">
                         <label>Upload Image</label>
-                        <input type="file" formControlName="item_img_url" class="form-control" #fileInput (change)="ImageUpload($event)" ImageTypeValidator>
+                        <input type="file" formControlName="item_img_url" class="form-control" #fileInput1 (change)="ImageUpload($event)" ImageTypeValidator>
                         <div *ngIf="EditForm.controls['item_img_url'].touched && !EditForm.controls['item_img_url'].valid">
                           <label *ngIf="EditForm.controls['item_img_url'].hasError('required')" style="color:red;">Select Image</label>
                           <label *ngIf="EditForm.controls['item_img_url'].hasError('ImageTypeValidator')" style="color:red;">Incorrect Format</label>

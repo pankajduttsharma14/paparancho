@@ -53,7 +53,7 @@
                           <label>Tax Type</label>
                           <input type="text" class="form-control" formControlName="tax_type">
                           <div *ngIf="AddTaxForm.controls['tax_type'].touched && !AddTaxForm.controls['tax_type'].valid">
-                            <label *ngIf="AddTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter tax type</label>
+                            <label *ngIf="AddTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Type</label>
                           </div>
                         </div>
                       </div>
@@ -179,7 +179,7 @@
                   <input type="hidden" name="" formControlName="id" style="display: none;" [ngModel]="model.id">
                   <input type="text" class="form-control" formControlName="tax_type" [ngModel]="model.tax_type">
                   <div *ngIf="EditTaxForm.controls['tax_type'].touched && !EditTaxForm.controls['tax_type'].valid">
-                    <label *ngIf="EditTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter tax type</label>
+                    <label *ngIf="EditTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Type</label>
                   </div>
                 </div>
               </div>

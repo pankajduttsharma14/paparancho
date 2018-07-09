@@ -59,7 +59,13 @@ export class ViewTablesComponent implements OnInit {
   public GetTables = [];
   GetTablesMsg;
   ngOnInit() {
-    this.spinnerService.show();
+   this.GetAllTables();
+
+  }
+TableHeading:string;
+  GetAllTables()
+  {  this.TableHeading='All Tables';
+     this.spinnerService.show();
     this.TableService.GetAllTable().subscribe(res => {
         if (res.status == 200) {
           this.GetTables = res.data;
@@ -73,14 +79,34 @@ export class ViewTablesComponent implements OnInit {
         this.GetTablesMsg = "No Tables For Display";
         this.spinnerService.hide();
       });
-
   }
+
+  GetRunningTables()
+  {
+     this.TableHeading='Running Tables';
+    this.spinnerService.show();
+    this.TableService.GetRunningTables().subscribe(res => {
+        if (res.status == 200) {
+          this.GetTables = res.data;
+          this.spinnerService.hide();
+        } else {
+          this.GetTablesMsg = "No Tables For Display";
+          this.spinnerService.hide();
+        }
+      },
+      err => {
+        this.GetTablesMsg = "No Tables For Display";
+        this.spinnerService.hide();
+      });
+  }
+
+
   // view table details
   TableDetail = null;
   SeatCap = null;
   TableOrders = null;
   TableDetails(TableData) {
-
+    console.log(TableData);
     this.TableDetail = Array();
     this.SeatCap = Array();
     this.TableOrders = Array();
@@ -189,17 +215,25 @@ export class ViewTablesComponent implements OnInit {
 
   ClearMsg: any = [];
   // clear table
-  ClearTable(id) {
+  ClearTable(table) {
 
     this.spinnerService.show();
+    let id=table.stid;
     this.TableService.ClearTable(id).subscribe(res => {
 
-      if (res.status == 200) {
+      if (res.status == 200 && res.data.status!=400) {
 
         this.ClearMsg.push({ 'message': 'Table Cleared', 'status': true });
         this.TableService.GetAllTable().subscribe(res => {
           if (res.status == 200) {
             this.GetTables = res.data;
+            for(var i=0;i<res.data.length;i++)
+            {  
+                if(res.data[i].stid==table.stid)
+                {
+                      this.TableDetails(res.data[i]);
+                }
+            }
             this.spinnerService.hide();
           } else {
             this.GetTablesMsg = "No Tables For Display";
@@ -268,7 +302,15 @@ export class ViewTablesComponent implements OnInit {
         this.TableService.GetAllTable().subscribe(res => {
             if (res.status == 200) {
               this.GetTables = res.data;
+               for(var i=0;i<res.data.length;i++)
+            {  
+                if(res.data[i].stid==data.stid)
+                {
+                      this.TableDetails(res.data[i]);
+                }
+            }
               this.spinnerService.hide();
+
             } else {
               this.GetTablesMsg = "No Tables For Display";
               this.spinnerService.hide();

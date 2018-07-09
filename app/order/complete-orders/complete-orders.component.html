@@ -90,7 +90,7 @@
               <!-- <a [routerLink]="['/dashboard/order/complete-orders/',OrderDetails.data[0].order_id]" class="btn btn-primary" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-print"></i> Print  Bill</a> -->
               <a (click)="print()" class="btn btn-primary" *ngIf="OrderDetails.Orderdata[0].status=='Pending' || OrderDetails.Orderdata[0].status=='Completed'"><i class="fa fa-print"></i> Print  Bill</a>
               <!-- <button type="button" class="btn btn-warning" *ngIf="OrderDetails.Orderdata[0].status=='Pending'"><i class="fa fa-edit"></i> Edit Order</button> -->
-              <button type="button" class="btn btn-success" (click)="ChangeStatus(hideStatus)" *ngIf="OrderDetails.Orderdata[0].status!='Completed' ||  OrderDetails.Orderdata[0].status!='Cancelled'"><i class="fa fa-money"></i> Payment Recived</button>
+              <button type="button" class="btn btn-success" (click)="ChangeStatus(hideStatus)" *ngIf="OrderDetails.Orderdata[0].status!='Completed' ||  OrderDetails.Orderdata[0].status!='Cancelled'"><i class="fa fa-money"></i> Payment Received</button>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@
     </div>
   </div>
 </div>
-<div id="print-section1" [hidden]="false">
+<div id="print-section1" [hidden]="true">
   <table width="280" style="font-family: Arial; text-align: left; font-size: 10px; height: auto; margin: 0px auto;">
     <thead>
         <tr align="center">

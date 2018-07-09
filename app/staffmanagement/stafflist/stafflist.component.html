@@ -41,7 +41,10 @@
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Staff</h3>
-                  <div class="alert alert-success" *ngIf="StaffMsg!=null"> SStaff record has been added successfully</div>
+                   <div class="alert" *ngIf="StaffMsg!=null" [ngClass]="{'alert-success':StaffMsg==true,'alert-danger':StaffMsg==false}">
+                    <span *ngIf="StaffMsg==true"><i class="fa fa-check" style="color:green;"></i> Staff has been added successfully !</span>
+                    <span *ngIf="StaffMsg==false"><i class="fa fa-times" style="color:red;"></i> Staff login ID alrady Exists. Please enter different Login ID</span>
+                  </div>
                   <form [formGroup]="StaffListForm" (ngSubmit)="AddStaffList(StaffListForm)" autocomplete='off' *ngIf="StaffMsg==null">
                     <div class="form-group">
                       <div class="row">
@@ -86,10 +89,11 @@
                           </div>
                         </div>
                         <div class="col-md-6">
+
                           <label>Role</label>
                           <select formControlName="role_id" class="form-control">
                             <option [selected]="true" value="">Select Staff Role</option>
-                            <option *ngFor="let data of StaffRoles.data" [value]="data.srl_id">{{data.title}}</option>
+                            <option *ngFor="let data of StaffRoles" [value]="data.srl_id">{{data.title}}</option>
                           </select>
                           <div *ngIf="StaffListForm.controls['role_id'].touched && !StaffListForm.controls['role_id'].valid">
                             <label *ngIf="StaffListForm.controls['role_id'].hasError('required')" style="color:red;">Select Staff Role</label>
@@ -105,7 +109,7 @@
                           <div *ngIf="StaffListForm.controls['first_name'].touched && !StaffListForm.controls['first_name'].valid">
                             <label *ngIf="StaffListForm.controls['first_name'].hasError('required')" style="color:red;">Enter First Name</label>
                             <!-- <label *ngIf="StaffListForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label> -->
-                            <label *ngIf="StaffListForm.controls['first_name'].hasError('maxlength')" style="color:red;">Max 30 digits Allowed!</label>
+                            <label *ngIf="StaffListForm.controls['first_name'].hasError('maxlength')" style="color:red;">Max 30 characters allowed</label>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -114,7 +118,7 @@
                           <div *ngIf="StaffListForm.controls['last_name'].touched && !StaffListForm.controls['last_name'].valid">
                             <label *ngIf="StaffListForm.controls['last_name'].hasError('required')" style="color:red;">Enter Last Name</label>
                             <!-- <label *ngIf="StaffListForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label> -->
-                            <label *ngIf="StaffListForm.controls['last_name'].hasError('maxlength')" style="color:red;">Max 30 digits Allowed!</label>
+                            <label *ngIf="StaffListForm.controls['last_name'].hasError('maxlength')" style="color:red;">Max 30 characters allowed</label>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -333,7 +337,7 @@
                           <label>Role</label>
                           <select formControlName="role_id" class="form-control" [(ngModel)]="model.role_id">
                             <option value="">Select Staff Role</option>
-                            <option *ngFor="let data of StaffRoles.data" [value]="data.srl_id" 
+                            <option *ngFor="let data of StaffRoles" [value]="data.srl_id" 
                             [selected]="data.srl_id==model.role_id">{{data.title}}</option>
                           </select>
                           <div *ngIf="EditForm.controls['role_id'].touched && !EditForm.controls['role_id'].valid">
@@ -360,7 +364,7 @@
                           <input type="text" formControlName="first_name" class="form-control" [ngModel]="model.first_name">
                           <div *ngIf="EditForm.controls['first_name'].touched && !EditForm.controls['first_name'].valid">
                             <label *ngIf="EditForm.controls['first_name'].hasError('required')" style="color:red;">Enter First Name</label>
-                            <label *ngIf="EditForm.controls['first_name'].hasError('pattern')" style="color:red;">Firstname doesn't contain numbers </label>
+                            <label *ngIf="EditForm.controls['first_name'].hasError('maxlength')" style="color:red;">Max 30 characters allowed</label>
                           </div>
                         </div>
                         <div class="col-md-4">
@@ -368,7 +372,7 @@
                           <input type="text" formControlName="last_name" class="form-control" [ngModel]="model.last_name">
                           <div *ngIf="EditForm.controls['last_name'].touched && !EditForm.controls['last_name'].valid">
                             <label *ngIf="EditForm.controls['last_name'].hasError('required')" style="color:red;">Enter Last Name</label>
-                            <label *ngIf="EditForm.controls['last_name'].hasError('pattern')" style="color:red;">Lastname doesn't contain numbers </label>
+                            <label *ngIf="EditForm.controls['last_name'].hasError('maxlength')" style="color:red;">Max 30 characters allowed</label>
                           </div>
                         </div>
                         <div class="col-md-4">

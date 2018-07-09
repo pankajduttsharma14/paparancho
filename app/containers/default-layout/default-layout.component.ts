@@ -5,11 +5,12 @@ import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {NotificationService} from '../../services/notification.service';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+   
   
   
 
@@ -83,8 +84,8 @@ export class DefaultLayoutComponent implements OnInit {
   CreateChangeForm() {
     this.ChangePasswordForm = this.fb.group({
       'user_id': [''],
-      'old_password': ['', Validators.compose([Validators.required, Validators.minLength(6),this.PasswordMatch])],
-      'new_password': ['', Validators.compose([Validators.required, Validators.minLength(6),this.PasswordMatch])]
+      'old_password': ['', Validators.compose([Validators.required, Validators.minLength(6),Validators.maxLength(14),this.PasswordMatch])],
+      'new_password': ['', Validators.compose([Validators.required, Validators.minLength(6),Validators.maxLength(14),this.PasswordMatch])]
 
     },{
       validator: this.PasswordMatch // your validation method
@@ -140,5 +141,9 @@ NotificationsList=[];
         return;
     });
   }
+
+ 
+
+
 
 }

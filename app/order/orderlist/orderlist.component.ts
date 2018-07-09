@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef } from '@angular/core';
 import {OrderService} from '../../services/order.service';
 import {Router} from '@angular/router';
 
@@ -15,7 +15,7 @@ export class OrderlistComponent implements OnInit {
   public OrderList=[];
   p: number = 1;
   search:any;
-  constructor(private router:Router, private OrderService:OrderService) { 
+  constructor(private router:Router, private OrderService:OrderService, private elm:ElementRef) { 
   	// var status=localStorage.getItem('loginStatus');
   	// if(status!="true")
   	// {
@@ -28,7 +28,7 @@ export class OrderlistComponent implements OnInit {
       var data=new Array();
       for(var i=0;i<res.data.length;i++)
       { var  resData=res.data[i];
-        data.push({id:resData.id,stid:resData.stid,staff_name:resData.staff_name,order_from:resData.order_from,createdAt:resData.createdAt,order_time:resData.order_time,total_amt:resData.total_amt,tax_amt:resData.tax_amt,payment_by:resData.payment_by,status:resData.status});
+        data.push({id:resData.id,stid:resData.stid,staff_name:resData.staff_name,order_from:resData.order_from,createdAt:resData.createdAt,order_time:resData.order_time,total_amt:resData.total_amt,tax_amt:resData.tax_amt,payment_by:resData.payment_by,status:resData.status,grand_total:resData.grand_total});
       }
       this.OrderList=data;
 
@@ -40,8 +40,9 @@ export class OrderlistComponent implements OnInit {
  ngOnInit() {}
   
   // todays Orders
-  SwitchFilter(value:boolean)
+  SwitchFilter(value:boolean, event)
   { 
+    console.log(event.target.value);
     this.switch=value;
     return this.switch;
   }

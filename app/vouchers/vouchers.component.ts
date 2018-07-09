@@ -48,6 +48,7 @@ export class VouchersComponent implements OnInit {
   }
   // Add voucher
    formatAMPM(time) {
+     
       var hours = time.getHours();
       var minutes = time.getMinutes();
       var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -64,7 +65,6 @@ export class VouchersComponent implements OnInit {
     var data = formData.value;
     var time = data.time;
     
-
     this.VoucherData = {
       'vcr_name': data.VName,
       'type': data.VType,
@@ -161,7 +161,6 @@ export class VouchersComponent implements OnInit {
     "status":'',
     "valid_till_date":'',
     "valid_before": ''
-
   }
   Edit($event=0) {
     var date=new Date(this.Editrow[0].valid_till_date);
@@ -177,23 +176,21 @@ export class VouchersComponent implements OnInit {
       "type":this.Editrow[0].type,
       "value":this.Editrow[0].value,
       "status":this.Editrow[0].status,
-      // "valid_till_date":new Date(date.getDay()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()),
       "valid_till_date":year+"-"+month+"-"+day,
       "valid_before":this.Editrow[0].valid_before,
 
     }
-
-
-
-
 }
 
 UpdateVoucherMsg:string=null;
 // Update voucher msg
   UpdateVoucher(formData) {
     this.spinnerService.show();
-  
     let data=formData.value;
+    let time=this.EditForm.controls['valid_before'].value;
+    
+    
+    
     var post = {
     "id":data.id,
     "vcr_name":data.vcr_name,
@@ -201,9 +198,9 @@ UpdateVoucherMsg:string=null;
     "value":data.value,
     "status":data.status,
     "valid_till_date":data.valid_till_date,
-    "valid_before":this.formatAMPM(data.valid_before),
-
-  }
+    "valid_before":typeof time=='string' ? time: this.formatAMPM(time),
+    }
+    
     this.VouchersService.UpdateVoucher(post).subscribe(res=>{
         if(res.status==200)
         {

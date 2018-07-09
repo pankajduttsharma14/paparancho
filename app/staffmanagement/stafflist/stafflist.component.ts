@@ -67,7 +67,16 @@ export class StafflistComponent implements OnInit {
 
     this.spinnerService.show();
     this.StaffService.GetStaffRoles().subscribe(
-      res => { this.StaffRoles = res;
+      res => { 
+          for(var i=0;i<res.data.length;i++)
+          {
+            if(res.data[i].status=='ACTIVE')
+            {
+                this.StaffRoles.push(res.data[i]);
+               
+            }
+          }
+
         this.spinnerService.hide(); },
       err => { this.spinnerService.hide(); });
 
@@ -117,7 +126,7 @@ export class StafflistComponent implements OnInit {
 
 
   // Add Staff
-  StaffMsg: string;
+  StaffMsg: boolean=null;
 
   AddStaffList(formData) {
     this.spinnerService.show();
@@ -128,7 +137,7 @@ export class StafflistComponent implements OnInit {
         res => {
           if (res.status == 200) {
 
-            this.StaffMsg = res.message;
+            this.StaffMsg = true;
             // get all .categories
             this.StaffService.GetStaffList().subscribe(res => {
                 this.StaffList = res;
@@ -142,7 +151,7 @@ export class StafflistComponent implements OnInit {
             }, 3000);
 
           } else {
-            this.StaffMsg = "Staff can't added";
+            this.StaffMsg = false;
             this.spinnerService.hide();
             setTimeout(() => {
 
@@ -152,7 +161,7 @@ export class StafflistComponent implements OnInit {
           }
         },
         err => {
-          this.StaffMsg = "Staff can't added";
+          this.StaffMsg = false;
           this.spinnerService.hide();
           setTimeout(() => {
 
@@ -222,7 +231,7 @@ export class StafflistComponent implements OnInit {
   // edit staff
   Editrow = [];
   show(data, modal) {
-    console.log(data);
+    
     this.Editrow = new Array();
     this.Editrow.push(data);
 
@@ -267,7 +276,7 @@ export class StafflistComponent implements OnInit {
       "status": this.Editrow[0].status,
 
     }
-    console.log(this.model);
+    
 
   }
 

@@ -17,11 +17,13 @@
           </ul>
         </div> -->
         <div class="card-body">
-          
-          <table class="table" style="width:100%;">
+          <div class="table-responsive">
+          <table class="table" style="max-width:1500px;">
             <thead>
               <tr>
 
+                <th>Order #</th>
+                <th>Table #</th>
                 <th>Items</th>
                 <th>Qty.</th>
                 <th>Status</th>
@@ -33,6 +35,8 @@
             <tbody>
               <tr *ngFor='let data of OrderDetails.data' style="position: relative;">
 
+                <td>{{OrderDetails.Orderdata[0].order_id}}</td>
+                <td>{{OrderDetails.Orderdata[0].stid}}</td>
                 <td>{{data.item_name}}</td>
                 <td>{{data.item_qty}}</td>
                 <td>
@@ -58,11 +62,15 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
                 
                 <th colspan="1" style="text-align: right;" ><span>Sub Total</span></th>
                 <th style="text-align: right;" >{{OrderDetails.Orderdata[0].total_amt}}</th>
               </tr> 
               <tr *ngIf="OrderDetails.Orderdata">
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -75,6 +83,8 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
                 
                 
                 <th>Total Items {{OrderDetails.Orderdata[0].item_total}}</th>
@@ -83,6 +93,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
 
           <div class="button_groups" *ngIf="OrderDetails.Orderdata">
             <div *ngIf="OrderDetails.Orderdata[0].status!='Completed'">

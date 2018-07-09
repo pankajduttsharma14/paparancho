@@ -27,6 +27,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import {OutletModule} from './outletmanagement/outlet.module';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AnonymousGuardService } from './services/AnonymousGuardService';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 
 
@@ -41,6 +43,7 @@ import {
   AppHeaderModule,
   AppFooterModule,
   AppSidebarModule,
+
 
 
 } from '@coreui/angular'
@@ -60,6 +63,9 @@ import {TableModule} from './tablemanagement/table.module';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import {TaxModule} from './taxmanagement/tax.module';
 import { StatusfilterPipe } from './pipes/statusfilter.pipe';
+import {PricedashboardComponent} from './pricedashboard/pricedashboard.component';
+
+
 
 
 
@@ -96,7 +102,8 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
     TaxModule,
     Ng4LoadingSpinnerModule.forRoot(),
     ReactiveFormsModule,
-    OutletModule
+    OutletModule,
+    CarouselModule
 
 
 
@@ -114,6 +121,8 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
     AppSettingComponent,
     ModalsComponent,
     StatusfilterPipe,
+    PricedashboardComponent
+    
     
     
 
@@ -122,6 +131,7 @@ import { StatusfilterPipe } from './pipes/statusfilter.pipe';
     provide: LocationStrategy,
     useClass: PathLocationStrategy,},AuthService,Ng4LoadingSpinnerService,AuthGuardService,AnonymousGuardService],
     exports:[ModalsComponent,ModalModule],
+
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

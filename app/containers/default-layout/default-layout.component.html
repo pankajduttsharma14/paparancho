@@ -106,7 +106,9 @@
       </li> -->
     </ol>
     <div class="container-fluid">
-      <router-outlet></router-outlet>
+      
+        <router-outlet></router-outlet>
+      
     </div>
     <!-- /.container-fluid -->
   </main>
@@ -331,6 +333,9 @@
                 <div *ngIf="ChangePasswordForm.controls['old_password'].touched && !ChangePasswordForm.controls['old_password'].valid">
                   <label *ngIf="ChangePasswordForm.controls['old_password'].hasError('required')" style="color:red;">Enter Old Password</label>
                   <label *ngIf="ChangePasswordForm.controls['old_password'].hasError('minlength')" style="color:red;">Password should be at least 6 characters</label>
+                  <label *ngIf="ChangePasswordForm.controls['old_password'].hasError('maxlength')" style="color:red;">
+                    14 character allowed!
+                  </label>
                 </div>
               </div>
             </div>
@@ -341,7 +346,8 @@
                 <div *ngIf="ChangePasswordForm.controls['new_password'].touched && !ChangePasswordForm.controls['new_password'].valid">
                   <label *ngIf="ChangePasswordForm.controls['new_password'].hasError('required')" style="color:red;">Enter New Password</label>
                   <label *ngIf="ChangePasswordForm.controls['new_password'].hasError('minlength')" style="color:red;">password should be at least 6 characters</label>
-                  <label *ngIf="ChangePasswordForm.controls['new_password'].hasError('PasswordMatch')" style="color:red;">Old and New password should be diffrent</label>
+                  <label *ngIf="ChangePasswordForm.controls['new_password'].hasError('PasswordMatch')" style="color:red;">Old and New password should be different</label>
+                  <label *ngIf="ChangePasswordForm.controls['new_password'].hasError('maxlength')" style="color:red;">Max 14 character allowed!</label>
                 </div>
               </div>
             </div>

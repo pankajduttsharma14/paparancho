@@ -48,4 +48,10 @@ export class TableService {
     const url: string = this.BASE_URL + "edittable";
     return this.http.post(url, data, this.options).map(res => res.json()); 
   }
+  GetRunningTables():Observable<any>
+  {
+    const url: string = this.BASE_URL + "getRunningTablelist";
+    return this.http.get(url, this.options).map(res => res.json());
+  }
+
 }

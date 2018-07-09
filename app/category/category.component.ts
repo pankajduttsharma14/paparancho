@@ -91,7 +91,7 @@ export class CategoryComponent implements OnInit {
       var categories_data=new Array();
         for(var i=0;i<data.length;i++)
         {
-          categories_data.push({icid:data[i].icid,cat_type:data[i].cat_type,cat_title:data[i].cat_title,isAlcoholic:data[i].isAlcoholic,status:data[i].status,cat_img_url:data[i].cat_img_url});
+          categories_data.push({icid:data[i].icid,cat_type:data[i].cat_type,cat_title:data[i].cat_title,isAlcoholic:data[i].isAlcoholic,status:data[i].status,cat_img_url:data[i].cat_img_url, ol_id:data[i].ol_id});
         }
         return categories_data;
 
@@ -254,7 +254,7 @@ export class CategoryComponent implements OnInit {
 
     this.Editrow = new Array();
     this.Editrow.push(data);
-
+    
     modal.show();
   }
 
@@ -284,6 +284,7 @@ export class CategoryComponent implements OnInit {
       'isAlcoholic': this.Editrow[0].isAlcoholic
 
     }
+
 
   }
   UpdateCatMsg: string = null;

@@ -13,8 +13,7 @@ import {TaxRoutingModule} from './taxmanagement/tax.routing';
 import {OutletRoutingModule} from './outletmanagement/outlet.routing';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { AnonymousGuardService as HomeGuard } from './services/AnonymousGuardService';
-
-
+import {PricedashboardComponent} from './pricedashboard/pricedashboard.component';
 export const routes: Routes = [
 
 
@@ -39,6 +38,13 @@ export const routes: Routes = [
     component: P404Component,
     data: {
       title: 'Page 404'
+    }
+  },
+  {
+    path: 'price-screen',
+    component: PricedashboardComponent,
+    data: {
+      title: 'Price List'
     }
   },
   {

@@ -52,7 +52,13 @@ export class CompleteOrdersComponent implements OnInit {
   amount_return:any;
   CalcAmount(amount)
   {
-   this.amount_return=amount-this.OrderDetails.Orderdata[0].grand_total;    
+    if(amount.length!=0)
+    {
+       this.amount_return=amount-this.OrderDetails.Orderdata[0].grand_total;       
+    }
+    else
+    {return false;}
+   
   }
   ChangeStatus(status)
   {

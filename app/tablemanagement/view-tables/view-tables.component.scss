@@ -265,12 +265,30 @@
     border: none;
     color: #fff;
 }
-.card-header .dropdown-menu{
+.card-header.right_card_header .dropdown-menu{
 
   left: auto !important;
   right: 0 !important;
 }
+.card-header.left_card_header .dropdown-menu{
 
+  right: auto !important;
+  left: 0 !important;
+}
+.card-header .dropdown-menu
+{
+
+    background: #06b4f1;
+    border-radius: 0px;
+    border: none;
+    color: #fff;
+}
+.card-header .dropdown-item:hover, .dropdown-item:focus{
+  background: #20a8d8 !important;
+  color: #fff !important;
+  border:none;
+  box-shadow: none;
+}
 
 .box-container {
   position: relative;

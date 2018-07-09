@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900');
+
+.pricedashboard_main
+{
+	background:#1a1a1a;	
+	font-family: 'Rubik', sans-serif;
+	padding: 25px 15px;
+	
+}
+
+
+.list_items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*flex-wrap: wrap;*/
+  width: 100%;
+  background:#1a1a1a;
+  /*height: 90vh;*/
+
+
+  -moz-column-count: 1;
+    
+    -webkit-column-count: 1;
+    
+    column-count: 1;
+
+  
+}
+.list_items li {
+ height: auto;
+width: 32%;
+padding: 10px 15px;
+font-size: 1vw;
+font-family: 'Rubik', sans-serif;
+font-weight: 400;
+margin-right: 12px;
+/*display: inline-block;*/
+float: left;
+
+}
+.heading{
+background: #e84324;
+color: #fff;
+font-size: 1.8vw;
+display: inline-block;
+text-transform: uppercase;
+padding: 5px 15px;
+margin-bottom: 0px;
+font-weight: 400;
+margin-top: 10px;
+}
+.list_items li:nth-child(odd)
+{
+	background: #252525;
+}
+.list_items li:nth-child(even)
+{
+	background: #363636;
+}
+
+.price {
+    background: #25ab2e;
+    padding: 5px 15px;
+    border-radius: 0.6vw;
+}
+.list_items li{
+
+}
+
+

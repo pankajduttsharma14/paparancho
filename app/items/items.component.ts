@@ -15,7 +15,7 @@ export class ItemsComponent implements OnInit {
   @ViewChild('largeModal')  public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
-  @ViewChild('fileInput') fileInput;
+  @ViewChild('fileInput1') fileInput:any;
 
   p: number = 1;
   public items: any = [];
@@ -114,20 +114,33 @@ export class ItemsComponent implements OnInit {
 
 
   // vars
-  catList = {};
+  catList = [];
   brandList = {};
   AddItemMsg: string = null;
   ngOnInit() {
-    this.catList = JSON.parse(localStorage.getItem('categories'));
     
-    // this.brandList = JSON.parse(localStorage.getItem('brands'));
 
+    this.FoodService.GetAllCategories().subscribe(res=>{
 
+        if(res.status==200)
+        {
+          for(var i=0;i<res.data.length;i++)
+          {
+              if(res.data[i].status=='ACTIVE')
+              {
+                this.catList.push(res.data[i]);
+              }
+          }
 
+        }
+    },err=>{
 
-
-  }
-  // model:any={'min_bar_price':'','max_bar_price':''};
+      return;
+    })
+    
+   
+}
+  
   // bar price custom validator
 
 
@@ -291,9 +304,11 @@ export class ItemsComponent implements OnInit {
   // edit Items
   Editrow = [];
   show(data, modal) {
+
     this.GetCategoryType(data.icid);
     this.Editrow = Array();
     this.Editrow.push(data);
+    this.resetFile();
 
     modal.show();
   }
@@ -327,7 +342,7 @@ export class ItemsComponent implements OnInit {
       "item_price": this.Editrow[0].item_price,
       "min_bar_price": this.Editrow[0].min_bar_price,
       "max_bar_price": this.Editrow[0].max_bar_price,
-      "item_img_url": this.Editrow[0].item_img_url,
+      "item_img_url": '',
       "item_img_name": this.Editrow[0].item_img_name,
       "item_stock": this.Editrow[0].item_stock,
       "status": this.Editrow[0].status,
@@ -445,5 +460,8 @@ export class ItemsComponent implements OnInit {
     fd.append('status',this.EditForm.controls['status'].value);
     return fd;
   }
+  resetFile() {
+   this.fileInput.nativeElement.value = "";
 
+ }
 }
