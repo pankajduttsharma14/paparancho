@@ -35,7 +35,7 @@
             <tbody>
               <tr *ngFor='let data of OrderDetails.data' style="position: relative;">
 
-                <td>{{OrderDetails.Orderdata[0].order_id}}</td>
+                <td>{{OrderDetails.Orderdata[0].order_number}}</td>
                 <td>{{OrderDetails.Orderdata[0].stid}}</td>
                 <td>{{data.item_name}}</td>
                 <td>{{data.item_qty}}</td>
@@ -68,7 +68,7 @@
                 <th colspan="1" style="text-align: right;" ><span>Sub Total</span></th>
                 <th style="text-align: right;" >{{OrderDetails.Orderdata[0].total_amt}}</th>
               </tr> 
-              <tr *ngIf="OrderDetails.Orderdata">
+             <!--  <tr *ngIf="OrderDetails.Orderdata">
                 <th></th>
                 <th></th>
                 <th></th>
@@ -78,7 +78,7 @@
                 
                 <th colspan="1" style="text-align: right;" >Tax</th>
                 <th style="text-align: right;" >{{OrderDetails.Orderdata[0].tax_amt}}</th>
-              </tr>
+              </tr> -->
               <tr style="background: #efefef; text-transform: uppercase;" *ngIf="OrderDetails.Orderdata">
                 <th></th>
                 <th></th>

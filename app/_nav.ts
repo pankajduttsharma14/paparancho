@@ -28,17 +28,17 @@ export const navItems = [
   {
     name: 'Staff Management',
     url: 'staff-management',
-    icon: 'icon-puzzle',
+    icon: 'icon-user',
     children: [
       {
         name: 'Staff Role List',
         url: 'staff-management/staffrole',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
       {
         name: 'Staff List',
         url: 'staff-management/stafflist',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       }
 
 
@@ -46,9 +46,9 @@ export const navItems = [
   },
   // menu management
 {
-    name: 'Food/Beverages',
+    name: 'Food & Beverages',
     url: 'food',
-    icon: 'icon-puzzle',
+    icon: 'fa fa-cutlery',
     children: [
       // {
       //   name: 'Brands',
@@ -58,12 +58,12 @@ export const navItems = [
       {
         name: 'Categories',
         url:  'food/categories',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
       {
         name: 'Items',
         url: 'food/items',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
       // {
       //   name: 'My Bar Price',
@@ -79,12 +79,12 @@ export const navItems = [
 {
     name: 'Order Management',
     url: 'order',
-    icon: 'icon-puzzle',
+    icon: 'icon-basket-loaded',
     children: [
       {
         name: 'Order List',
         url: 'order/order-list',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
 
       // {
@@ -102,32 +102,39 @@ export const navItems = [
    {
     name: 'Vouchers',
     url: 'vouchers',
-    icon: 'icon-puzzle',
+    icon: 'fa fa-gift',
     
   },
+ 
   // Tax management
   {
     name: 'Table Management',
     url: 'table-management',
-    icon: 'icon-puzzle',
+    icon: 'icon-list',
     children: [
       {
         name: 'View Tables',
         url: 'table-management/view-tables',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
     ]
   },
    {
     name: 'Tax Management',
     url: 'tax',
-    icon: 'icon-puzzle',
+    icon: 'fa fa-money',
     children: [
       {
         name: 'Tax List',
         url: 'tax/tax-list',
-        icon: 'icon-puzzle'
+        icon: 'fa fa-angle-right'
       },
     ]
+  },
+   {
+    name: 'Reports',
+    url: 'reports',
+    icon: 'icon-graph',
+    
   },
 ];

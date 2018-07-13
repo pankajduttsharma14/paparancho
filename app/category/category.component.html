@@ -22,7 +22,14 @@
 </div>
 <!-- /.modal -->
 <!-- delete model -->
+
 <div class="animated fadeIn">
+  <div [ngClass]="{'ShowBox':Enlarge==true, 'HideBox':Enlarge==false}" class="d-none" (click)="HideImage($event)">
+      <div style="position: relative;">
+        <span class="cross_icon" (click)="HideImage($event)">&times;</span>
+        <img [src]="ImageUrl" alt="Enlarge Image" (click)="$event.stopPropagation()">
+      </div>
+  </div>
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
     <div class="col-lg-12">
@@ -169,8 +176,12 @@
                 <th>Actions</th>
               </tr>
             </thead>
+            
             <tbody>
-              <tr *ngFor='let data of categories | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p} '>
+              <tr *ngIf="(categories | filter:searchCat).length===0">
+                <td><h3>No Records Found!</h3></td>
+              </tr>
+              <tr *ngFor='let data of categories | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p}'>
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
                 </td> -->
@@ -181,7 +192,7 @@
                 <td>{{data.cat_type}}</td>
                 <td width="20%" style="word-break: break-all;">{{data.cat_title | uppercase}}</td>
                 <td><span *ngIf="data.isAlcoholic=='true'">Yes</span><span *ngIf="data.isAlcoholic=='false'">N/A</span></td>
-                <td><img [src]="data.cat_img_url" alt="image" height="50" style="max-width:80px;"></td>
+                <td><img [src]="data.cat_img_url" alt="image" height="50" style="max-width:80px; cursor: pointer;" (click)="ScaleImg(data.cat_img_url, $event)"></td>
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                 <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                 <td>

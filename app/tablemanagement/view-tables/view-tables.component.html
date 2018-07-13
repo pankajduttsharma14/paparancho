@@ -119,7 +119,7 @@
           </button>
           <ul *dropdownMenu class="dropdown-menu" role="menu">
             <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="GetAllTables()" *ngIf="TableHeading!='All Tables'">All Tables</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="GetRunningTables()" *ngIf="TableHeading!='Running Tables'">Running Tables</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:void(0)" (click)="GetRunningTables()" *ngIf="TableHeading!='Booked Tables'">Booked Tables</a></li>
             <!-- <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
             <li class="divider dropdown-divider"></li>
             <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
@@ -170,13 +170,32 @@
           <h3 class="table_heading_new"><i class="icon-arrow-right-circle"></i> Table No</h3>
           <p><b>{{TableDetail[0].stid}}</b></p>
         </div>
+         <div class="even" *ngIf="TableDetail!=null">
+          <h3><i class="icon-chart"></i> Seat Capacity</h3>
+          <!-- <ul class="chair_loop">
+            <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
+          </ul> -->
+          <p>{{SeatCap.length}}</p>
+        </div>
         <div class="odd" *ngIf="TableDetail!=null">
           <h3><i class="icon-note"></i> Table Availability</h3>
           <p><span [ngClass]="{'free_text': TableDetail[0].is_available=='FREE', 'booked_text': TableDetail[0].is_available=='BOOKED','semi_booked_text':TableDetail[0].is_available=='PARTIALY BOOKED', 'locked_text': TableDetail[0].is_available=='LOCKED'}" *ngIf="TableDetail[0].status!='OUTOFSERVICE'"><i class="icon-lock" *ngIf="TableDetail[0].is_available=='LOCKED'"></i> {{TableDetail[0].is_available}} </span>
             <span *ngIf="TableDetail[0].status=='OUTOFSERVICE'" style="color: red;">{{TableDetail[0].status}}</span></p>
         </div>
         <div class="even" *ngIf="TableDetail!=null">
-          <h3><i class="icon-arrow-right-circle"></i> Seat Capacity</h3>
+          <h3><i class="icon-layers"></i> Table Occupancy</h3>
+          <!-- <ul class="chair_loop">
+            <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
+          </ul> -->
+          <p>
+            <span class="seat_status" *ngIf="TableDetail[0].engageseat"><b class="text-danger">Engaged Seats:</b> {{TableDetail[0].engageseat}}</span>
+            <span class="seat_status" *ngIf="TableDetail[0].freeseat"><b class="text-success">Free Seats:</b> {{TableDetail[0].freeseat}}</span>
+            <span class="seat_status" *ngIf="!TableDetail[0].engageseat"><b class="text-danger">Engaged Seats:</b> N/A</span>
+            <span class="seat_status" *ngIf="!TableDetail[0].freeseat"><b class="text-success">Free Seats:</b> N/A</span>
+          </p>
+        </div>
+        <div class="even" *ngIf="TableDetail!=null">
+          <h3><i class="icon-chart"></i> Seat Capacity</h3>
           <!-- <ul class="chair_loop">
             <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
           </ul> -->

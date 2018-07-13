@@ -50,10 +50,10 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-md-12">
-                          <label>Tax Type</label>
+                          <label>Tax Title</label>
                           <input type="text" class="form-control" formControlName="tax_type">
                           <div *ngIf="AddTaxForm.controls['tax_type'].touched && !AddTaxForm.controls['tax_type'].valid">
-                            <label *ngIf="AddTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Type</label>
+                            <label *ngIf="AddTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Title</label>
                           </div>
                         </div>
                       </div>
@@ -115,7 +115,7 @@
               <tr>
                 <!-- <th></th> -->
                 <!-- <th>Tax Id</th> -->
-                <th>Tax Type</th>
+                <th>Tax Title</th>
                 <th>Tax Value</th>
                 <th>Actions</th>
               </tr>
@@ -175,11 +175,11 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
-                  <label>Tax Type</label>
+                  <label>Tax Title</label>
                   <input type="hidden" name="" formControlName="id" style="display: none;" [ngModel]="model.id">
                   <input type="text" class="form-control" formControlName="tax_type" [ngModel]="model.tax_type">
                   <div *ngIf="EditTaxForm.controls['tax_type'].touched && !EditTaxForm.controls['tax_type'].valid">
-                    <label *ngIf="EditTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Type</label>
+                    <label *ngIf="EditTaxForm.controls['tax_type'].hasError('required')" style="color:red;">Enter Tax Title</label>
                   </div>
                 </div>
               </div>

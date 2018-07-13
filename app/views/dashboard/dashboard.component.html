@@ -4,10 +4,10 @@
       <div class="card text-white bg-primary">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
-          <!--   <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
+            <!--   <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
               <i class="icon-settings"></i>
             </button> -->
-          <!--   <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+            <!--   <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
@@ -15,9 +15,9 @@
             </div> -->
           </div>
           <h4 class="mb-0">{{DashboardData.data.completedorder[0].nooforders}}</h4>
-          <p>Total Order</p>
+          <p>Total Orders</p>
         </div>
-       <!--  <div class="chart-wrapper px-3" style="height:70px;">
+        <!--  <div class="chart-wrapper px-3" style="height:70px;">
           <canvas baseChart class="chart"
           [datasets]="lineChart1Data"
           [labels]="lineChart1Labels"
@@ -27,17 +27,18 @@
           [chartType]="lineChart1Type"></canvas>
         </div> -->
       </div>
-    </div><!--/.col-->
+    </div>
+    <!--/.col-->
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-info">
         <div class="card-body pb-0">
-         <!--  <button type="button" class="btn btn-transparent p-0 float-right">
+          <!--  <button type="button" class="btn btn-transparent p-0 float-right">
             <i class="icon-location-pin"></i>
           </button> -->
           <h4 class="mb-0">{{DashboardData.data.completedorder[0].total_sale}}</h4>
           <p>Today's Sale</p>
         </div>
-       <!--  <div class="chart-wrapper px-3" style="height:70px;">
+        <!--  <div class="chart-wrapper px-3" style="height:70px;">
           <canvas baseChart class="chart"
           [datasets]="lineChart2Data"
           [labels]="lineChart2Labels"
@@ -47,7 +48,8 @@
           [chartType]="lineChart2Type"></canvas>
         </div> -->
       </div>
-    </div><!--/.col-->
+    </div>
+    <!--/.col-->
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-warning">
         <div class="card-body pb-0">
@@ -55,7 +57,7 @@
             <!-- <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
               <i class="icon-settings"></i>
             </button> -->
-           <!--  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+            <!--  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
@@ -64,7 +66,7 @@
           <h4 class="mb-0">{{DashboardData.data.cancelordercount[0].nooforders}}</h4>
           <p>Cancelled Orders</p>
         </div>
-       <!--  <div class="chart-wrapper" style="height:70px;">
+        <!--  <div class="chart-wrapper" style="height:70px;">
           <canvas baseChart class="chart"
           [datasets]="lineChart3Data"
           [labels]="lineChart3Labels"
@@ -74,15 +76,16 @@
           [chartType]="lineChart3Type"></canvas>
         </div> -->
       </div>
-    </div><!--/.col-->
+    </div>
+    <!--/.col-->
     <div class="col-sm-6 col-lg-3">
       <div class="card text-white bg-danger">
         <div class="card-body pb-0">
           <div class="btn-group float-right" dropdown>
-           <!--  <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
+            <!--  <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
               <i class="icon-settings"></i>
             </button> -->
-           <!--  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+            <!--  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
@@ -91,7 +94,7 @@
           <h4 class="mb-0">{{DashboardData.data.pendingordercount[0].nooforders}}</h4>
           <p>Pending Orders</p>
         </div>
-       <!--  <div class="chart-wrapper px-3" style="height:70px;">
+        <!--  <div class="chart-wrapper px-3" style="height:70px;">
           <canvas baseChart class="chart"
           [datasets]="barChart1Data"
           [labels]="barChart1Labels"
@@ -101,42 +104,40 @@
           [chartType]="barChart1Type"></canvas>
         </div> -->
       </div>
-    </div><!--/.col-->
-  </div><!--/.row-->
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
   <div class="animated fadeIn">
-  <ng4-loading-spinner></ng4-loading-spinner>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i>Today's Outstanding Bills
-        </div>
-        <div class="card-body">
-          <h3 *ngIf="PendingOrdersError">No Pending Orders</h3>
-
-          <!-- {{PendingOrders | json}} -->
-           <table class="table" *ngIf="!PendingOrdersError">
-            <thead>
-              <tr>
-                
-                <th>Order #</th>
-                <th>Table #</th>
-                <th>Staff Name</th>
-                <th>Ordered From</th>
-                <th>Order Time</th>
-                <th>Sub Total (<i class="fa fa-rupee"></i>)</th>
-                <th>Discount (<i class="fa fa-rupee"></i>)</th>
-                <th>Tax (<i class="fa fa-rupee"></i>)</th>
-                <th>Total Amount (<i class="fa fa-rupee"></i>)</th>
-                <th>Payment By</th>
-                <th>Actions</th>
-
-              </tr>
-            </thead>
-            <tbody>
-
-              <tr *ngFor='let data of PendingOrders | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
-                  
+    <ng4-loading-spinner></ng4-loading-spinner>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i>Today's Outstanding Bills
+          </div>
+          <div class="card-body">
+            <h3 *ngIf="PendingOrdersError">No Pending Orders</h3>
+            <!-- {{PendingOrders | json}} -->
+            <div class="table-responsive">
+            <table class="table" *ngIf="!PendingOrdersError" style="min-width:1200px;">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Table #</th>
+                  <th>Staff Name</th>
+                  <th>Ordered From</th>
+                  <th>Order Time</th>
+                  <th>Sub Total (<i class="fa fa-rupee"></i>)</th>
+                  <th>Discount (<i class="fa fa-rupee"></i>)</th>
+                  <th>Tax (<i class="fa fa-rupee"></i>)</th>
+                  <th>Total Amount (<i class="fa fa-rupee"></i>)</th>
+                  <th>Payment By</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let data of PendingOrders | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
                   <td>{{data.id}}</td>
                   <td>{{data.stid}}</td>
                   <td>{{data.stewards}}</td>
@@ -149,30 +150,23 @@
                   </td>
                   <td>{{data.tax_amt}}</td>
                   <td>{{data.grand_total}}</td>
-                   <td>
+                  <td>
                     <span class="badge badge-warning" *ngIf="data.payment_by==null">Payment Due</span>
                     <span *ngIf="data.payment_by!=null" class="badge badge-success">{{data.payment_by}}</span>
-                    
                   </td>
-                
                   <td class="actions_main">
                     <!-- <a title="Edit"><i class="fa fa-edit"></i></a>  -->
                     <!-- <a title="Delete"><i class="fa fa-trash"></i></a> -->
                     <a title="View Detail" [routerLink]="['/dashboard/order/order-details/',data.id]"><i class="fa fa-eye"></i></a>
                   </td>
-
-              </tr>
-
-
-
-            </tbody>
-          </table>
+                </tr>
+              </tbody>
+            </table>
+            </div>  
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-  
-<!--/.row-->
+  <!--/.row-->
 </div>

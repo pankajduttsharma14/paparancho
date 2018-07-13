@@ -28,6 +28,7 @@ import {OutletModule} from './outletmanagement/outlet.module';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AnonymousGuardService } from './services/AnonymousGuardService';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {ReportsModule} from './reports/reports.module';
 
 
 
@@ -103,7 +104,8 @@ import {PricedashboardComponent} from './pricedashboard/pricedashboard.component
     Ng4LoadingSpinnerModule.forRoot(),
     ReactiveFormsModule,
     OutletModule,
-    CarouselModule
+    CarouselModule,
+    ReportsModule
 
 
 

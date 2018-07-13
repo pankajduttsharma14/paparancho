@@ -1,7 +1,13 @@
 // Here you can add other styles
 .card-header
 {
-  background: #20a8d8;
+  
+background: #20a8d8; /* Old browsers */
+background: -moz-linear-gradient(top, #20a8d8 0%, #20c8db 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #20a8d8 0%,#20c8db 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #20a8d8 0%,#20c8db 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a8d8', endColorstr='#20c8db',GradientType=0 ); /* IE6-9 */
+
   color: #fff;
   font-size: 18px;
 }
@@ -18,4 +24,198 @@ label{
 input[type='file']
 {
 	    padding: 3px !important;
+}
+
+.actions_main a
+{
+		cursor: pointer;
+		color: #2199e8;
+	margin-left:10px;
+	font-size:16px;	
+	display:inline-block;
+
+}
+
+.modal_heading
+{
+	font-size:18px;
+	background: #20a8d8;
+	color: #fff;
+	padding: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	box-shadow: 0px 4px 17px rgba(0,0,0,0.4);
+	-webkit-box-shadow:0px 4px 17px rgba(0,0,0,0.4);
+	-moz-box-shadow:0px 4px 17px rgba(0,0,0,0.4);
+
+background: #20a8d8; /* Old browsers */
+background: -moz-linear-gradient(top, #20a8d8 0%, #20c8db 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #20a8d8 0%,#20c8db 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #20a8d8 0%,#20c8db 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a8d8', endColorstr='#20c8db',GradientType=0 ); /* IE6-9 */
+
+}
+
+.sub_btn
+{
+	background: #20a8d8;
+}
+.form-control, .time_picker p-calendar .ui-inputtext {
+    width: 100% !important;
+    height: 35px !important;
+    border: none !important;
+    background: #efefef !important;
+    border-radius: 0 !important;
+
+}
+.form-control:hover, .form-control:focus
+{
+	box-shadow: none !important;
+	outline: none !important;
+}
+.custom_time
+{
+	width: 100%;
+}
+.button_control
+{
+	text-align: right;
+	margin: 10px 20px 0;
+}
+.button_control button
+{
+	color: #fff;
+
+}
+
+.modal-content{
+	border-radius: 0px;
+	border:none;
+}
+
+.modal-body{
+	padding: 0px;
+}
+.modal-body form
+{
+	padding: 1rem;
+}
+
+.sub_btn{
+	background: #20a8d8; /* Old browsers */
+background: -moz-linear-gradient(top, #20a8d8 0%, #20c8db 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #20a8d8 0%,#20c8db 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #20a8d8 0%,#20c8db 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a8d8', endColorstr='#20c8db',GradientType=0 ); /* IE6-9 */
+transition-duration:0.5s;
+}
+.sub_btn:hover, .sub_btn:focus, .sub_btn:active{
+	transition-duration:0.5s; 
+	box-shadow: none !important;
+	outline: none !important;
+	color: #fff !important;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#87e0fd+0,53cbf1+40,05abe0+100;Blue+3D+%23+16 */
+background: rgb(135,224,253) !important; /* Old browsers */
+background: -moz-linear-gradient(top, rgba(135,224,253,1) 0%, rgba(83,203,241,1) 40%, rgba(5,171,224,1) 100%) !important; /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%) !important; /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%) !important; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
+}
+
+.pagination{
+	float: right;
+}
+.pagination li
+{
+	background: #e4e5e6;
+	
+}
+
+
+.app-header
+{
+	background:#262a2e !important;
+}
+
+.app-header .nav-item .nav-link{
+	color: #fff;
+}
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus{
+	color: #2199e8;
+}
+.seat_status
+{
+	margin-right: 10px;
+}
+
+
+.ShowBox {
+    
+    position: fixed;
+    display: block !important;
+    top: 0%;
+    left: 0%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex !important;
+    
+    justify-content: center;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.ShowBox img{
+	border-radius:5px;
+	border:5px solid rgba(255,255,255,0.7); 
+	animation: enlarge 1s ease;	
+	max-height: 100%;
+	max-width: 100%;
+
+}
+.OverFlowHidden
+{
+	overflow: hidden;
+}
+
+@keyframes enlarge{
+
+	0%{
+		opacity: 0;
+		height: 0;
+		width: 0;
+	}
+
+	100%
+	{
+		opacity: 1;
+		height: auto;
+		width: auto;
+	}
+}
+
+.cross_icon
+{
+	font-size: 35px;
+position: absolute;
+right: -10px;
+top: -20px;
+background: rgba(255,255,255,0.7);
+height: auto;
+line-height: 1;
+padding: 0px 7px;
+border-radius: 50%;
+cursor: pointer;
+}
+
+.btn_list{
+	list-style: none;
+}
+
+.btn_list li
+{
+	display:inline-block;
+	margin-left:10px;
 }

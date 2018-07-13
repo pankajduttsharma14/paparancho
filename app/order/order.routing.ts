@@ -19,7 +19,7 @@ const routes :Routes= [
     	  path:'',
     	  component: OrderlistComponent,
           data: {
-          title: 'Order-List'
+          title: 'Order List'
           },
           pathMatch:'full'
       },
@@ -28,7 +28,7 @@ const routes :Routes= [
         path:'order-list',
         component: OrderlistComponent,
           data: {
-          title: 'Order-List'
+          title: 'Order List'
           },
           pathMatch:'full'
 
@@ -38,7 +38,7 @@ const routes :Routes= [
         path:'order-details/:id',
         component: OrderdetailsComponent,
           data: {
-          title: 'Order-Details'
+          title: 'Order Details'
           },
           pathMatch:'full'
 

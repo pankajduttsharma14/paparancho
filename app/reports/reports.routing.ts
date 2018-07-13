@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {VouchersComponent} from './vouchers.component';
+import {ReportsComponent} from './reports.component';
 
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Vouchers'
+      title: 'Reports'
     },
-    component:VouchersComponent,
+    component:ReportsComponent,
     
 
   },{path: '**', redirectTo: '/404'},
@@ -20,4 +20,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class VoucherRoutingModule{}
+export class ReportsRoutingModule{}

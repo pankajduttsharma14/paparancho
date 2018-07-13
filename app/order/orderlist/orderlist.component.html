@@ -45,7 +45,7 @@
 
                 <tr *ngFor='let data of OrderList | dateToday:switch | filter:search | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
   	                
-  	                <td>{{data.id}}</td>
+  	                <td>{{data.order_number}}</td>
   	                <td>{{data.stid}}</td>
                     <td>{{data.staff_name}}</td>
   	                <td>{{data.order_from}}</td>

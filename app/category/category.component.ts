@@ -31,6 +31,7 @@ export class CategoryComponent implements OnInit {
   AddForm: any;
   EditForm: any;
   searchCat: any = '';
+  myIndex:number=0;
 
   // parameters for form
   ol_id: string;
@@ -52,6 +53,7 @@ export class CategoryComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private spinnerService: Ng4LoadingSpinnerService,
+    private el:ElementRef
     
     
 
@@ -101,7 +103,7 @@ export class CategoryComponent implements OnInit {
     this.AddForm = this.fb.group({
       'ol_id': ['', Validators.required],
       'cat_type': ['', Validators.required],
-      'parent_id': ['', Validators.required],
+      
       'cat_title': ['', Validators.required],
       'cat_img_name': ['', Validators.required],
       // 'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
@@ -117,7 +119,7 @@ export class CategoryComponent implements OnInit {
       'icid': ['', ],
       'ol_id': ['', Validators.required],
       'cat_type': ['', Validators.required],
-      'parent_id': ['', Validators.required],
+      
       'cat_title': ['', Validators.required],
       'cat_img_name': ['', Validators.required],
       // 'cat_img_url': ['', [Validators.required, Validators.pattern(this.urlPattern)]],
@@ -130,7 +132,7 @@ export class CategoryComponent implements OnInit {
  
   ngOnInit() {
     
-
+    
   }
 
   // set categorydata
@@ -365,7 +367,7 @@ export class CategoryComponent implements OnInit {
     let data = new FormData();
     data.append('ol_id', this.AddForm.controls['ol_id'].value);
     data.append('cat_type', this.AddForm.controls['cat_type'].value);
-    data.append('parent_id', this.AddForm.controls['parent_id'].value);
+    
     data.append('cat_title', this.AddForm.controls['cat_title'].value);
     data.append('cat_img_name', this.AddForm.controls['cat_img_name'].value);
     // data.append('cat_img_url', this.SelectedFile, this.SelectedFile.name);
@@ -394,7 +396,7 @@ export class CategoryComponent implements OnInit {
     data.append('icid', this.EditForm.controls['icid'].value);
     data.append('ol_id', this.EditForm.controls['ol_id'].value);
     data.append('cat_type', this.EditForm.controls['cat_type'].value);
-    data.append('parent_id', this.EditForm.controls['parent_id'].value);
+    
     data.append('cat_title', this.EditForm.controls['cat_title'].value);
     data.append('cat_img_name', this.EditForm.controls['cat_img_name'].value);
     data.append('cat_img_url', this.SelectedFile);
@@ -430,6 +432,27 @@ export class CategoryComponent implements OnInit {
     this.largeModal.show();
   }
   resetFile() { this.fileInput.nativeElement.value = ""; }
+  
+  ImageUrl:any;
+  Enlarge:boolean=false;
+  
+  ScaleImg(url, event){
+      document.body.classList.add('OverFlowHidden');
+      if(!url || url=='') return;
+      else{
+
+      this.ImageUrl=url;
+      this.Enlarge=true;
+      }
+
+  }
+
+  HideImage(event)
+  {
+    document.body.classList.remove('OverFlowHidden');
+    this.Enlarge=false;
+  }
+
 
 
 }

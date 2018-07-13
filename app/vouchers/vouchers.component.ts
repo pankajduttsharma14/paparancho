@@ -5,13 +5,13 @@ import { ViewEncapsulation } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import {PrinterService} from '../services/printer.service';
-import * as shajs from 'sha.js';
+
+
 @Component({
   selector: 'app-vouchers',
   templateUrl: './vouchers.component.html',
   styleUrls: ['./vouchers.component.scss'],
-  providers: [VouchersService,Ng4LoadingSpinnerService,PrinterService],
+  providers: [VouchersService,Ng4LoadingSpinnerService],
   encapsulation: ViewEncapsulation.None,
 
 
@@ -24,7 +24,7 @@ export class VouchersComponent implements OnInit {
   public Vouchers;
   p: number = 1;
   EditForm: FormGroup;
-  constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService, private PrinterService:PrinterService){
+  constructor(private VouchersService: VouchersService, private router: Router, private fb: FormBuilder,private spinnerService: Ng4LoadingSpinnerService){
     // var status = localStorage.getItem('loginStatus');
     // if (status != "true") {
     //   this.router.navigate(['login']);

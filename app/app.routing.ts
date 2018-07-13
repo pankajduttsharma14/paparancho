@@ -97,6 +97,11 @@ export const routes: Routes = [
         canActivateChild:[AuthGuard]
       },
       {
+        path: 'reports',
+        loadChildren: './reports/reports.module#ReportsModule',
+        canActivateChild:[AuthGuard]
+      },
+      {
         path: 'table-management',
         loadChildren: './tablemanagement/table.module#TableModule',
         canActivateChild:[AuthGuard]

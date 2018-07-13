@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Food'
+      title: 'Food & Beverages'
     },
     
     children: [

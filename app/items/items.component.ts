@@ -36,32 +36,31 @@ export class ItemsComponent implements OnInit {
   item_stock: number;
   status: string;
 
-  constructor(private FoodService: FoodService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
-    // var status = localStorage.getItem('loginStatus');
-    // if (status != "true") {
-    //   this.router.navigate(['login']);
-    // }
-    this.spinnerService.show();
-    this.FoodService.GetAllItems().subscribe(res => {
-      this.items = res.data;
-      this.spinnerService.hide();
+  GetAllitems()
+  {
+  this.spinnerService.show();
+  this.FoodService.GetAllItems().subscribe(res => {
+  this.items = res.data;
+      
+  this.spinnerService.hide();
     }, err => { this.spinnerService.hide(); });
+  }
 
-
-
+  constructor(private FoodService: FoodService, private router: Router, private FormBuilder: FormBuilder, private spinnerService: Ng4LoadingSpinnerService) {
+    this.GetAllitems();
     this.CreateEditForm();
     this.CreateAddForm();
   }
   
-  ItemFilterData(data):any
-  {
-      var item_data=new Array();
-        for(var i=0;i<data.length;i++)
-        {
-          item_data.push({itmid:data[i].itmid,item_title:data[i].item_title,item_stock:data[i].item_stock,item_price:data[i].item_price,min_bar_price:data[i].min_bar_price,max_bar_price:data[i].max_bar_price,item_img_url:data[i].item_img_url,});
-        }
-        return item_data;
-}
+//   ItemFilterData(data):any
+//   {
+//       var item_data=new Array();
+//         for(var i=0;i<data.length;i++)
+//         {
+//           item_data.push({itmid:data[i].itmid,item_title:data[i].item_title,item_stock:data[i].item_stock,item_price:data[i].item_price,min_bar_price:data[i].min_bar_price,max_bar_price:data[i].max_bar_price,item_img_url:data[i].item_img_url,});
+//         }
+//         return item_data;
+// }
 
 
   CreateAddForm(): void {
@@ -464,4 +463,25 @@ export class ItemsComponent implements OnInit {
    this.fileInput.nativeElement.value = "";
 
  }
+
+  
+  ImageUrl:any;
+  Enlarge:boolean=false;
+  
+  ScaleImg(url, event){
+      document.body.classList.add('OverFlowHidden');
+      if(!url || url=='') return;
+      else{
+
+      this.ImageUrl=url;
+      this.Enlarge=true;
+      }
+
+  }
+
+  HideImage(event)
+  {
+    document.body.classList.remove('OverFlowHidden');
+    this.Enlarge=false;
+  }
 }

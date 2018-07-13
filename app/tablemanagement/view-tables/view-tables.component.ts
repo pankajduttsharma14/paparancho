@@ -68,22 +68,23 @@ TableHeading:string;
      this.spinnerService.show();
     this.TableService.GetAllTable().subscribe(res => {
         if (res.status == 200) {
+          this.spinnerService.hide();
           this.GetTables = res.data;
+        } 
+        else {
           this.spinnerService.hide();
-        } else {
           this.GetTablesMsg = "No Tables For Display";
-          this.spinnerService.hide();
         }
       },
       err => {
-        this.GetTablesMsg = "No Tables For Display";
         this.spinnerService.hide();
+        this.GetTablesMsg = "No Tables For Display";
       });
   }
 
   GetRunningTables()
   {
-     this.TableHeading='Running Tables';
+     this.TableHeading='Booked Tables';
     this.spinnerService.show();
     this.TableService.GetRunningTables().subscribe(res => {
         if (res.status == 200) {

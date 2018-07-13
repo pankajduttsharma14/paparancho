@@ -1,0 +1,92 @@
+<div class="animated fadeIn">
+  <ng4-loading-spinner></ng4-loading-spinner>
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- msg -->
+      <!-- msg -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Reports
+        </div>
+        <div class="card-body">
+          
+          <form [formGroup]="ReportsForm" (ngSubmit)="GetReports()" style="margin-bottom: 20px;">
+            <div class="row">
+              <div class="col-md-4">
+                <label>Outlet Name</label>
+                <select formControlName="ol_id" class="form-control">
+                  <option value="" [selected]="true">Select Outlet</option>
+                  <option value="1">Papa Rancho</option>
+                  <option value="2">Trance</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label>From</label>
+                <input type="date" class="form-control" formControlName="fromdate" (change)="ChangeDate($event)">
+              </div>
+              <div class="col-md-4">
+                <label>To</label>
+                <input type="date" class="form-control" formControlName="todate" [min]="MinDate">
+              </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-12">
+                <button type="submit" [disabled]="!ReportsForm.valid" class="btn btn-secondary sub_btn"><i class="icon-chart"></i> Get Reports List</button>  
+                </div>
+            </div>
+          </form>
+          <div class="row">
+              <div class="col-md-12">
+                  <ul class="pull-right btn_list" *ngIf="ReportList.length!=0">
+                    <li><a href="javascript:void(0)" (click)="ExportToCSV()" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download CSV</a></li>
+                    <li><a href="javascript:void(0)" (click)="ExportToPdf()" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download PDF</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table" style="min-width: 1000px; width:100%;">
+              <thead>
+                <tr>
+                  <th>Order#</th>
+                  <th>Table#</th>
+                  <th>Bill#</th>
+                  <th>Ordered From</th>
+                  <th>Stewards</th>
+                  <th>Order Time</th>
+                  <th>status</th>
+                  <!-- <th>Voucher Status</th> -->
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="8" *ngIf="ReportList.length==0">No records</td></tr>
+                 <tr *ngFor='let data of ReportList | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
+                  
+                  <td>{{data.order_number}}</td>
+                  <td>{{data.table_number}}</td>
+                  <td>{{data.bill_no}}</td>
+                  <td>{{data.order_from}}</td>
+                  <td>
+                    <span *ngIf="!data.steward_name">N/A</span>
+                    <span *ngIf="data.steward_name">{{data.steward_name}}</span>
+                  </td>
+                  <td>{{data.order_time}}</td>
+                  
+                  <td>
+                      <!-- <span class="badge badge-success">{{data.status}}</span> -->
+                      <span class="badge badge-danger" *ngIf="data.status=='Cancelled'">{{data.status}}</span>
+                      <span class="badge badge-warning" *ngIf="data.status=='Pending'">{{data.status}}</span>
+                      <span class="badge badge-success" *ngIf="data.status=='Completed'">{{data.status}}</span>
+                  </td>
+                  <td>{{data.grand_total}}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

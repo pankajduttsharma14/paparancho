@@ -24,6 +24,12 @@
 <!-- delete model -->
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
+  <div [ngClass]="{'ShowBox':Enlarge==true, 'HideBox':Enlarge==false}" class="d-none" (click)="HideImage($event)">
+      <div style="position: relative;">
+        <span class="cross_icon" (click)="HideImage($event)">&times;</span>
+        <img [src]="ImageUrl" alt="Enlarge Image" (click)="$event.stopPropagation()">
+      </div>
+  </div>
   <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -44,7 +50,6 @@
                   <h3 class="modal_heading">Add Item</h3>
                   <div class="alert alert-success" *ngIf="AddItemMsg!=null">Item has been added successfully</div>
                   <!-- form  -->
-
                   <form [formGroup]="AddItemsForm" (ngSubmit)="AddItems()" *ngIf="AddItemMsg==null">
                     <div class="row">
                       <input type="hidden" [ngModel]="GetCatType" formControlName="item_cat_type" style="display: none">
@@ -64,7 +69,7 @@
                         <label>Category</label>
                         <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)">
                           <option value="" [selected]="true">Select Category</option>
-                          <option *ngFor="let item of catList" [value]="item.icid">{{item.cat_title}}</option>
+                          <option *ngFor="let item of catList" [value]="item.icid">{{item.cat_title | uppercase}}</option>
                         </select>
                         <div *ngIf="AddItemsForm.controls['icid'].touched && !AddItemsForm.controls['icid'].valid">
                           <label *ngIf="AddItemsForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
@@ -205,6 +210,11 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngIf="(items | filter:searchItem).length===0">
+                  <td>
+                    <h3>No Records Found!</h3>
+                  </td>
+                </tr>
                 <tr *ngFor='let data of items | filter: searchItem | paginate: { itemsPerPage: 10, currentPage: p}'>
                   <!-- <td>
                     <input type="checkbox" name="checkbox">
@@ -214,15 +224,15 @@
                   <td>{{data.cat_title}}</td>
                   <td>{{data.item_stock}}</td>
                   <td>
-                     {{data.item_price | number : '1.2-2'}}
+                    {{data.item_price | number : '1.2-2'}}
                   </td>
                   <td>
-                     {{data.min_bar_price | number : '1.2-2'}}
+                    {{data.min_bar_price | number : '1.2-2'}}
                   </td>
                   <td>
-                     {{data.max_bar_price | number : '1.2-2'}}
+                    {{data.max_bar_price | number : '1.2-2'}}
                   </td>
-                  <td><img [src]="data.item_img_url" alt="image" height="50px" style="max-width: 80px;"></td>
+                  <td><img [src]="data.item_img_url" alt="image" height="50px" style="max-width: 80px; cursor: pointer;" (click)="ScaleImg(data.item_img_url, $event)"></td>
                   <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                   <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
                   <td>
@@ -243,7 +253,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>  
+          </div>
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
         </div>
         <!--Edit modal  -->
@@ -255,7 +265,6 @@
                   <h3 class="modal_heading">Edit Item</h3>
                   <div class="alert alert-success" *ngIf="ItemEditMsg!=null">Item record has been updated successfully</div>
                   <!-- form  -->
-                  
                   <form [formGroup]="EditForm" (ngSubmit)="EditItem(EditForm)" *ngIf="ItemEditMsg==null">
                     <div class="row">
                       <input type="hidden" [ngModel]="GetCatType" formControlName="item_cat_type" style="display: none;">
@@ -283,7 +292,7 @@
                         <label>Category</label>
                         <select formControlName="icid" class="form-control" (change)="GetCategoryType($event.target.value)" [(ngModel)]="model.icid">
                           <option value="">Select Category</option>
-                          <option *ngFor="let item of catList" [value]="item.icid" [selected]="item.icid==model.icid">{{item.cat_title}}</option>
+                          <option *ngFor="let item of catList" [value]="item.icid" [selected]="item.icid==model.icid">{{item.cat_title | uppercase}}</option>
                         </select>
                         <div *ngIf="EditForm.controls['icid'].touched && !EditForm.controls['icid'].valid">
                           <label *ngIf="EditForm.controls['icid'].hasError('required')" style="color:red;">Select Category</label>
@@ -327,7 +336,6 @@
                           <label *ngIf="EditForm.controls['min_bar_price'].hasError('required')" style="color:red;">Enter Min Price</label>
                           <label *ngIf="EditForm.controls['min_bar_price'].hasError('min')" style="color:red;">Value Should start From 1</label>
                           <label *ngIf="EditForm.controls['min_bar_price'].hasError('pattern') && !EditForm.controls['min_bar_price'].hasError('required')" style="color:red;">Max 7 digits allowed</label>
-
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -342,7 +350,7 @@
                       </div>
                     </div>
                     <div class="row">
-                       <div class="col-md-6">
+                      <div class="col-md-6">
                         <label>Upload Image</label>
                         <input type="file" formControlName="item_img_url" class="form-control" #fileInput1 (change)="ImageUpload($event)" ImageTypeValidator>
                         <div *ngIf="EditForm.controls['item_img_url'].touched && !EditForm.controls['item_img_url'].valid">
