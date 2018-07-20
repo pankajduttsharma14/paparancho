@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FoodService } from '../services/food.service';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
@@ -15,7 +15,8 @@ export class ItemsComponent implements OnInit {
   @ViewChild('largeModal')  public largeModal: ModalDirective;
   @ViewChild('largeModal1') public largeModal1: ModalDirective;
   @ViewChild('dangerModal') public dangerModel: ModalDirective;
-  @ViewChild('fileInput1') fileInput:any;
+  @ViewChild('fileInput1') ElementRef:any;
+  @ViewChild('fileInput') fileInput:any;
 
   p: number = 1;
   public items: any = [];
@@ -85,6 +86,7 @@ export class ItemsComponent implements OnInit {
     }, {
       validator: this.PriceValidator // your validation method
     });
+    
   }
 
 
@@ -109,6 +111,8 @@ export class ItemsComponent implements OnInit {
     },{
       validator: this.PriceValidator // your validation method
     });
+
+    
   }
 
 

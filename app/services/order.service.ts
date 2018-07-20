@@ -15,7 +15,7 @@ export class OrderService {
   constructor(private http:Http) { 
     this.BASE_URL = AppSettingComponent.API_ENDPOINT;
     this.headers=new Headers();
-    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('enctype', 'multipart/form-data');
     this.headers.append('client-service', 'PR2018PS');  
     this.headers.append('auth-key', '5ccd7b534b19d30030c6503f3a852d00');
     this.options=new RequestOptions({headers:this.headers});

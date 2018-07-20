@@ -1,20 +1,18 @@
-
 <div class="animated fadeIn">
   <div class="row">
-
-
-
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Order List
         </div>
-         <div class="btn-group" style="text-align: right; padding: 20px;">
-    		<button type="button" class="btn btn-primary" (click)="SwitchFilter(true,$event)">Today</button>
-    		<button type="button" class="btn btn-success" (click)="SwitchFilter(false,$event)">All</button>
-  		</div>
         <div class="card-body">
           <div class="row justify-content-end">
+            <div class="col-9">
+              <div class="btn-group" style="text-align: right;">
+                <button type="button" class="btn btn-primary" (click)="SwitchFilter(true,$event)">Today</button>
+                <button type="button" class="btn btn-success" (click)="SwitchFilter(false,$event)">All</button>
+              </div>
+            </div>
             <div class="col-3">
               <div class="input-group searchBox" style="margin-bottom: 10px;">
                 <input class="form-control" placeholder="Search Here..." [(ngModel)]="search">
@@ -26,7 +24,6 @@
             <table class="table" style="max-width: 1500px; min-width: 1200px;">
               <thead>
                 <tr>
-                  
                   <th>Order #</th>
                   <th>Table #</th>
                   <th>Stewards</th>
@@ -38,53 +35,43 @@
                   <th>Payment By</th>
                   <th>Status</th>
                   <th>Actions</th>
-
                 </tr>
               </thead>
               <tbody>
-
                 <tr *ngFor='let data of OrderList | dateToday:switch | filter:search | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
-  	                
-  	                <td>{{data.order_number}}</td>
-  	                <td>{{data.stid}}</td>
-                    <td>{{data.staff_name}}</td>
-  	                <td>{{data.order_from}}</td>
-  	               
-  	                
-  	                <td>{{data.createdAt | date:'dd/MM/yyyy'}} <br> {{data.order_time}}</td>
-                    <td>{{data.total_amt}}</td>
-                    <td>{{data.tax_amt}}</td>
-  	                <td>
-
-                     <span *ngIf="data.grand_total=='0.00'">{{data.total_amt}}</span> 
-                     <span *ngIf="data.grand_total!='0.00'">{{data.grand_total}}</span> 
-                    </td>
-                     <td>
-                      <span class="badge badge-warning" *ngIf="data.payment_by==null">Payment Due</span>
-                      <span *ngIf="data.payment_by!=null" class="badge badge-success">{{data.payment_by}}</span>
-                      
-                    </td>
-                    <td>
-                      <!-- <span class="badge badge-success">{{data.status}}</span> -->
-                      <span class="badge badge-danger" *ngIf="data.status=='Cancelled'">{{data.status}}</span>
-                      <span class="badge badge-warning" *ngIf="data.status=='Pending'">{{data.status}}</span>
-                      <span class="badge badge-success" *ngIf="data.status=='Completed'">{{data.status}}</span>
-                    </td>
-  	                <td class="actions_main">
-  	                  <!-- <a title="Edit"><i class="fa fa-edit"></i></a>  -->
-  	                  <!-- <a title="Delete"><i class="fa fa-trash"></i></a> -->
-  	                  <a title="View Detail" [routerLink]="['/dashboard/order/order-details/',data.id]"><i class="fa fa-eye"></i></a>
-  	                </td>
-
+                  <td>{{data.order_number}}</td>
+                  <td>{{data.stid}}</td>
+                  <td>{{data.staff_name}}</td>
+                  <td>{{data.order_from}}</td>
+                  <td>{{data.createdAt | date:'dd/MM/yyyy'}}
+                    <br> {{data.order_time}}</td>
+                  <td>{{data.total_amt}}</td>
+                  <td>{{data.tax_amt}}</td>
+                  <td>
+                    <span *ngIf="data.grand_total=='0.00'">{{data.total_amt}}</span>
+                    <span *ngIf="data.grand_total!='0.00'">{{data.grand_total}}</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-warning" *ngIf="data.payment_by==null">Payment Due</span>
+                    <span *ngIf="data.payment_by!=null" class="badge badge-success">{{data.payment_by}}</span>
+                  </td>
+                  <td>
+                    <!-- <span class="badge badge-success">{{data.status}}</span> -->
+                    <span class="badge badge-danger" *ngIf="data.status=='Cancelled'">{{data.status}}</span>
+                    <span class="badge badge-warning" *ngIf="data.status=='Pending'">{{data.status}}</span>
+                    <span class="badge badge-success" *ngIf="data.status=='Completed'">{{data.status}}</span>
+                  </td>
+                  <td class="actions_main">
+                    <!-- <a title="Edit"><i class="fa fa-edit"></i></a>  -->
+                    <!-- <a title="Delete"><i class="fa fa-trash"></i></a> -->
+                    <a title="View Detail" [routerLink]="['/dashboard/order/order-details/',data.id]"><i class="fa fa-eye"></i></a>
+                  </td>
                 </tr>
-
-
-
               </tbody>
             </table>
-          </div>  
+          </div>
           <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
-         <!--  <ul class="pagination">
+          <!--  <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#">Prev</a></li>
             <li class="page-item active">
               <a class="page-link" href="#">1</a>
@@ -97,7 +84,5 @@
         </div>
       </div>
     </div>
-
   </div>
-
 </div>

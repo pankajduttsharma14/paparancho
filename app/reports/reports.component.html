@@ -9,8 +9,15 @@
           <i class="fa fa-align-justify"></i> Reports
         </div>
         <div class="card-body">
-          
-          <form [formGroup]="ReportsForm" (ngSubmit)="GetReports()" style="margin-bottom: 20px;">
+          <div class="row">
+            <div class="col-md-6">
+                  <input type="radio" name="ReportType" [(ngModel)]="ReportType" value="SalesReport" id="SalesReport">  
+                  <label for="SalesReport" class="report_head">Sales Report</label>
+                  <input type="radio" name="ReportType" [(ngModel)]="ReportType" value="MISReport" id="MISReport">  
+                  <label for="MISReport" class="report_head">MIS Report</label>  
+              </div>
+          </div>
+          <form [formGroup]="ReportsForm" (ngSubmit)="GetReports()" style="margin-bottom: 20px;" [hidden]="ReportType!='SalesReport'">
             <div class="row">
               <div class="col-md-4">
                 <label>Outlet Name</label>
@@ -20,6 +27,7 @@
                   <option value="2">Trance</option>
                 </select>
               </div>
+              
               <div class="col-md-4">
                 <label>From</label>
                 <input type="date" class="form-control" formControlName="fromdate" (change)="ChangeDate($event)">
@@ -35,15 +43,32 @@
                 </div>
             </div>
           </form>
+
+          <form [formGroup]="MisForm" (ngSubmit)="GetMisReport()" style="margin-bottom: 20px;" [hidden]="ReportType!='MISReport'">
+            <div class="row">
+          
+              <div class="col-md-4">
+                <label>Order Date</label>
+                <input type="date" class="form-control" formControlName="order_date" (change)="ChangeDate($event)">
+              </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-12">
+                <button type="submit" [disabled]="!MisForm.valid" class="btn btn-secondary sub_btn"><i class="icon-chart"></i> Get Reports List</button>  
+                </div>
+            </div>
+          </form>
+          <!-- reports btn -->
           <div class="row">
               <div class="col-md-12">
-                  <ul class="pull-right btn_list" *ngIf="ReportList.length!=0">
-                    <li><a href="javascript:void(0)" (click)="ExportToCSV()" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download CSV</a></li>
-                    <li><a href="javascript:void(0)" (click)="ExportToPdf()" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download PDF</a></li>
+                  <ul class="pull-right btn_list" *ngIf="ReportList.length!=0" [hidden]="ReportType!='SalesReport'">
+                    <li><a href="javascript:void(0)" (click)="ExportToCSV(ReportList)" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download CSV</a></li>
+                    <li><a href="javascript:void(0)" (click)="SavePDF(ReportList)" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download PDF</a></li>
                   </ul>
               </div>
           </div>
-          <div class="table-responsive">
+          <!-- reports btn -->
+          <div class="table-responsive" [hidden]="ReportType!='SalesReport'">
             <table class="table" style="min-width: 1000px; width:100%;">
               <thead>
                 <tr>
@@ -80,6 +105,40 @@
                   </td>
                   <td>{{data.grand_total}}</td>
                   
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+          </div>
+
+          <!-- reports btn -->
+          <div class="row">
+              <div class="col-md-12">
+                  <ul class="pull-right btn_list" *ngIf="MisReport.length!=0" [hidden]="ReportType!='MISReport'">
+                    <li><a href="javascript:void(0)" (click)="ExportToCSV(MisReport)" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download CSV</a></li>
+                    <li><a href="javascript:void(0)" (click)="SavePDF(MisReport)" class="btn btn-primary sub_btn"><i class="fa fa-download"></i> Download PDF</a></li>
+                  </ul>
+              </div>
+          </div>
+          <!-- reports btn -->
+          <!-- mis report -->
+          <div class="table-responsive" [hidden]="ReportType!='MISReport'">
+            <table class="table" style="min-width: 1000px; width:100%;">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Item Quantity</th>
+                  <th>Average Price</th>
+                  <th>Net Ammount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="8" *ngIf="MisReport.length==0">No records</td></tr>
+                 <tr *ngFor='let data of MisReport | paginate: { itemsPerPage: 10, currentPage: p}' style="position: relative;">
+                  <td>{{data.item_title}}</td>
+                  <td>{{data.item_qty}}</td>
+                  <td>{{data.avrage_itm_price}}</td>
+                  <td>{{data.net_amount}}</td>
                 </tr>
               </tbody>
             </table>

@@ -1,4 +1,5 @@
 <!-- delete model -->
+
 <div bsModal #dangerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
@@ -22,13 +23,12 @@
 </div>
 <!-- /.modal -->
 <!-- delete model -->
-
 <div class="animated fadeIn">
   <div [ngClass]="{'ShowBox':Enlarge==true, 'HideBox':Enlarge==false}" class="d-none" (click)="HideImage($event)">
-      <div style="position: relative;">
-        <span class="cross_icon" (click)="HideImage($event)">&times;</span>
-        <img [src]="ImageUrl" alt="Enlarge Image" (click)="$event.stopPropagation()">
-      </div>
+    <div style="position: relative;">
+      <span class="cross_icon" (click)="HideImage($event)">&times;</span>
+      <img [src]="ImageUrl" alt="Enlarge Image" (click)="$event.stopPropagation()">
+    </div>
   </div>
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -39,11 +39,6 @@
         </div>
         <!-- modal  -->
         <div class="add_box">
-          <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
-              <i class="fa fa-plus"></i> Add Category
-            </button>
-          </div>
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -74,7 +69,7 @@
                             <label *ngIf="AddForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
                           </div>
                         </div>
-                          <div class="col-md-4">
+                        <div class="col-md-4">
                           <label>Category Title</label>
                           <input type="text" formControlName="cat_title" class="form-control">
                           <div *ngIf="AddForm.controls['cat_title'].touched && !AddForm.controls['cat_title'].valid">
@@ -90,7 +85,6 @@
                             <label *ngIf="AddForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
                           </div>
                         </div> -->
-                      
                       </div>
                       <div class="row">
                         <div class="col-md-6">
@@ -154,6 +148,13 @@
         <div class="card-body">
           <div class="alert alert-success" *ngIf="DeleteCatMsg!=null">Category has been deleted</div>
           <div class="row justify-content-end">
+            <div class="col-9">
+              
+                <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="ShowModelAdd()">
+                  <i class="fa fa-plus"></i> Add Category
+                </button>
+              
+            </div>
             <div class="col-3">
               <div class="input-group searchBox" style="margin-bottom: 10px;">
                 <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchCat">
@@ -163,6 +164,7 @@
           </div>
           <!-- {{categories | json}} -->
           <table class="table">
+            
             <thead>
               <tr>
                 <!-- <th></th> -->
@@ -176,10 +178,10 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            
             <tbody>
               <tr *ngIf="(categories | filter:searchCat).length===0">
-                <td><h3>No Records Found!</h3></td>
+                <td>
+                  <h3>No Records Found!</h3></td>
               </tr>
               <tr *ngFor='let data of categories | filter:searchCat | paginate: { itemsPerPage: 10, currentPage: p}'>
                 <!-- <td>
@@ -263,7 +265,7 @@
                             <label *ngIf="EditForm.controls['cat_type'].hasError('required')" style="color:red;">Select Category Type</label>
                           </div>
                         </div>
-                         <div class="col-md-4">
+                        <div class="col-md-4">
                           <label>Category Title</label>
                           <input type="text" formControlName="cat_title" class="form-control" [ngModel]="model.cat_title">
                           <div *ngIf="EditForm.controls['cat_title'].touched && !EditForm.controls['cat_title'].valid">
@@ -272,14 +274,13 @@
                         </div>
                       </div>
                       <div class="row">
-                       <!--  <div class="col-md-6">
+                        <!--  <div class="col-md-6">
                           <label>Parent Id</label>
                           <input type="number" formControlName="parent_id" class="form-control" [ngModel]="model.parent_id">
                           <div *ngIf="EditForm.controls['parent_id'].touched && !EditForm.controls['parent_id'].valid">
                             <label *ngIf="EditForm.controls['parent_id'].hasError('required')" style="color:red;">Enter Parent Id</label>
                           </div>
                         </div> -->
-                       
                       </div>
                       <div class="row">
                         <div class="col-md-6">

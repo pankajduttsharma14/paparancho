@@ -15,11 +15,13 @@
         <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
         <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(roleId,true)">Yes</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- delete model -->
-
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -30,11 +32,6 @@
         </div>
         <!-- modal -->
         <div class="add_box">
-          <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="showModel(largeModal)">
-              <i class="fa fa-plus"></i> Add Staff Role
-            </button>
-          </div>
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -47,9 +44,9 @@
                         <div class="col-md-12">
                           <label>Outlet Name</label>
                           <select formControlName="ol_id" class="form-control">
-                              <option [selected]="true" value="">Select Outlet</option>
-                              <option value="1">Papa Rancho</option>
-                              <option value="2">Trance</option>
+                            <option [selected]="true" value="">Select Outlet</option>
+                            <option value="1">Papa Rancho</option>
+                            <option value="2">Trance</option>
                           </select>
                           <div *ngIf="StaffRoleForm.controls['ol_id'].touched && !StaffRoleForm.controls['ol_id'].valid">
                             <label *ngIf="StaffRoleForm.controls['ol_id'].hasError('required')" style="color:red;">Enter Outlet Name</label>
@@ -65,7 +62,7 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-6"  style="display: none;">
+                        <div class="col-md-6" style="display: none;">
                           <label>Mod Permission</label>
                           <input type="number" formControlName="mod_permission" class="form-control">
                           <div *ngIf="StaffRoleForm.controls['mod_permission'].touched && !StaffRoleForm.controls['mod_permission'].valid">
@@ -104,8 +101,14 @@
         <!-- modal -->
         <div class="card-body">
           <div class="alert alert-success" *ngIf="DeleteStaff!=null">Staff role has been deleted successfully</div>
+          <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="showModel(largeModal)" style="margin-bottom: 10px;">
+                  <i class="fa fa-plus"></i> Add Staff Role
+                </button>
+            </div>
+          </div>
           <div class="table-responsive">
-            
             <table class="table" width="100%;">
               <thead>
                 <tr>
@@ -116,7 +119,6 @@
                   <!-- <th>Mod Permission</th> -->
                   <!-- <th>Modified Date</th> -->
                   <!-- <th>Created Date</th> -->
-                  
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -134,7 +136,6 @@
                   <!-- <td>{{data.mod_permission}}</td> -->
                   <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td> -->
                   <!-- <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-                  
                   <td>
                     <!-- <a href="#" title="Add" style="font-size: 16px;
                     margin-right: 10px;">
@@ -183,11 +184,10 @@
                         </div>
                         <div class="col-md-12">
                           <label>Outlet Name</label>
-                          
                           <select formControlName="ol_id" class="form-control" [(ngModel)]="model.ol_id">
-                              <option value="">Select Outlet</option>
-                              <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
-                              <option value="2" [selected]="model.ol_id=='2'">Trance</option>
+                            <option value="">Select Outlet</option>
+                            <option value="1" [selected]="model.ol_id=='1'">Papa Rancho</option>
+                            <option value="2" [selected]="model.ol_id=='2'">Trance</option>
                           </select>
                           <div *ngIf="EditForm.controls['ol_id'].touched && !EditForm.controls['ol_id'].valid">
                             <label *ngIf="EditForm.controls['ol_id'].hasError('required')" style="color:red;">Select Outlet Name</label>
@@ -221,11 +221,9 @@
                           </div>
                         </div>
                       </div>
-                    
                       <div class="row">
                         <div class="col-md-12" style="margin-top: 10px;">
                           <button type="submit" class="sub_btn btn btn-success" [disabled]="!EditForm.valid"><i class="fa fa-edit"></i> Update Staff Role</button>
-
                         </div>
                       </div>
                     </div>

@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-setting.component.scss']
 })
 export class AppSettingComponent implements OnInit {
-  public static API_ENDPOINT="http://qa.syscraft-barpos.tk/V3/pos/";
-  // public static API_ENDPOINT="http://192.168.1.142/paparancho/V3/index.php/pos/";
+	// QA
+  // public static API_ENDPOINT="http://qa.syscraft-barpos.tk/V3/pos/";
+  
+  // client
+  public static API_ENDPOINT="http://api.syscraft-barpos.tk/V3/pos/";
+  
   constructor() { }
 
   ngOnInit() {

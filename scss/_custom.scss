@@ -60,7 +60,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a8d8', end
 {
 	background: #20a8d8;
 }
-.form-control, .time_picker p-calendar .ui-inputtext {
+.modal-body .form-control, .time_picker p-calendar .ui-inputtext {
     width: 100% !important;
     height: 35px !important;
     border: none !important;
@@ -79,8 +79,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#20a8d8', end
 }
 .button_control
 {
-	text-align: right;
-	margin: 10px 20px 0;
+	text-align: left;
+	margin: 10px 0px 0;
 }
 .button_control button
 {
@@ -218,4 +218,21 @@ cursor: pointer;
 {
 	display:inline-block;
 	margin-left:10px;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #c8ced3;
+    background: #2f353a;
+    color: #fff;
+}
+.table td, .table th
+{
+	border:none !important;
+}
+
+
+.table tr:nth-child(even) td
+{
+	background:#efefef;
 }

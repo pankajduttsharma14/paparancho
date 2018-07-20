@@ -194,13 +194,7 @@
             <span class="seat_status" *ngIf="!TableDetail[0].freeseat"><b class="text-success">Free Seats:</b> N/A</span>
           </p>
         </div>
-        <div class="even" *ngIf="TableDetail!=null">
-          <h3><i class="icon-chart"></i> Seat Capacity</h3>
-          <!-- <ul class="chair_loop">
-            <li *ngFor="let item of SeatCap"><img src="../../../../assets/img/table.png" height="35"></li>
-          </ul> -->
-          <p>{{SeatCap.length}}</p>
-        </div>
+        
       </div>
       <div class="orders_list" *ngIf="TableOrders">
         <h3><i class="icon-list"></i> Orders on table</h3>

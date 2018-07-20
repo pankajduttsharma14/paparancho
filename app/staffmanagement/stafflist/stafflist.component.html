@@ -15,12 +15,13 @@
         <button type="button" class="btn btn-success" (click)="dangerModal.hide()" style="border-radius: 0px;">No</button>
         <button type="button" class="btn btn-danger" style="border-radius: 0px;" (click)="ConfirmDialog(staffId,true)">Yes</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 <!-- delete model -->
-
-
 <div class="animated fadeIn">
   <ng4-loading-spinner></ng4-loading-spinner>
   <div class="row">
@@ -31,17 +32,12 @@
         </div>
         <!-- modal -->
         <div class="add_box">
-          <div class="button_control">
-            <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
-              <i class="fa fa-plus"></i> Add Staff
-            </button>
-          </div>
           <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-body">
                   <h3 class="modal_heading">Add Staff</h3>
-                   <div class="alert" *ngIf="StaffMsg!=null" [ngClass]="{'alert-success':StaffMsg==true,'alert-danger':StaffMsg==false}">
+                  <div class="alert" *ngIf="StaffMsg!=null" [ngClass]="{'alert-success':StaffMsg==true,'alert-danger':StaffMsg==false}">
                     <span *ngIf="StaffMsg==true"><i class="fa fa-check" style="color:green;"></i> Staff has been added successfully !</span>
                     <span *ngIf="StaffMsg==false"><i class="fa fa-times" style="color:red;"></i> Staff login ID alrady Exists. Please enter different Login ID</span>
                   </div>
@@ -70,7 +66,7 @@
                       </div>
                       <!-- row 2 -->
                       <div class="row">
-                      <!--   <div class="col-md-4">
+                        <!--   <div class="col-md-4">
                           <label>Pass code</label>
                           <input type="text" formControlName="pass_code" class="form-control">
                           <div *ngIf="StaffListForm.controls['pass_code'].touched && !StaffListForm.controls['pass_code'].valid">
@@ -80,7 +76,8 @@
                         </div> -->
                         <div class="col-md-6">
                           <label>Password</label>
-                          <div style="position: relative;"><input [attr.type]="ViewPass" formControlName="password" class="form-control"> 
+                          <div style="position: relative;">
+                            <input [attr.type]="ViewPass" formControlName="password" class="form-control">
                             <i class="fa eye_icon" [ngClass]="{'fa-eye':ViewPass=='password', 'fa-eye-slash':ViewPass=='text'}" (click)="PasswordSwitch()"></i>
                           </div>
                           <div *ngIf="StaffListForm.controls['password'].touched && !StaffListForm.controls['password'].valid">
@@ -89,7 +86,6 @@
                           </div>
                         </div>
                         <div class="col-md-6">
-
                           <label>Role</label>
                           <select formControlName="role_id" class="form-control">
                             <option [selected]="true" value="">Select Staff Role</option>
@@ -196,6 +192,13 @@
         <div class="card-body table-responsive">
           <div class="alert alert-success" *ngIf="DeleteStaffListMsg!=null">{{DeleteStaffListMsg}}</div>
           <div class="row justify-content-end">
+            <div class="col-9">
+              
+                <button type="button" class="btn btn-secondary sub_btn" data-toggle="modal" (click)="largeModal.show()">
+                  <i class="fa fa-plus"></i> Add Staff
+                </button>
+              
+            </div>
             <div class="col-3">
               <div class="input-group searchBox" style="margin-bottom: 10px;">
                 <input class="form-control" placeholder="Search Here..." [(ngModel)]="searchStaff">
@@ -226,10 +229,10 @@
             </thead>
             <tbody>
               <tr *ngIf="(StaffList.data | filter:searchStaff).length===0">
-                  <td>
-                    <h3>No Records Found!</h3>
-                  </td>
-                </tr>
+                <td>
+                  <h3>No Records Found!</h3>
+                </td>
+              </tr>
               <tr *ngFor='let data of StaffList.data | filter:searchStaff | paginate: { itemsPerPage: 10, currentPage: p}'>
                 <!-- <td>
                   <input type="checkbox" name="checkbox">
@@ -249,17 +252,15 @@
                 <td>{{data.gender}}</td> -->
                 <!-- <td>{{data.modifydt | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.createdt | date: 'dd/MM/yyyy'}}</td> -->
-
                 <td><span class="badge" [ngClass]="{'badge-success': data.login_status=='ONLINE','badge-danger': data.login_status=='OFFLINE'}">{{data.login_status}}</span></td>
-                
                 <td>
                   <span title="Edit" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" data-toggle="modal" (click)="show(data, largeModal1)"><i class="fa fa-edit"></i></span>
                   <!-- <span title="Delete" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="DeleteStaffList(data.staff_id)"><i class="fa fa-trash"></i></span> -->
-                    <span title="Delete" style="font-size: 16px;
+                  <span title="Delete" style="font-size: 16px;
                     margin-right: 10px; color:#20a8d8 !important; cursor: pointer;" (click)="ConfirmDialog(data.staff_id)"><i class="fa fa-trash"></i></span>
-                    <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
+                  <span class="badge" [ngClass]="{'badge-success': data.status=='ACTIVE','badge-danger': data.status=='INACTIVE'}"><i class="fa fa-times" *ngIf="data.status=='INACTIVE'"></i>
                       <i class="fa fa-check" *ngIf="data.status=='ACTIVE'"></i>
                     </span>
                 </td>
@@ -286,14 +287,11 @@
                 <div class="modal-body">
                   <h3 class="modal_heading">Edit Staff</h3>
                   <div class="alert alert-success" *ngIf="UpdateStaffListMsg!=null">Staff record has been updated successfully</div>
-                  
-                   <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off'  *ngIf="UpdateStaffListMsg==null">
+                  <form [formGroup]="EditForm" (ngSubmit)="UpdateStaffList(EditForm)" autocomplete='off' *ngIf="UpdateStaffListMsg==null">
                     <div class="form-group">
-                      <div class="row"> 
+                      <div class="row">
                         <div class="col-md-6" style="display: none;">
-                          
                           <input type="hidden" formControlName="staff_id" class="form-control" [ngModel]="model.staff_id">
-                          
                         </div>
                         <div class="col-md-6">
                           <label>Staff Login Id/Phone Number</label>
@@ -317,7 +315,7 @@
                       </div>
                       <!-- row 2 -->
                       <div class="row">
-                       <!--  <div class="col-md-6">
+                        <!--  <div class="col-md-6">
                           <label>Pass code</label>
                           <input type="text" formControlName="pass_code" class="form-control" [ngModel]="model.pass_code">
                           <div *ngIf="EditForm.controls['pass_code'].touched && !EditForm.controls['pass_code'].valid">
@@ -336,14 +334,11 @@
                             <label *ngIf="EditForm.controls['password'].hasError('minlength')" style="color:red;">Password should Contain 6 Digits</label>
                           </div>
                         </div>
-                    
                         <div class="col-md-6">
-                          
                           <label>Role</label>
                           <select formControlName="role_id" class="form-control" [(ngModel)]="model.role_id">
                             <option value="">Select Staff Role</option>
-                            <option *ngFor="let data of StaffRoles" [value]="data.srl_id" 
-                            [selected]="data.srl_id==model.role_id">{{data.title}}</option>
+                            <option *ngFor="let data of StaffRoles" [value]="data.srl_id" [selected]="data.srl_id==model.role_id">{{data.title}}</option>
                           </select>
                           <div *ngIf="EditForm.controls['role_id'].touched && !EditForm.controls['role_id'].valid">
                             <label *ngIf="EditForm.controls['role_id'].hasError('required')" style="color:red;">Select Role</label>
