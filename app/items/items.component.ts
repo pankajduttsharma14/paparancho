@@ -136,8 +136,6 @@ export class ItemsComponent implements OnInit {
 
       return;
     })
-    
-   
 }
   
   // bar price custom validator
